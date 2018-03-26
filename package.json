@@ -1,0 +1,60 @@
+{
+	"name": "datovelger",
+	"version": "0.9.0",
+	"description": "Enkel datovelger",
+	"main": "dist/datovelger.js",
+	"types": "dist/datovelger.d.ts",
+	"license": "MIT",
+	"files": ["/src", "/dist"],
+	"author": "NAV developer",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/navikt/datovelger.git"
+	},
+	"dependencies": {
+		"babel-preset-env": "^1.6.1",
+		"chokidar": "^2.0.2",
+		"focus-trap": "^2.4.3",
+		"focus-trap-react": "^3.1.2",
+		"gulp-newer": "^1.4.0",
+		"lodash.isequal": "^4.5.0",
+		"lodash.throttle": "^4.1.1",
+		"moment": "^2.21.0",
+		"nav-frontend-chevron": "^1.0.2",
+		"nav-frontend-core": "^4.0.5",
+		"nav-frontend-js-utils": "^1.0.3",
+		"nav-frontend-typografi": "^2.0.2",
+		"react-day-picker":
+			"git+ssh://git@github.com:frodehansen2/react-day-picker.git",
+		"react-dom": "^16.2.0"
+	},
+	"peerDependencies": {
+		"classnames": "^2.2.5",
+		"prop-types": "^15.5.10",
+		"react": "^16.2.0"
+	},
+	"devDependencies": {
+		"@types/classnames": "^2.2.3",
+		"@types/react": "^16.0.40",
+		"babel-core": "^6.26.0",
+		"babel-plugin-transform-react-display-name": "^6.25.0",
+		"classnames": "^2.2.5",
+		"gulp": "^3.9.1",
+		"gulp-babel": "^7.0.1",
+		"gulp-insert": "^0.5.0",
+		"gulp-plumber": "^1.2.0",
+		"gulp-typescript": "^4.0.1",
+		"merge2": "^1.2.1",
+		"nav-frontend-chevron-style": "^0.3.4",
+		"nav-frontend-knapper-style": "^0.3.7",
+		"nav-frontend-skjema-style": "^0.3.16",
+		"nav-frontend-typografi-style": "^1.0.8",
+		"node-less-chokidar": "^0.1.2",
+		"npm-run-all": "^4.1.2",
+		"typescript": "^2.7.2"
+	},
+	"scripts": {
+		"build-css": "node-less-chokidar src/styles/datovelger.less -o src/",
+		"build": "gulp build"
+	}
+}
