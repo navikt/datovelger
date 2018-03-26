@@ -8,7 +8,7 @@ export interface Props {
 	onInputChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-interface State {
+export interface State {
 	value: string;
 }
 

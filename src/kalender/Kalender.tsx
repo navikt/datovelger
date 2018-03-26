@@ -29,7 +29,7 @@ export interface Props {
 	dayPickerProps?: DayPickerProps;
 }
 
-interface State {
+export interface State {
 	måned: Date;
 }
 

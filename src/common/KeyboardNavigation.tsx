@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { KeyboardActions, KeyboardAction } from './KeyboardActions';
 
-type KeyboarActionEvent = (evt: React.KeyboardEvent<any>) => void;
+export type KeyboarActionEvent = (evt: React.KeyboardEvent<any>) => void;
 
 export interface Props {
 	onEnter?: KeyboarActionEvent;
@@ -96,8 +96,7 @@ const KeyboardNavigation: React.StatelessComponent<Props> = (props) => (
 			...(props.onAltPageDown ? [altPageDownAction(props.onAltPageDown)] : []),
 			...(props.onHome ? [homeAction(props.onHome)] : []),
 			...(props.onEnd ? [endAction(props.onEnd)] : [])
-		]}
-	>
+		]}>
 		{props.children}
 	</KeyboardActions>
 );

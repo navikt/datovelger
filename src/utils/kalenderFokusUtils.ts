@@ -39,7 +39,7 @@ export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
 export const fokuserFørsteDagIUke = (
 	kalender: RefHTMLElement,
 	dato: Date,
-	evt: React.KeyboardEvent<any>
+	evt: KeyboardEvent
 ) => {
 	evt.preventDefault();
 	let dag = moment(dato)
@@ -56,7 +56,7 @@ export const fokuserFørsteDagIUke = (
 export const fokuserFørsteDagIMåned = (
 	kalender: RefHTMLElement,
 	måned: Date,
-	evt: React.KeyboardEvent<any>
+	evt: KeyboardEvent
 ) => {
 	evt.preventDefault();
 	fokuserPåDato(
@@ -70,7 +70,7 @@ export const fokuserFørsteDagIMåned = (
 export const fokuserSisteDagIMåned = (
 	kalender: RefHTMLElement,
 	måned: Date,
-	evt: React.KeyboardEvent<any>
+	evt: KeyboardEvent
 ) => {
 	evt.preventDefault();
 	fokuserPåDato(
@@ -84,7 +84,7 @@ export const fokuserSisteDagIMåned = (
 export const fokuserSisteDagIUke = (
 	kalender: RefHTMLElement,
 	dato: Date,
-	evt: React.KeyboardEvent<any>
+	evt: KeyboardEvent
 ) => {
 	evt.preventDefault();
 	let dag = moment(dato)

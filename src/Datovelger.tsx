@@ -17,7 +17,7 @@ import {
 	AfterModifier
 } from 'react-day-picker';
 
-interface State {
+export interface State {
 	måned: Date;
 	datovalidering: DatoValidering;
 	erÅpen?: boolean;

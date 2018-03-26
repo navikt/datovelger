@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 
-interface Props {
+export interface Props {
 	date: Date;
 	locale: string;
 	localeUtils: LocaleUtils;

@@ -11,7 +11,7 @@ export interface Props {
 	maks?: Date;
 }
 
-interface NavbarKnappProps {
+export interface NavbarKnappProps {
 	måned: Date;
 	retning: 'forrige' | 'neste';
 	disabled: boolean;
@@ -39,8 +39,7 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 			onClick={(e) => (disabled ? null : onClick(e, måned))}
 			aria-label={label}
 			aria-disabled={disabled}
-			role="button"
-		>
+			role="button">
 			<Chevron type={retning === 'forrige' ? 'venstre' : 'høyre'} />
 		</button>
 	);
