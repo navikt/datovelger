@@ -1,8 +1,9 @@
 {
 	"name": "datovelger",
-	"version": "0.9.1",
+	"version": "0.9.2",
 	"description": "Enkel datovelger",
-	"main": "src/Datovelger.tsx",
+	"main": "dist/datovelger.js",
+	"types": "dist/datovelger.d.ts",
 	"license": "MIT",
 	"files": ["/src", "/dist"],
 	"author": "NAV developer",
