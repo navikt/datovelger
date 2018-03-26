@@ -12,6 +12,7 @@ const gutil = require('gulp-util');
 const path = require('path');
 const chalk = require('chalk');
 const merge = require('merge2');
+const less = require('gulp-less');
 
 const src = './src/**/*.ts*';
 const dest = 'dist';
@@ -70,8 +71,13 @@ function renameUsingMapper(mapper) {
 		callback(null, file);
 	});
 }
-
-function build() {
+function buildLess() {
+	return gulp
+		.src('./src/styles/datovelger.less')
+		.pipe(less({}))
+		.pipe(gulp.dest('./dist/styles'));
+}
+function buildTs() {
 	const tsResult = gulp
 		.src(src)
 		.pipe(fixErrorHandling())
@@ -96,5 +102,6 @@ function build() {
 	return merge([tsPipe, dtsPipe]);
 }
 
-gulp.task('build', build);
+gulp.task('buildLess', buildLess);
+gulp.task('buildTs', buildTs);
 gulp.task('default', ['build']);

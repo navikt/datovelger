@@ -30,6 +30,9 @@
 	},
 	"peerDependencies": {
 		"classnames": "^2.2.5",
+		"nav-frontend-skjema-style": "^0.3.16",
+		"nav-frontend-typografi-style": "^1.0.8",
+		"nav-frontend-chevron-style": "^0.3.4",
 		"prop-types": "^15.5.10",
 		"react": "^16.2.0"
 	},
@@ -42,19 +45,18 @@
 		"gulp": "^3.9.1",
 		"gulp-babel": "^7.0.1",
 		"gulp-insert": "^0.5.0",
+		"gulp-less": "^4.0.0",
 		"gulp-plumber": "^1.2.0",
 		"gulp-typescript": "^4.0.1",
 		"merge2": "^1.2.1",
-		"nav-frontend-chevron-style": "^0.3.4",
 		"nav-frontend-knapper-style": "^0.3.7",
-		"nav-frontend-skjema-style": "^0.3.16",
-		"nav-frontend-typografi-style": "^1.0.8",
 		"node-less-chokidar": "^0.1.2",
 		"npm-run-all": "^4.1.2",
 		"typescript": "^2.7.2"
 	},
 	"scripts": {
-		"build-css": "node-less-chokidar src/styles/datovelger.less -o src/",
-		"build": "gulp build"
+		"build:css": "gulp buildLess",
+		"build:js": "gulp buildTs",
+		"build": "npm-run-all build:css build:js"
 	}
 }
