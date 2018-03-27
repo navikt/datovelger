@@ -2635,11 +2635,15 @@ natives@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/natives/-/natives-1.1.2.tgz#4437ca1ed8a7f047531ccdfaf2792853df4efa1c"
 
+nav-frontend-chevron-style@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.4.tgz#e6b0d5e9ddd87af988e4e1a44fc7fcb1fbb70994"
+
 nav-frontend-chevron@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-chevron/-/nav-frontend-chevron-1.0.2.tgz#93a3bdf9d6a774cd64c6498ebfd7e278a35729b3"
 
-nav-frontend-core@^4.0.5:
+nav-frontend-core@^4.0.2, nav-frontend-core@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-4.0.5.tgz#309c9de6a5146e8e93b3f52d4fc42cc309acdca1"
 
@@ -2650,6 +2654,16 @@ nav-frontend-js-utils@^1.0.3:
 nav-frontend-knapper-style@^0.3.7:
   version "0.3.7"
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.7.tgz#bf0100a704d65232323e9a5b370fb9c4faba3c61"
+
+nav-frontend-skjema-style@^0.3.16:
+  version "0.3.16"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.16.tgz#df7d358c4427764a263af40645f4b97218235a5d"
+
+nav-frontend-typografi-style@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.8.tgz#34aa32cf33223c4f178b48e767229910b6ab6132"
+  dependencies:
+    nav-frontend-core "^4.0.2"
 
 nav-frontend-typografi@^2.0.2:
   version "2.0.3"
@@ -3011,7 +3025,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -3081,6 +3095,15 @@ rc@^1.1.7:
 react-dom@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"

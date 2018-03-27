@@ -1,0 +1,35 @@
+{
+	"name": "dev",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@types/react": "^16.0.41",
+		"css-loader": "^0.28.11",
+		"less-loader": "^4.1.0",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0",
+		"ts-loader": "^4.1.0"
+	},
+	"devDependencies": {
+		"babel-polyfill": "^6.26.0",
+		"clean-webpack-plugin": "^0.1.19",
+		"datovelger": "../dist",
+		"mini-css-extract-plugin": "^0.2.0",
+		"nav-frontend-chevron-style": "^0.3.4",
+		"nav-frontend-js-utils": "^1.0.3",
+		"npm-run-all": "^4.1.2",
+		"optimize-css-assets-webpack-plugin": "^4.0.0",
+		"rimraf": "^2.6.2",
+		"webpack": "^4.3.0",
+		"webpack-cli": "^2.0.13"
+	},
+	"scripts": {
+		"clear:dist": "rimraf dist",
+		"dev": "webpack --config=./config/webpack.config.js",
+		"build": "npm-run-all clear:dist dev"
+	}
+}
