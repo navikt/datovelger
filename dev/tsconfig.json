@@ -16,8 +16,8 @@
 		"strictNullChecks": true,
 		"suppressImplicitAnyIndexErrors": true,
 		"noUnusedLocals": true,
-		"baseUrl": "./src",
-		"typeRoots": ["./node_modules/@types", "./src/@types"]
+		"typeRoots": ["./node_modules/@types", "./src/@types"],
+		"baseUrl": ""
 	},
 
 	"esModuleInterop": true,

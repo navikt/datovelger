@@ -7,8 +7,12 @@ exports.getFokusertDato = function (kalender) {
     if (kalender) {
         if (document.activeElement.classList.contains('DayPicker-Day')) {
             var dagElement = document.activeElement.childNodes.item(0);
-            var dateAttr = dagElement.attributes.getNamedItem('data-date').value;
-            return moment(dateAttr, 'DD.MM.YYYY').toDate();
+            if (dagElement) {
+                var attr = dagElement.attributes.getNamedItem('data-date');
+                if (attr) {
+                    return moment(attr.value, 'DD.MM.YYYY').toDate();
+                }
+            }
         }
     }
     return undefined;

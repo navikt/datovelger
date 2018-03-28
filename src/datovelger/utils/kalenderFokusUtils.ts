@@ -9,8 +9,12 @@ export const getFokusertDato = (kalender: RefHTMLElement): Date | undefined => {
 			const dagElement = document.activeElement.childNodes.item(
 				0
 			) as HTMLElement;
-			const dateAttr = dagElement.attributes.getNamedItem('data-date').value;
-			return moment(dateAttr, 'DD.MM.YYYY').toDate();
+			if (dagElement) {
+				const attr = dagElement.attributes.getNamedItem('data-date');
+				if (attr) {
+					return moment(attr.value, 'DD.MM.YYYY').toDate();
+				}
+			}
 		}
 	}
 	return undefined;

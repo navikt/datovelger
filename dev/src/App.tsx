@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Datovelger from 'datovelger';
+import Datovelger from '../../src/datovelger';
 
 import './styles.less';
 

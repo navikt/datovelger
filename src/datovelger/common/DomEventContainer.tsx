@@ -106,8 +106,7 @@ class DomEventContainer extends React.Component<Props, {}> {
 				{...propsRest}
 				onBlur={this.handleBlur}
 				onKeyDown={this.handleInternalDocumentKeyDown}
-				tabIndex={this.props.tabIndex}
-			>
+				tabIndex={this.props.tabIndex}>
 				{this.props.children}
 			</div>
 		);

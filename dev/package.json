@@ -20,7 +20,6 @@
 		"babel-polyfill": "^6.26.0",
 		"case-sensitive-paths-webpack-plugin": "^2.1.2",
 		"clean-webpack-plugin": "^0.1.19",
-		"datovelger": "../src",
 		"html-webpack-plugin": "^3.1.0",
 		"interpolate-html-plugin": "^2.0.0",
 		"mini-css-extract-plugin": "^0.2.0",

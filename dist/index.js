@@ -139,7 +139,7 @@ var Datovelger = /** @class */function (_super) {
             datovalidering = _c.datovalidering;
         var avgrensningerInfoId = avgrensninger ? this.instansId + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.props.valgtDato !== undefined;
-        return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer blokk-s" }, React.createElement(Datoinput_1.default, __assign({}, inputProps, { inputProps: {
+        return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer blokk-s" }, "a", React.createElement(Datoinput_1.default, __assign({}, inputProps, { inputProps: {
                 id: id,
                 'aria-invalid': invalidDate,
                 'aria-describedby': avgrensningerInfoId
