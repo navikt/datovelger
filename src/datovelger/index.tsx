@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import { guid } from 'nav-frontend-js-utils';
-import { DatovelgerAvgrensninger } from './types';
+import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import { formatDateInputValue, normaliserDato } from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
 import KalenderKnapp from './elementer/KalenderKnapp';
@@ -16,6 +16,7 @@ import {
 	BeforeModifier,
 	AfterModifier
 } from 'react-day-picker';
+import KalenderPortal from './elementer/KalenderPortal';
 
 export interface State {
 	måned: Date;
@@ -45,6 +46,8 @@ export interface Props {
 	visUkenumre?: boolean;
 	/** Språk - default no */
 	locale?: 'nb';
+	/** Hvor kalender skal vises. Default under */
+	kalenderplassering?: KalenderPlassering;
 }
 
 const getUtilgjengeligeDager = (
@@ -175,6 +178,7 @@ class Datovelger extends React.Component<Props, State> {
 			inputProps,
 			avgrensninger,
 			locale = 'nb',
+			kalenderplassering = 'under',
 			...kalenderProps
 		} = this.props;
 
@@ -195,7 +199,7 @@ class Datovelger extends React.Component<Props, State> {
 								avgrensninger={avgrensninger}
 							/>
 						)}
-					<div className="nav-datovelger__inputContainer blokk-s">
+					<div className="nav-datovelger__inputContainer">
 						<Datoinput
 							{...inputProps}
 							inputProps={{
@@ -214,22 +218,24 @@ class Datovelger extends React.Component<Props, State> {
 						/>
 					</div>
 					{erÅpen && (
-						<Kalender
-							ref={(c) => (this.kalender = c)}
-							{...kalenderProps}
-							locale={locale}
-							dato={valgtDato}
-							måned={valgtDato || new Date()}
-							min={avgrensninger && avgrensninger.minDato}
-							maks={avgrensninger && avgrensninger.maksDato}
-							utilgjengeligeDager={
-								avgrensninger
-									? getUtilgjengeligeDager(avgrensninger)
-									: undefined
-							}
-							onVelgDag={(d) => this.onVelgDag(d, true)}
-							onLukk={() => this.lukkKalender(true)}
-						/>
+						<KalenderPortal plassering={kalenderplassering}>
+							<Kalender
+								ref={(c) => (this.kalender = c)}
+								{...kalenderProps}
+								locale={locale}
+								dato={valgtDato}
+								måned={valgtDato || new Date()}
+								min={avgrensninger && avgrensninger.minDato}
+								maks={avgrensninger && avgrensninger.maksDato}
+								utilgjengeligeDager={
+									avgrensninger
+										? getUtilgjengeligeDager(avgrensninger)
+										: undefined
+								}
+								onVelgDag={(d) => this.onVelgDag(d, true)}
+								onLukk={() => this.lukkKalender(true)}
+							/>
+						</KalenderPortal>
 					)}
 				</div>
 			</DomEventContainer>
