@@ -2,8 +2,12 @@
 @import '_mixins.less';
 @import '_dayPicker-overrides.less';
 
+@z-fullskjerm: 100;
+
 .nav-datovelger {
 	@input-width: 11rem;
+	position: relative;
+	display: inline-block;
 	&__inputContainer {
 		display: inline-block;
 		width: @input-width;
@@ -76,6 +80,31 @@
 				right: 0;
 			}
 		}
+	}
+	&__kalenderPortal {
+		position: absolute;
+		top: calc(100% + 2px);
+		left: 0;
+		&--fullskjerm {
+			z-index: @z-fullskjerm;
+			position: fixed;
+			display: flex;
+			align-items: center;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(255, 255, 255, 0.8);
+			.nav-datovelger__kalenderPortal__content {
+				margin: 0 auto;
+				min-height: 18.5rem;
+			}
+		}
+	}
+	&__kalender {
+		border: 1px solid #b7b1a9;
+		border-radius: 4px;
+		overflow: hidden;
 	}
 	.DayPicker();
 }
