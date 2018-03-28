@@ -1,8 +1,8 @@
 .idea/
 npm-debug.log
+yarn-error.log
 node_modules/
-/build
-/dist
+dist/
 .gitattributes
 .iml
 .DS_Store

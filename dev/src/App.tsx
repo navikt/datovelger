@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Datovelger from '../../src/datovelger';
 
 import './styles.less';
+import DatovelgerWrapper from './DatovelgerWrapper';
 
 export interface State {
 	dato: Date | undefined;
@@ -21,9 +21,11 @@ export class DatovelgerApp extends React.Component<Props, State> {
 	}
 	render() {
 		return (
-			<div>
-				<h1>Datovelger</h1>
-				<Datovelger id="datovelger" onVelgDag={this.onVelgDag} />
+			<div className="App">
+				<div className="App__content">
+					<h1>Datovelger</h1>
+					<DatovelgerWrapper />
+				</div>
 			</div>
 		);
 	}
