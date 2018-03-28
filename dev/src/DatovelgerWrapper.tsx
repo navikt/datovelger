@@ -1,9 +1,12 @@
 import * as React from 'react';
 import * as moment from 'moment';
 
-import Datoinput from '../../src/datovelger';
+import Datovelger from '../../src/datovelger';
 
-import { DatovelgerAvgrensninger } from '../../src/datovelger/types';
+import {
+	DatovelgerAvgrensninger,
+	KalenderPlassering
+} from '../../src/datovelger/types';
 import { validerDato } from '../../src/datovelger/utils/datovalidering';
 
 export interface Props {}
@@ -13,6 +16,7 @@ export interface State {
 	inputValue: string;
 	error: string | undefined;
 	avgrensninger: DatovelgerAvgrensninger;
+	plassering: KalenderPlassering;
 }
 
 class DatovelgerWrapper extends React.Component<Props, State> {
@@ -25,6 +29,7 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 			dato: undefined,
 			inputValue: '',
 			error: '',
+			plassering: 'under',
 			avgrensninger: {
 				minDato: moment()
 					.add(-5, 'days')
@@ -73,10 +78,10 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 		return (
 			<form action="#" onSubmit={this.handleSubmit}>
 				<div className="datovelger">
-					<div className="blokk-s">
+					<div className="blokk-xxs">
 						<label htmlFor="datoinput">Velg dato</label>
 					</div>
-					<Datoinput
+					<Datovelger
 						id="datoinput"
 						valgtDato={this.state.dato}
 						onVelgDag={(d: Date) => this.oppdaterDato(d)}
@@ -84,14 +89,41 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 						inputProps={{
 							placeholder: 'dd.mm.åååå'
 						}}
+						kalenderplassering={this.state.plassering}
 						onUgyldigDagValgt={(d, validering) => {
 							this.oppdaterDato(d);
 						}}
 					/>
+					<fieldset>
+						<legend>Props</legend>
+						<label htmlFor="plassering-under">
+							<input
+								id="plassering-under"
+								type="radio"
+								name="plassering"
+								value="under"
+								checked={this.state.plassering === 'under'}
+								onClick={() => this.setState({ plassering: 'under' })}
+							/>
+							Under
+						</label>
+						<label htmlFor="plassering-fullskjerm">
+							<input
+								id="plassering-fullskjerm"
+								type="radio"
+								name="plassering"
+								value="fullskjerm"
+								checked={this.state.plassering === 'fullskjerm'}
+								onClick={() => this.setState({ plassering: 'fullskjerm' })}
+							/>
+							Fullskjerm
+						</label>
+					</fieldset>
 					<hr />
 				</div>
 				<p>Valgt dato: {valgtDato}</p>
 				<p>Validering: {this.state.error}</p>
+				<hr />
 			</form>
 		);
 	}
