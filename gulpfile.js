@@ -13,6 +13,8 @@ const path = require('path');
 const chalk = require('chalk');
 const merge = require('merge2');
 const less = require('gulp-less');
+const watch = require('gulp-watch');
+const batch = require('gulp-batch');
 
 const src = './src/**/*.ts*';
 const dest = 'dist';
@@ -141,6 +143,29 @@ function buildTs() {
 	return merge([tsPipe, dtsPipe]);
 }
 
+function buildAndWatchLess() {
+	watch(
+		'./src/**/*.less',
+		batch(function(events, done) {
+			gulp.start('buildLess', done);
+		})
+	);
+}
+
+function buildAndWatchTs() {
+	watch(
+		['./src/**/*.tsx', './src/**/*.ts'],
+		batch(function(events, done) {
+			gulp.start('buildTs', done);
+		})
+	);
+}
+
+gulp.task('buildAndWatchLess', buildAndWatchLess);
+gulp.task('buildAndWatchTs', buildAndWatchTs);
 gulp.task('buildLess', buildLess);
 gulp.task('buildTs', buildTs);
+gulp.task('watch', buildAndWatchTs);
+// gulp.task('dev', ['buildAndWatchLess', 'buildAndWatchTs']);
+
 gulp.task('default', ['build']);
