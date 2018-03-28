@@ -1,7 +1,13 @@
 import * as React from 'react';
 
 const KalenderIkon = (props: {}) => (
-	<svg height={16} width={16} viewBox="0 0 18 18" {...props} role="presentation" aria-hidden="true">
+	<svg
+		height={16}
+		width={16}
+		viewBox="0 0 18 18"
+		{...props}
+		role="presentation"
+		aria-hidden="true">
 		<title>Kalender</title>
 		<g stroke="#0067C5" fill="none" fillRule="evenodd">
 			<path d="M4 2.667H1.333v14h15.334v-14H14" />

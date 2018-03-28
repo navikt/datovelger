@@ -8,6 +8,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@types/react": "^16.0.41",
+		"@types/react-dom": "^16.0.4",
 		"css-loader": "^0.28.11",
 		"less-loader": "^4.1.0",
 		"react": "^16.2.0",
@@ -15,21 +16,32 @@
 		"ts-loader": "^4.1.0"
 	},
 	"devDependencies": {
+		"babel-loader": "^7.1.4",
 		"babel-polyfill": "^6.26.0",
+		"case-sensitive-paths-webpack-plugin": "^2.1.2",
 		"clean-webpack-plugin": "^0.1.19",
-		"datovelger": "../dist",
+		"datovelger": "../src",
+		"html-webpack-plugin": "^3.1.0",
+		"interpolate-html-plugin": "^2.0.0",
 		"mini-css-extract-plugin": "^0.2.0",
 		"nav-frontend-chevron-style": "^0.3.4",
 		"nav-frontend-js-utils": "^1.0.3",
 		"npm-run-all": "^4.1.2",
 		"optimize-css-assets-webpack-plugin": "^4.0.0",
+		"react-day-picker":
+			"git+ssh://git@github.com:frodehansen2/react-day-picker.git",
+		"react-dev-utils": "^5.0.0",
 		"rimraf": "^2.6.2",
+		"style-loader": "^0.20.3",
 		"webpack": "^4.3.0",
-		"webpack-cli": "^2.0.13"
+		"webpack-cli": "^2.0.13",
+		"webpack-dev-server": "^3.1.1"
 	},
 	"scripts": {
-		"clear:dist": "rimraf dist",
+		"clear": "rimraf dist",
 		"dev": "webpack --config=./config/webpack.config.js",
-		"build": "npm-run-all clear:dist dev"
-	}
+		"build": "npm-run-all clear dev",
+		"start": "node ./scripts/start.js"
+	},
+	"devServer": {}
 }

@@ -3,10 +3,20 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = {
 	mode: 'development',
-	entry: ['babel-polyfill', './src/index.tsx'],
+	entry: [
+		'babel-polyfill',
+		require.resolve('react-dev-utils/webpackHotDevClient'),
+		'./src/index.tsx'
+	],
+	output: {
+		filename: 'index.bundle.js',
+		path: path.resolve(__dirname, '../dist')
+	},
 	module: {
 		rules: [
 			{
@@ -22,7 +32,9 @@ module.exports = {
 			{
 				test: /\.less$/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					{
+						loader: 'style-loader'
+					},
 					{
 						loader: 'css-loader'
 					},
@@ -42,11 +54,13 @@ module.exports = {
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.json', '.jsx']
 	},
-	output: {
-		filename: 'index.js',
-		path: path.resolve(__dirname, '../dist')
-	},
 	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'Whoo',
+			template: './public/index.html'
+		}),
+		new webpack.NamedModulesPlugin(),
+		new CaseSensitivePathsPlugin(),
 		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 		new MiniCssExtractPlugin({
 			filename: '[name].css',

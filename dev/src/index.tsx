@@ -1,16 +1,7 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import DatovelgerApp from './App';
 
-import Datovelger from 'datovelger';
-
-export interface Props {}
-
-export class DatovelgerTestApp extends React.Component<Props, {}> {
-	render() {
-		return (
-			<div>
-				<Datovelger id="" onVelgDag={() => null} />
-			</div>
-		);
-	}
-}
-export default DatovelgerTestApp;
+ReactDOM.render(<DatovelgerApp />, document.getElementById(
+	'root'
+) as HTMLElement);
