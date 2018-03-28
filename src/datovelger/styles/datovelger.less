@@ -15,12 +15,11 @@
 	}
 	&__kalenderknapp {
 		.knappbase-mixin(inherit);
-		padding: ~'calc(.5em - 2px) calc(2.5em - 2px) calc(.625em - 2px) calc(2.5em - 2px)';
+		padding: 0.1rem 0.5rem;
 		@borderRadius: 0 4px 4px 0;
 		background-color: @white;
 		border: 1px solid #0067c5;
 		border-radius: @borderRadius;
-		padding: 9px 9px 9px 9px;
 		margin: 0;
 		height: @inputHeight;
 		z-index: 2;
@@ -56,10 +55,9 @@
 		top: 0.4rem;
 		&__knapp {
 			.knappbase-mixin(inherit);
+			padding: 0.5rem 0.3rem;
 			position: absolute;
 			border: none;
-			padding-left: 0.3rem;
-			padding-right: 0.3rem;
 			margin-top: 1px;
 			&[disabled] {
 				cursor: default;
