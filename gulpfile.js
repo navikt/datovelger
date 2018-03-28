@@ -75,9 +75,9 @@ function renameUsingMapper(mapper) {
 }
 function buildLess() {
 	return gulp
-		.src('./src/styles/datovelger.less')
+		.src('./src/datovelger/styles/datovelger.less')
 		.pipe(less({}))
-		.pipe(gulp.dest('./dist/styles'));
+		.pipe(gulp.dest('./dist/datovelger/styles'));
 }
 function parseTsAndAppendDocInfo(contents, file) {
 	const tsPath = file.path
