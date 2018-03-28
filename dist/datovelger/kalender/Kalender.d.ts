@@ -1,0 +1,32 @@
+/// <reference types="react" />
+import * as React from 'react';
+import { DayPickerProps, Modifier } from 'react-day-picker';
+import { LocaleUtils } from 'react-day-picker/types/utils';
+export interface Props {
+    måned: Date;
+    dato?: Date;
+    locale: string;
+    min?: Date;
+    maks?: Date;
+    localeUtils?: LocaleUtils;
+    onVelgDag: (dato: Date) => void;
+    onLukk: () => void;
+    utilgjengeligeDager?: Modifier[];
+    visUkenumre?: boolean;
+    dayPickerProps?: DayPickerProps;
+}
+export interface State {
+    måned: Date;
+}
+export declare class Kalender extends React.Component<Props, State> {
+    kalender: HTMLDivElement | null;
+    nesteFokusertDato: Date | undefined;
+    setFokusPåInput: boolean | undefined;
+    constructor(props: Props);
+    componentDidUpdate(prevProps: Props, prevState: State): void;
+    settFokus(): void;
+    onByttMåned(måned: Date): void;
+    navigerMåneder(evt: React.KeyboardEvent<any>, antall: number): void;
+    render(): JSX.Element;
+}
+export default Kalender;
