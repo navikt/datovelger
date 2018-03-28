@@ -195,7 +195,7 @@ class Datovelger extends React.Component<Props, State> {
 								avgrensninger={avgrensninger}
 							/>
 						)}
-					<div className="nav-datovelger__inputContainer blokk-s">
+					<div className="nav-datovelger__inputContainer">
 						<Datoinput
 							{...inputProps}
 							inputProps={{
@@ -214,22 +214,24 @@ class Datovelger extends React.Component<Props, State> {
 						/>
 					</div>
 					{erÅpen && (
-						<Kalender
-							ref={(c) => (this.kalender = c)}
-							{...kalenderProps}
-							locale={locale}
-							dato={valgtDato}
-							måned={valgtDato || new Date()}
-							min={avgrensninger && avgrensninger.minDato}
-							maks={avgrensninger && avgrensninger.maksDato}
-							utilgjengeligeDager={
-								avgrensninger
-									? getUtilgjengeligeDager(avgrensninger)
-									: undefined
-							}
-							onVelgDag={(d) => this.onVelgDag(d, true)}
-							onLukk={() => this.lukkKalender(true)}
-						/>
+						<div className="nav-datovelger__kalenderContainer">
+							<Kalender
+								ref={(c) => (this.kalender = c)}
+								{...kalenderProps}
+								locale={locale}
+								dato={valgtDato}
+								måned={valgtDato || new Date()}
+								min={avgrensninger && avgrensninger.minDato}
+								maks={avgrensninger && avgrensninger.maksDato}
+								utilgjengeligeDager={
+									avgrensninger
+										? getUtilgjengeligeDager(avgrensninger)
+										: undefined
+								}
+								onVelgDag={(d) => this.onVelgDag(d, true)}
+								onLukk={() => this.lukkKalender(true)}
+							/>
+						</div>
 					)}
 				</div>
 			</DomEventContainer>

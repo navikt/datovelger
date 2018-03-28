@@ -4,6 +4,8 @@
 
 .nav-datovelger {
 	@input-width: 11rem;
+	position: relative;
+	display: inline-block;
 	&__inputContainer {
 		display: inline-block;
 		width: @input-width;
@@ -76,6 +78,14 @@
 				right: 0;
 			}
 		}
+	}
+	&__kalenderContainer {
+		position: absolute;
+		top: 100%;
+		right: 0;
+	}
+	&__kalender {
+		border: 1px solid #b7b1a9;
 	}
 	.DayPicker();
 }
