@@ -17,6 +17,7 @@ export interface DatovelgerAvgrensninger {
 export interface FraseDato {
     date: string;
 }
+export declare type KalenderPlassering = 'under' | 'fullskjerm';
 export interface DatovelgerPhrases {
     calendarLabel: string;
     closeDatePicker: string;

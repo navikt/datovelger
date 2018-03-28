@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import * as React from 'react';
-import { DatovelgerAvgrensninger } from './types';
+import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import { DatoValidering } from './utils/datovalidering';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Datoinput from './Datoinput';
@@ -32,6 +32,8 @@ export interface Props {
     visUkenumre?: boolean;
     /** Språk - default no */
     locale?: 'nb';
+    /** Hvor kalender skal vises. Default under */
+    kalenderplassering?: KalenderPlassering;
 }
 declare class Datovelger extends React.Component<Props, State> {
     instansId: string;

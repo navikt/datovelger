@@ -38,6 +38,7 @@ var DomEventContainer_1 = require("./common/DomEventContainer");
 var Datoinput_1 = require("./Datoinput");
 var AvgrensningerInfo_1 = require("./elementer/AvgrensningerInfo");
 var Kalender_1 = require("./kalender/Kalender");
+var KalenderPortal_1 = require("./elementer/KalenderPortal");
 var getUtilgjengeligeDager = function (avgrensninger) {
     var ugyldigeDager = [];
     if (avgrensninger.ugyldigeTidsperioder) {
@@ -133,13 +134,15 @@ var Datovelger = /** @class */function (_super) {
             avgrensninger = _a.avgrensninger,
             _b = _a.locale,
             locale = _b === void 0 ? 'nb' : _b,
-            kalenderProps = __rest(_a, ["valgtDato", "id", "inputProps", "avgrensninger", "locale"]);
-        var _c = this.state,
-            erÅpen = _c.erÅpen,
-            datovalidering = _c.datovalidering;
+            _c = _a.kalenderplassering,
+            kalenderplassering = _c === void 0 ? 'under' : _c,
+            kalenderProps = __rest(_a, ["valgtDato", "id", "inputProps", "avgrensninger", "locale", "kalenderplassering"]);
+        var _d = this.state,
+            erÅpen = _d.erÅpen,
+            datovalidering = _d.datovalidering;
         var avgrensningerInfoId = avgrensninger ? this.instansId + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.props.valgtDato !== undefined;
-        return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer blokk-s" }, React.createElement(Datoinput_1.default, __assign({}, inputProps, { inputProps: {
+        return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, __assign({}, inputProps, { inputProps: {
                 id: id,
                 'aria-invalid': invalidDate,
                 'aria-describedby': avgrensningerInfoId
@@ -147,13 +150,13 @@ var Datovelger = /** @class */function (_super) {
                 return _this.input = c;
             }, date: valgtDato, onDateChange: this.onDatoDateChange })), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.kalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(Kalender_1.default, __assign({ ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalenderplassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
                 return _this.kalender = c;
             } }, kalenderProps, { locale: locale, dato: valgtDato, "m\u00E5ned": valgtDato || new Date(), min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
                 return _this.onVelgDag(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);
-            } }))));
+            } })))));
     };
     return Datovelger;
 }(React.Component);
