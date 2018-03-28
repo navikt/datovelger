@@ -168,4 +168,4 @@ gulp.task('buildTs', buildTs);
 gulp.task('watch', buildAndWatchTs);
 // gulp.task('dev', ['buildAndWatchLess', 'buildAndWatchTs']);
 
-gulp.task('default', ['build']);
+gulp.task('default', ['buildTs', 'buildLess']);
