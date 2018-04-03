@@ -5024,7 +5024,7 @@ rc@^1.1.7:
 
 "react-day-picker@git+ssh://git@github.com:frodehansen2/react-day-picker.git":
   version "7.1.4"
-  resolved "git+ssh://git@github.com:frodehansen2/react-day-picker.git#1e3903ccf90ca09f895340f2a15417ff6fbb9b0e"
+  resolved "git+ssh://git@github.com:frodehansen2/react-day-picker.git#6a6a3c76f567e172fa2437f5498337c48733b313"
   dependencies:
     prop-types "^15.6.1"
 
@@ -6534,8 +6534,8 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
 
 whatwg-fetch@>=0.10.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 whet.extend@~0.9.9:
   version "0.9.9"

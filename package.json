@@ -1,19 +1,22 @@
 {
 	"name": "datovelger",
-	"version": "0.9.24",
+	"version": "0.9.25",
 	"description": "Enkel datovelger",
 	"main": "dist/datovelger/index.js",
 	"types": "dist/datovelger/index.d.ts",
 	"license": "MIT",
-	"files": ["/src", "/dist"],
+	"files": [
+		"/src",
+		"/dist"
+	],
 	"author": "NAV developer",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/navikt/datovelger.git"
 	},
 	"dependencies": {
-		"classnames": "^2.2.5",
 		"babel-preset-env": "^1.6.1",
+		"classnames": "^2.2.5",
 		"focus-trap": "^2.4.3",
 		"focus-trap-react": "^3.1.2",
 		"gulp-babel": "^7.0.1",
@@ -31,8 +34,7 @@
 		"nav-frontend-core": "^4.0.5",
 		"nav-frontend-js-utils": "^1.0.3",
 		"nav-frontend-typografi": "^2.0.2",
-		"react-day-picker":
-			"git+ssh://git@github.com:frodehansen2/react-day-picker.git",
+		"react-day-picker": "git+ssh://git@github.com:frodehansen2/react-day-picker.git",
 		"react-dom": "^16.2.0"
 	},
 	"devDependencies": {
@@ -50,8 +52,8 @@
 		"gulp-plumber": "^1.2.0",
 		"gulp-typescript": "^4.0.1",
 		"merge2": "^1.2.1",
-		"nav-frontend-knapper-style": "^0.3.7",
 		"nav-frontend-chevron-style": "^0.3.4",
+		"nav-frontend-knapper-style": "^0.3.7",
 		"nav-frontend-skjema-style": "^0.3.16",
 		"nav-frontend-typografi-style": "^1.0.8",
 		"node-less-chokidar": "^0.1.2",

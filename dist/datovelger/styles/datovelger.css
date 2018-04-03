@@ -655,6 +655,9 @@ body .blokk-xl {
   position: relative;
   display: inline-block;
 }
+.nav-datovelger * {
+  box-sizing: border-box;
+}
 .nav-datovelger__inputContainer {
   display: inline-block;
   width: 11rem;
