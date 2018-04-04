@@ -118,13 +118,15 @@ class Datovelger extends React.Component<Props, State> {
 			erÅpen: false,
 			statusMessage: ''
 		};
-
-		console.log(this.state);
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState({
-			datovalidering: validerDato(nextProps.dato, nextProps.avgrensninger || {})
+			datovalidering: validerDato(
+				nextProps.dato,
+				nextProps.avgrensninger || {}
+			),
+			måned: getDefaultMåned(nextProps)
 		});
 	}
 

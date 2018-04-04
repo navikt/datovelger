@@ -84,12 +84,12 @@ var Datovelger = /** @class */function (_super) {
             erÅpen: false,
             statusMessage: ''
         };
-        console.log(_this.state);
         return _this;
     }
     Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
         this.setState({
-            datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {})
+            datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {}),
+            måned: getDefaultMåned(nextProps)
         });
     };
     Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
