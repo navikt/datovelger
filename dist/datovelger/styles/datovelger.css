@@ -957,6 +957,7 @@ body .blokk-xl {
   top: calc(100% + 2px);
   left: 0;
   line-height: 1.3em;
+  z-index: 10;
 }
 .nav-datovelger__kalenderPortal--fullskjerm {
   z-index: 100;

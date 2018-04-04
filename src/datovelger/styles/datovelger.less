@@ -4,6 +4,7 @@
 @import '_dayPicker-overrides.less';
 
 @z-fullskjerm: 100;
+@z-popup: 10;
 
 .nav-datovelger {
 	* {
@@ -92,6 +93,7 @@
 		top: ~'calc(100% + 2px)';
 		left: 0;
 		line-height: 1.3em;
+		z-index: @z-popup;
 		&--fullskjerm {
 			z-index: @z-fullskjerm;
 			position: fixed;
