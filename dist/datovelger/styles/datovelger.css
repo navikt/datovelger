@@ -861,7 +861,6 @@ body .blokk-xl {
 .nav-datovelger__kalenderknapp > svg {
   width: 16px;
   height: 16px;
-  transform: translateY(2px);
 }
 .nav-datovelger__kalenderknapp:active,
 .nav-datovelger__kalenderknapp:hover,
