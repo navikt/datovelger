@@ -59,10 +59,10 @@
 		top: 0.4rem;
 		&__knapp {
 			.knappbase-mixin(inherit);
-			padding: 0.5rem 0.3rem;
+			padding: 0.5rem 0.5rem;
 			position: absolute;
 			border: none;
-			margin-top: 1px;
+			margin-top: 3px;
 			&[disabled] {
 				cursor: default;
 				opacity: 0;
@@ -82,12 +82,16 @@
 			&--neste {
 				right: 0;
 			}
+			svg {
+				display: block;
+			}
 		}
 	}
 	&__kalenderPortal {
 		position: absolute;
 		top: ~'calc(100% + 2px)';
 		left: 0;
+		line-height: 1.3em;
 		&--fullskjerm {
 			z-index: @z-fullskjerm;
 			position: fixed;
@@ -100,7 +104,7 @@
 			background-color: rgba(255, 255, 255, 0.8);
 			.nav-datovelger__kalenderPortal__content {
 				margin: 0 auto;
-				min-height: 18.5rem;
+				min-height: 20rem;
 			}
 		}
 	}

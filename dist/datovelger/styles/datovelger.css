@@ -920,10 +920,10 @@ body .blokk-xl {
   text-decoration: none;
   background-color: transparent;
   padding: calc(.5em - 2px) calc(2.5em - 2px) calc(.625em - 2px) calc(2.5em - 2px);
-  padding: 0.5rem 0.3rem;
+  padding: 0.5rem 0.5rem;
   position: absolute;
   border: none;
-  margin-top: 1px;
+  margin-top: 3px;
 }
 .nav-datovelger__navbar__knapp:focus {
   outline: none;
@@ -949,10 +949,14 @@ body .blokk-xl {
 .nav-datovelger__navbar__knapp--neste {
   right: 0;
 }
+.nav-datovelger__navbar__knapp svg {
+  display: block;
+}
 .nav-datovelger__kalenderPortal {
   position: absolute;
   top: calc(100% + 2px);
   left: 0;
+  line-height: 1.3em;
 }
 .nav-datovelger__kalenderPortal--fullskjerm {
   z-index: 100;
@@ -967,7 +971,7 @@ body .blokk-xl {
 }
 .nav-datovelger__kalenderPortal--fullskjerm .nav-datovelger__kalenderPortal__content {
   margin: 0 auto;
-  min-height: 18.5rem;
+  min-height: 20rem;
 }
 .nav-datovelger__kalender {
   border: 1px solid #b7b1a9;

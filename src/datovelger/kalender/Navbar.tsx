@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import * as classnames from 'classnames';
-import Chevron from 'nav-frontend-chevron';
+import Chevron from '../elementer/ChevronSvg';
 
 export interface Props {
 	måned: Date;
@@ -40,7 +40,7 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 			aria-label={label}
 			aria-disabled={disabled}
 			role="button">
-			<Chevron type={retning === 'forrige' ? 'venstre' : 'høyre'} />
+			<Chevron retning={retning === 'forrige' ? 'venstre' : 'høyre'} />
 		</button>
 	);
 };

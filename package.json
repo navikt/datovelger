@@ -1,14 +1,11 @@
 {
 	"name": "datovelger",
-	"version": "0.9.26",
+	"version": "0.9.27",
 	"description": "Enkel datovelger",
 	"main": "dist/datovelger/index.js",
 	"types": "dist/datovelger/index.d.ts",
 	"license": "MIT",
-	"files": [
-		"/src",
-		"/dist"
-	],
+	"files": ["/src", "/dist"],
 	"author": "NAV developer",
 	"repository": {
 		"type": "git",
@@ -34,7 +31,8 @@
 		"nav-frontend-core": "^4.0.5",
 		"nav-frontend-js-utils": "^1.0.3",
 		"nav-frontend-typografi": "^2.0.2",
-		"react-day-picker": "git+ssh://git@github.com:frodehansen2/react-day-picker.git",
+		"react-day-picker":
+			"git+ssh://git@github.com:frodehansen2/react-day-picker.git",
 		"react-dom": "^16.2.0"
 	},
 	"devDependencies": {

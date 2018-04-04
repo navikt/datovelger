@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var moment = require("moment");
 var classnames = require("classnames");
-var nav_frontend_chevron_1 = require("nav-frontend-chevron");
+var ChevronSvg_1 = require("../elementer/ChevronSvg");
 var NavbarKnapp = function (_a) {
     var måned = _a.måned,
         retning = _a.retning,
@@ -15,7 +15,7 @@ var NavbarKnapp = function (_a) {
             'nav-datovelger__navbar__knapp--disabled': disabled
         }), type: "button", onClick: function (e) {
             return disabled ? null : onClick(e, måned);
-        }, "aria-label": label, "aria-disabled": disabled, role: "button" }, React.createElement(nav_frontend_chevron_1.default, { type: retning === 'forrige' ? 'venstre' : 'høyre' }));
+        }, "aria-label": label, "aria-disabled": disabled, role: "button" }, React.createElement(ChevronSvg_1.default, { retning: retning === 'forrige' ? 'venstre' : 'høyre' }));
 };
 var Navbar = function (_a) {
     var måned = _a.måned,
