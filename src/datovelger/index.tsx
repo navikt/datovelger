@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
+import * as moment from 'moment';
 import { guid } from 'nav-frontend-js-utils';
 import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import { formatDateInputValue, normaliserDato } from './utils';
@@ -78,6 +79,22 @@ const getUtilgjengeligeDager = (
 		...[helgedager as DaysOfWeekModifier]
 	];
 };
+
+const getDefaultMåned = (props: Props): Date => {
+	if (props.valgtDato) {
+		return props.valgtDato;
+	}
+	const idag = normaliserDato(new Date()).toDate();
+	if (props.avgrensninger) {
+		if (props.avgrensninger.minDato) {
+			return moment(props.avgrensninger.minDato).isAfter(idag)
+				? props.avgrensninger.minDato
+				: idag;
+		}
+	}
+	return idag;
+};
+
 class Datovelger extends React.Component<Props, State> {
 	instansId: string;
 	input: Datoinput | null;
@@ -96,13 +113,15 @@ class Datovelger extends React.Component<Props, State> {
 		this.lukkKalender = this.lukkKalender.bind(this);
 
 		this.state = {
-			måned: props.valgtDato || new Date(),
+			måned: getDefaultMåned(props),
 			datovalidering: props.valgtDato
 				? validerDato(props.valgtDato, props.avgrensninger || {})
 				: 'datoErIkkeDefinert',
 			erÅpen: false,
 			statusMessage: ''
 		};
+
+		console.log(this.state);
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
@@ -224,7 +243,7 @@ class Datovelger extends React.Component<Props, State> {
 								{...kalenderProps}
 								locale={locale}
 								dato={valgtDato}
-								måned={valgtDato || new Date()}
+								måned={this.state.måned}
 								min={avgrensninger && avgrensninger.minDato}
 								maks={avgrensninger && avgrensninger.maksDato}
 								utilgjengeligeDager={

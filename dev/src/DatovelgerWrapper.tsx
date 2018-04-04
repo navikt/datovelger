@@ -32,7 +32,7 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 			plassering: 'under',
 			avgrensninger: {
 				minDato: moment()
-					.add(-5, 'days')
+					.add(10, 'days')
 					.toDate(),
 				maksDato: moment()
 					.add(24, 'months')
