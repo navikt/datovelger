@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { normaliserDato } from './';
-import { DatovelgerAvgrensninger, DatovelgerTidsperiode } from '../types';
+import { Avgrensninger, Tidsperiode } from '../types';
 
 export type DatoValidering =
 	| 'datoErIkkeDefinert'
@@ -13,12 +13,12 @@ export type DatoValidering =
 
 export const erDatoGyldig = (
 	dato: Date | string | null | undefined,
-	avgrensninger: DatovelgerAvgrensninger
+	avgrensninger: Avgrensninger
 ) => validerDato(dato, avgrensninger) !== undefined;
 
 export const validerDato = (
 	dato: Date | string | null | undefined,
-	avgrensninger: DatovelgerAvgrensninger
+	avgrensninger: Avgrensninger
 ): DatoValidering => {
 	if (dato === 'string' && dato.length < 8) {
 		dato = undefined;
@@ -71,7 +71,7 @@ export const erDatoUkedag = (dato: Date) => {
 
 export const erDatoITidsperioder = (
 	dato: Date,
-	tidsperioder?: DatovelgerTidsperiode[]
+	tidsperioder?: Tidsperiode[]
 ) => {
 	if (!tidsperioder || tidsperioder.length === 0) {
 		return false;
@@ -90,7 +90,5 @@ export const erDatoITidsperioder = (
 	return gyldig;
 };
 
-export const erDagTilgjengelig = (
-	dato: Date,
-	avgrensninger?: DatovelgerAvgrensninger
-) => !avgrensninger || validerDato(dato, avgrensninger);
+export const erDagTilgjengelig = (dato: Date, avgrensninger?: Avgrensninger) =>
+	!avgrensninger || validerDato(dato, avgrensninger);

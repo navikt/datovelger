@@ -1,9 +1,9 @@
 /// <reference types="react" />
 import * as React from 'react';
-import { DatovelgerAvgrensninger } from '../types';
+import { Avgrensninger } from '../types';
 export interface Props {
     id: string;
-    avgrensninger: DatovelgerAvgrensninger;
+    avgrensninger: Avgrensninger;
 }
 declare const AvgrensningerInfo: React.StatelessComponent<Props>;
 export default AvgrensningerInfo;

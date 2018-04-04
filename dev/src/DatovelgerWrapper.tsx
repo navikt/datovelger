@@ -3,10 +3,7 @@ import * as moment from 'moment';
 
 import Datovelger from '../../src/datovelger';
 
-import {
-	DatovelgerAvgrensninger,
-	KalenderPlassering
-} from '../../src/datovelger/types';
+import { KalenderPlassering, Avgrensninger } from '../../src/datovelger/types';
 import { validerDato } from '../../src/datovelger/utils/datovalidering';
 
 export interface Props {}
@@ -15,7 +12,7 @@ export interface State {
 	dato: Date | undefined;
 	inputValue: string;
 	error: string | undefined;
-	avgrensninger: DatovelgerAvgrensninger;
+	avgrensninger: Avgrensninger;
 	plassering: KalenderPlassering;
 }
 
@@ -83,16 +80,13 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 					</div>
 					<Datovelger
 						id="datoinput"
-						valgtDato={this.state.dato}
-						onVelgDag={(d: Date) => this.oppdaterDato(d)}
+						dato={this.state.dato}
+						onChange={(d: Date) => this.oppdaterDato(d)}
 						avgrensninger={this.state.avgrensninger}
 						inputProps={{
 							placeholder: 'dd.mm.åååå'
 						}}
 						kalenderplassering={this.state.plassering}
-						onUgyldigDagValgt={(d, validering) => {
-							this.oppdaterDato(d);
-						}}
 					/>
 					<fieldset>
 						<legend>Props</legend>
@@ -103,7 +97,7 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 								name="plassering"
 								value="under"
 								checked={this.state.plassering === 'under'}
-								onClick={() => this.setState({ plassering: 'under' })}
+								onChange={() => this.setState({ plassering: 'under' })}
 							/>
 							Under
 						</label>
@@ -114,7 +108,7 @@ class DatovelgerWrapper extends React.Component<Props, State> {
 								name="plassering"
 								value="fullskjerm"
 								checked={this.state.plassering === 'fullskjerm'}
-								onClick={() => this.setState({ plassering: 'fullskjerm' })}
+								onChange={() => this.setState({ plassering: 'fullskjerm' })}
 							/>
 							Fullskjerm
 						</label>

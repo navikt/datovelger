@@ -30,6 +30,7 @@ var __rest = this && this.__rest || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var classnames = require("classnames");
+var moment = require("moment");
 var nav_frontend_js_utils_1 = require("nav-frontend-js-utils");
 var utils_1 = require("./utils");
 var datovalidering_1 = require("./utils/datovalidering");
@@ -56,6 +57,18 @@ var getUtilgjengeligeDager = function (avgrensninger) {
     };
     return ugyldigeDager.concat(maksDato ? [{ after: maksDato.toDate() }] : [], minDato ? [{ before: minDato.toDate() }] : [], [helgedager]);
 };
+var getDefaultMåned = function (props) {
+    if (props.dato) {
+        return props.dato;
+    }
+    var idag = utils_1.normaliserDato(new Date()).toDate();
+    if (props.avgrensninger) {
+        if (props.avgrensninger.minDato) {
+            return moment(props.avgrensninger.minDato).isAfter(idag) ? props.avgrensninger.minDato : idag;
+        }
+    }
+    return idag;
+};
 var Datovelger = /** @class */function (_super) {
     __extends(Datovelger, _super);
     function Datovelger(props) {
@@ -66,48 +79,39 @@ var Datovelger = /** @class */function (_super) {
         _this.toggleKalender = _this.toggleKalender.bind(_this);
         _this.lukkKalender = _this.lukkKalender.bind(_this);
         _this.state = {
-            måned: props.valgtDato || new Date(),
-            datovalidering: props.valgtDato ? datovalidering_1.validerDato(props.valgtDato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
+            måned: getDefaultMåned(props),
+            datovalidering: props.dato ? datovalidering_1.validerDato(props.dato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
             erÅpen: false,
             statusMessage: ''
         };
+        console.log(_this.state);
         return _this;
     }
     Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
         this.setState({
-            datovalidering: datovalidering_1.validerDato(nextProps.valgtDato, nextProps.avgrensninger || {})
+            datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {})
         });
     };
     Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
         var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
-        if (datovalidering === 'gyldig') {
-            this.setState({
-                statusMessage: "Valgt dag: " + utils_1.formatDateInputValue(dato),
-                erÅpen: false,
-                datovalidering: datovalidering
-            });
-            this.props.onVelgDag(dato);
-        } else if (this.props.onUgyldigDagValgt) {
-            this.props.onUgyldigDagValgt(dato, datovalidering);
-            this.setState({ datovalidering: datovalidering });
-        }
+        this.setState({
+            statusMessage: "Valgt dag: " + utils_1.formatDateInputValue(dato),
+            erÅpen: false,
+            datovalidering: datovalidering
+        });
+        this.props.onChange(dato);
         if (lukkKalender) {
             this.lukkKalender(true);
         }
     };
     Datovelger.prototype.onDatoDateChange = function (dato) {
         var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
-        if (datovalidering === 'gyldig') {
-            this.setState({
-                statusMessage: "Valgt dag: " + utils_1.formatDateInputValue(dato),
-                erÅpen: false,
-                datovalidering: datovalidering
-            });
-            this.props.onVelgDag(dato);
-        } else if (this.props.onUgyldigDagValgt) {
-            this.props.onUgyldigDagValgt(dato, datovalidering);
-            this.setState({ datovalidering: datovalidering });
-        }
+        this.setState({
+            statusMessage: "Valgt dag: " + utils_1.formatDateInputValue(dato),
+            erÅpen: false,
+            datovalidering: datovalidering
+        });
+        this.props.onChange(dato);
     };
     Datovelger.prototype.toggleKalender = function () {
         this.setFokusPåKalenderKnapp = true;
@@ -128,7 +132,7 @@ var Datovelger = /** @class */function (_super) {
     Datovelger.prototype.render = function () {
         var _this = this;
         var _a = this.props,
-            valgtDato = _a.valgtDato,
+            dato = _a.dato,
             id = _a.id,
             inputProps = _a.inputProps,
             avgrensninger = _a.avgrensninger,
@@ -136,23 +140,23 @@ var Datovelger = /** @class */function (_super) {
             locale = _b === void 0 ? 'nb' : _b,
             _c = _a.kalenderplassering,
             kalenderplassering = _c === void 0 ? 'under' : _c,
-            kalenderProps = __rest(_a, ["valgtDato", "id", "inputProps", "avgrensninger", "locale", "kalenderplassering"]);
+            kalenderProps = __rest(_a, ["dato", "id", "inputProps", "avgrensninger", "locale", "kalenderplassering"]);
         var _d = this.state,
             erÅpen = _d.erÅpen,
             datovalidering = _d.datovalidering;
         var avgrensningerInfoId = avgrensninger ? this.instansId + "_srDesc" : undefined;
-        var invalidDate = datovalidering !== 'gyldig' && this.props.valgtDato !== undefined;
+        var invalidDate = datovalidering !== 'gyldig' && this.props.dato !== undefined;
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, __assign({}, inputProps, { inputProps: {
                 id: id,
                 'aria-invalid': invalidDate,
                 'aria-describedby': avgrensningerInfoId
             }, ref: function (c) {
                 return _this.input = c;
-            }, date: valgtDato, onDateChange: this.onDatoDateChange })), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
+            }, date: dato, onDateChange: this.onDatoDateChange })), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.kalenderKnapp = c;
             }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalenderplassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
                 return _this.kalender = c;
-            } }, kalenderProps, { locale: locale, dato: valgtDato, "m\u00E5ned": valgtDato || new Date(), min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
+            } }, kalenderProps, { locale: locale, dato: dato, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
                 return _this.onVelgDag(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);

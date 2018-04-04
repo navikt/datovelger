@@ -1,16 +1,16 @@
-export interface DatovelgerTidsperiode {
+export interface Tidsperiode {
     /** Dato fra og med */
     startdato: Date;
     /** Dato til og med */
     sluttdato: Date;
 }
-export interface DatovelgerAvgrensninger {
+export interface Avgrensninger {
     /** Første valgbare dato */
     minDato?: Date;
     /** Siste valgbare dato */
     maksDato?: Date;
     /** Tidsperioder som en ikke skal kunne velge */
-    ugyldigeTidsperioder?: DatovelgerTidsperiode[];
+    ugyldigeTidsperioder?: Tidsperiode[];
     /** Om bruker skal kunne velge lørdag eller søndag. Default true  */
     helgedagerIkkeTillatt?: boolean;
 }

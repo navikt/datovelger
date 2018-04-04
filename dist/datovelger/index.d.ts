@@ -1,10 +1,11 @@
 /// <reference types="react" />
 import * as React from 'react';
-import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
+import { Avgrensninger, KalenderPlassering } from './types';
 import { DatoValidering } from './utils/datovalidering';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Datoinput from './Datoinput';
 import Kalender from './kalender/Kalender';
+export { Avgrensninger, Tidsperiode } from './types';
 export interface State {
     måned: Date;
     datovalidering: DatoValidering;
@@ -15,13 +16,11 @@ export interface Props {
     /** Påkrevd id som settes på inputfeltet */
     id: string;
     /** Valgt dato */
-    valgtDato?: Date;
+    dato?: Date;
     /** Begrensninger på hvilke datoer bruker kan velge */
-    avgrensninger?: DatovelgerAvgrensninger;
+    avgrensninger?: Avgrensninger;
     /** Kalles når en dato velges */
-    onVelgDag: (date: Date) => void;
-    /** Kalles når en ikke lovlig dato velges */
-    onUgyldigDagValgt?: (date: Date, validering?: DatoValidering) => void;
+    onChange: (date: Date, validering?: DatoValidering) => void;
     /** Input props */
     inputProps?: {
         placeholder?: string;
