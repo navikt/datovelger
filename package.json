@@ -1,6 +1,6 @@
 {
 	"name": "datovelger",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"description": "Enkel datovelger",
 	"main": "dist/datovelger/index.js",
 	"types": "dist/datovelger/index.d.ts",
@@ -31,8 +31,7 @@
 		"nav-frontend-core": "^4.0.5",
 		"nav-frontend-js-utils": "^1.0.3",
 		"nav-frontend-typografi": "^2.0.2",
-		"react-day-picker":
-			"git+ssh://git@github.com:frodehansen2/react-day-picker.git",
+		"react-day-picker": "^7.1.4",
 		"react-dom": "^16.2.0"
 	},
 	"devDependencies": {

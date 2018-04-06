@@ -97,18 +97,7 @@ var Kalender = /** @class */function (_super) {
             }, role: "dialog", "aria-label": "Kalender", className: "nav-datovelger__kalender" }, React.createElement(KeyboardNavigation_1.default, { onEscape: onLukk }, React.createElement(FocusTrap, { active: true, focusTrapOptions: {
                 clickOutsideDeactivates: true,
                 onDeactivate: this.props.onLukk
-            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: dato, onDayClick: onVelgDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps, { roles: {
-                day: 'link',
-                disabledDay: 'presentation',
-                weeknumber: 'link',
-                caption: 'heading',
-                month: 'application',
-                body: 'presentation',
-                week: 'presentation',
-                weekday: 'presentation',
-                weekdays: 'presentation',
-                weekdaysRow: 'presentation'
-            } })))));
+            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: dato, onDayClick: onVelgDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps)))));
     };
     return Kalender;
 }(React.Component);

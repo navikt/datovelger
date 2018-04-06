@@ -657,6 +657,9 @@ body .blokk-xl {
 }
 .DayPicker-wrapper {
   position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   padding-bottom: 1rem;
   flex-direction: row;
@@ -670,6 +673,9 @@ body .blokk-xl {
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   margin: 0 1rem;
   margin-top: 1rem;

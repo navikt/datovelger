@@ -155,18 +155,6 @@ export class Kalender extends React.Component<Props, State> {
 							disabledDays={utilgjengeligeDager}
 							{...innstillinger}
 							{...dayPickerProps}
-							roles={{
-								day: 'link',
-								disabledDay: 'presentation',
-								weeknumber: 'link',
-								caption: 'heading',
-								month: 'application',
-								body: 'presentation',
-								week: 'presentation',
-								weekday: 'presentation',
-								weekdays: 'presentation',
-								weekdaysRow: 'presentation'
-							}}
 						/>
 					</FocusTrap>
 				</KeyboardNavigation>
