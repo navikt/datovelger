@@ -1,5 +1,5 @@
 {
-	"name": "datovelger",
+	"name": "nav-datovelger",
 	"version": "1.0.0",
 	"description": "Enkel datovelger",
 	"main": "dist/datovelger/index.js",
