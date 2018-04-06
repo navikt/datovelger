@@ -1,6 +1,6 @@
 {
 	"name": "datovelger",
-	"version": "0.11.0",
+	"version": "1.0.0",
 	"description": "Enkel datovelger",
 	"main": "dist/datovelger/index.js",
 	"types": "dist/datovelger/index.d.ts",
