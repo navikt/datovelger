@@ -42,6 +42,7 @@ export class Kalender extends React.Component<Props, State> {
 		super(props);
 		this.navigerMåneder = this.navigerMåneder.bind(this);
 		this.settFokus = this.settFokus.bind(this);
+		this.onByttDag = this.onByttDag.bind(this);
 		this.onByttMåned = this.onByttMåned.bind(this);
 		this.state = {
 			måned: props.måned
@@ -64,6 +65,12 @@ export class Kalender extends React.Component<Props, State> {
 			fokuserKalender(this.kalender);
 		}
 	}
+
+	onByttDag(dato: Date, { disabled }: any) {
+	    if (!disabled) {
+	        this.props.onVelgDag(dato);
+        }
+    }
 
 	onByttMåned(måned: Date) {
 		const fokusertDato = getFokusertDato(this.kalender);
@@ -93,7 +100,6 @@ export class Kalender extends React.Component<Props, State> {
 			min,
 			maks,
 			locale,
-			onVelgDag,
 			onLukk,
 			visUkenumre,
 			utilgjengeligeDager,
@@ -150,7 +156,7 @@ export class Kalender extends React.Component<Props, State> {
 							month={måned}
 							canChangeMonth={false}
 							selectedDays={dato}
-							onDayClick={onVelgDag}
+							onDayClick={this.onByttDag}
 							onMonthChange={this.onByttMåned}
 							disabledDays={utilgjengeligeDager}
 							{...innstillinger}
