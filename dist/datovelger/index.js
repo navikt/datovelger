@@ -140,10 +140,12 @@ var Datovelger = /** @class */function (_super) {
             locale = _b === void 0 ? 'nb' : _b,
             _c = _a.kalenderplassering,
             kalenderplassering = _c === void 0 ? 'under' : _c,
-            kalenderProps = __rest(_a, ["dato", "id", "inputProps", "avgrensninger", "locale", "kalenderplassering"]);
-        var _d = this.state,
-            erÅpen = _d.erÅpen,
-            datovalidering = _d.datovalidering;
+            _d = _a.kanVelgeUgyldigDato,
+            kanVelgeUgyldigDato = _d === void 0 ? false : _d,
+            kalenderProps = __rest(_a, ["dato", "id", "inputProps", "avgrensninger", "locale", "kalenderplassering", "kanVelgeUgyldigDato"]);
+        var _e = this.state,
+            erÅpen = _e.erÅpen,
+            datovalidering = _e.datovalidering;
         var avgrensningerInfoId = avgrensninger ? this.instansId + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.props.dato !== undefined;
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, __assign({}, inputProps, { inputProps: {
@@ -160,7 +162,7 @@ var Datovelger = /** @class */function (_super) {
                 return _this.onVelgDag(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);
-            }, kanVelgeUgyldigDato: this.props.kanVelgeUgyldigDato, dayPickerProps: this.props.dayPickerProps })))));
+            }, kanVelgeUgyldigDato: kanVelgeUgyldigDato, dayPickerProps: this.props.dayPickerProps })))));
     };
     return Datovelger;
 }(React.Component);

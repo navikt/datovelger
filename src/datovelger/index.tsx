@@ -190,6 +190,7 @@ class Datovelger extends React.Component<Props, State> {
 			avgrensninger,
 			locale = 'nb',
 			kalenderplassering = 'under',
+			kanVelgeUgyldigDato = false,
 			...kalenderProps
 		} = this.props;
 
@@ -245,7 +246,7 @@ class Datovelger extends React.Component<Props, State> {
 								}
 								onVelgDag={(d) => this.onVelgDag(d, true)}
 								onLukk={() => this.lukkKalender(true)}
-								kanVelgeUgyldigDato={this.props.kanVelgeUgyldigDato}
+								kanVelgeUgyldigDato={kanVelgeUgyldigDato}
 								dayPickerProps={this.props.dayPickerProps}
 							/>
 						</KalenderPortal>
