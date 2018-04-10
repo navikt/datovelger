@@ -160,7 +160,7 @@ var Datovelger = /** @class */function (_super) {
                 return _this.onVelgDag(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);
-            } })))));
+            }, dayPickerProps: this.props.dayPickerProps })))));
     };
     return Datovelger;
 }(React.Component);
