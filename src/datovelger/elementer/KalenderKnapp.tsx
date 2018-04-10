@@ -29,9 +29,8 @@ class KalenderKnapp extends React.Component<Props> {
 					onClick();
 				}}
 				role="button"
-				aria-label={erÅpen ? 'Kalender' : 'Kalender'}
-				aria-expanded={erÅpen}
-			>
+				aria-label={'Kalender'}
+				aria-expanded={erÅpen}>
 				<KalenderIkon />
 			</button>
 		);
