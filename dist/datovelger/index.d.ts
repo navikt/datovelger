@@ -34,6 +34,8 @@ export interface Props {
     locale?: 'nb';
     /** Hvor kalender skal vises. Default under */
     kalenderplassering?: KalenderPlassering;
+    /** Default false. Tillater bruker å velge ugyldig dato. */
+    kanVelgeUgyldigDato?: boolean;
     /** dayPickerProps */
     dayPickerProps?: DayPickerProps;
 }
