@@ -1,5 +1,9 @@
 import * as React from 'react';
-import DayPicker, { DayPickerProps, Modifier } from 'react-day-picker';
+import DayPicker, {
+	DayPickerProps,
+	Modifier,
+	DayModifiers
+} from 'react-day-picker';
 import * as moment from 'moment';
 import * as FocusTrap from 'focus-trap-react';
 import {
@@ -26,6 +30,7 @@ export interface Props {
 	onLukk: () => void;
 	utilgjengeligeDager?: Modifier[];
 	visUkenumre?: boolean;
+	kanVelgeUgyldigDato?: boolean;
 	dayPickerProps?: DayPickerProps;
 }
 
@@ -42,6 +47,7 @@ export class Kalender extends React.Component<Props, State> {
 		super(props);
 		this.navigerMåneder = this.navigerMåneder.bind(this);
 		this.settFokus = this.settFokus.bind(this);
+		this.onByttDag = this.onByttDag.bind(this);
 		this.onByttMåned = this.onByttMåned.bind(this);
 		this.state = {
 			måned: props.måned
@@ -62,6 +68,12 @@ export class Kalender extends React.Component<Props, State> {
 	settFokus() {
 		if (this.kalender) {
 			fokuserKalender(this.kalender);
+		}
+	}
+
+	onByttDag(dato: Date, modifiers: DayModifiers) {
+		if (this.props.kanVelgeUgyldigDato || !modifiers.disabled) {
+			this.props.onVelgDag(dato);
 		}
 	}
 
@@ -93,7 +105,6 @@ export class Kalender extends React.Component<Props, State> {
 			min,
 			maks,
 			locale,
-			onVelgDag,
 			onLukk,
 			visUkenumre,
 			utilgjengeligeDager,
@@ -150,7 +161,7 @@ export class Kalender extends React.Component<Props, State> {
 							month={måned}
 							canChangeMonth={false}
 							selectedDays={dato}
-							onDayClick={onVelgDag}
+							onDayClick={this.onByttDag}
 							onMonthChange={this.onByttMåned}
 							disabledDays={utilgjengeligeDager}
 							{...innstillinger}

@@ -50,6 +50,8 @@ export interface Props {
 	locale?: 'nb';
 	/** Hvor kalender skal vises. Default under */
 	kalenderplassering?: KalenderPlassering;
+	/** Default false. Tillater bruker å velge ugyldig dato. */
+	kanVelgeUgyldigDato?: boolean;
 	/** dayPickerProps */
 	dayPickerProps?: DayPickerProps;
 }
@@ -243,6 +245,7 @@ class Datovelger extends React.Component<Props, State> {
 								}
 								onVelgDag={(d) => this.onVelgDag(d, true)}
 								onLukk={() => this.lukkKalender(true)}
+								kanVelgeUgyldigDato={this.props.kanVelgeUgyldigDato}
 								dayPickerProps={this.props.dayPickerProps}
 							/>
 						</KalenderPortal>
