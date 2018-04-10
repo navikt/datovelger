@@ -5,6 +5,7 @@ import { guid } from 'nav-frontend-js-utils';
 import { Avgrensninger, KalenderPlassering } from './types';
 import { formatDateInputValue, normaliserDato } from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
+import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
@@ -49,6 +50,8 @@ export interface Props {
 	locale?: 'nb';
 	/** Hvor kalender skal vises. Default under */
 	kalenderplassering?: KalenderPlassering;
+	/** dayPickerProps */
+	dayPickerProps?: DayPickerProps;
 }
 
 const getUtilgjengeligeDager = (avgrensninger: Avgrensninger): Modifier[] => {
@@ -240,6 +243,7 @@ class Datovelger extends React.Component<Props, State> {
 								}
 								onVelgDag={(d) => this.onVelgDag(d, true)}
 								onLukk={() => this.lukkKalender(true)}
+								dayPickerProps={this.props.dayPickerProps}
 							/>
 						</KalenderPortal>
 					)}
