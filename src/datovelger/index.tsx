@@ -26,7 +26,7 @@ export interface State {
 	måned: Date;
 	datovalidering: DatoValidering;
 	erÅpen?: boolean;
-	statusMessage: string;
+	// statusMessage: string;
 }
 
 export interface Props {
@@ -120,8 +120,7 @@ class Datovelger extends React.Component<Props, State> {
 			datovalidering: props.dato
 				? validerDato(props.dato, props.avgrensninger || {})
 				: 'datoErIkkeDefinert',
-			erÅpen: false,
-			statusMessage: ''
+			erÅpen: false
 		};
 	}
 
@@ -138,7 +137,6 @@ class Datovelger extends React.Component<Props, State> {
 	onVelgDag(dato: Date, lukkKalender?: boolean) {
 		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
 		this.setState({
-			statusMessage: `Valgt dag: ${formatDateInputValue(dato)}`,
 			erÅpen: false,
 			datovalidering
 		});
@@ -151,7 +149,6 @@ class Datovelger extends React.Component<Props, State> {
 	onDatoDateChange(dato: Date) {
 		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
 		this.setState({
-			statusMessage: `Valgt dag: ${formatDateInputValue(dato)}`,
 			erÅpen: false,
 			datovalidering
 		});
