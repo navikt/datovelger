@@ -14,7 +14,7 @@ exports.validerDato = function (dato, avgrensninger) {
         return 'datoErIkkeDefinert';
     }
     if (typeof dato === 'string') {
-        dato = moment(dato).toDate();
+        dato = moment(dato, 'DD.MM.YYYY').toDate();
     }
     if (!moment(dato).isValid()) {
         return 'datoErUgyldig';

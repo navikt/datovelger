@@ -37,7 +37,7 @@ var KalenderKnapp = /** @class */function (_super) {
             }, type: "button", className: "nav-datovelger__kalenderknapp", onClick: function (e) {
                 e.preventDefault();
                 onClick();
-            }, role: "button", "aria-label": erÅpen ? 'Kalender' : 'Kalender', "aria-expanded": erÅpen }, React.createElement(KalenderIkon_1.default, null));
+            }, role: "button", "aria-label": 'Kalender', "aria-expanded": erÅpen }, React.createElement(KalenderIkon_1.default, null));
     };
     return KalenderKnapp;
 }(React.Component);

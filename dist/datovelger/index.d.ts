@@ -11,7 +11,7 @@ export interface State {
     måned: Date;
     datovalidering: DatoValidering;
     erÅpen?: boolean;
-    statusMessage: string;
+    inputValue: string;
 }
 export interface Props {
     /** Påkrevd id som settes på inputfeltet */
@@ -49,6 +49,7 @@ declare class Datovelger extends React.Component<Props, State> {
     componentWillReceiveProps(nextProps: Props): void;
     onVelgDag(dato: Date, lukkKalender?: boolean): void;
     onDatoDateChange(dato: Date): void;
+    onDateInputChange(dato: string): void;
     toggleKalender(): void;
     lukkKalender(settFokusPåKalenderknapp?: boolean): void;
     componentDidUpdate(prevProps: Props, prevState: State): void;
