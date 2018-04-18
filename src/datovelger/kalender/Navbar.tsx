@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as moment from 'moment';
 import * as classnames from 'classnames';
 import Chevron from '../elementer/ChevronSvg';
+import { Tekster } from '../tekster';
 
 export interface Props {
 	måned: Date;
@@ -24,7 +25,7 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 	disabled,
 	onClick
 }) => {
-	const label = retning === 'forrige' ? 'Forrige måned' : 'Neste måned';
+	const label = retning === 'forrige' ? Tekster.navbar_forrigeManed_label : Tekster.navbar_forrigeManed_label;
 
 	return (
 		<button

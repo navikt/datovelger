@@ -39,12 +39,3 @@ export const erMånedTilgjengelig = (
 	return erEtterMin && erFørMaks;
 };
 
-// export function getSammeDatoIMåned(
-// 	dato: Date,
-// 	måned: Date,
-// 	nesteMåned: Date
-// ): Date {
-// 	return moment(dato)
-// 		.add(getMånedDiff(nesteMåned, måned), 'months')
-// 		.toDate();
-// }

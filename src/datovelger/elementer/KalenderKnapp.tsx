@@ -1,5 +1,6 @@
 import * as React from 'react';
 import KalenderIkon from './KalenderIkon';
+import { Tekster } from '../tekster';
 
 export interface Props {
 	onClick: () => void;
@@ -29,7 +30,7 @@ class KalenderKnapp extends React.Component<Props> {
 					onClick();
 				}}
 				role="button"
-				aria-label={'Kalender'}
+				aria-label={Tekster.kalenderLabel}
 				aria-expanded={erÅpen}>
 				<KalenderIkon />
 			</button>
