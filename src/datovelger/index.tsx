@@ -38,6 +38,7 @@ export interface Props {
 	avgrensninger?: Avgrensninger;
 	/** Kalles når en dato velges */
 	onChange: (date: Date, validering?: DatoValidering) => void;
+	onInputChange?: (evt: React.SyntheticEvent<HTMLInputElement>) => void;
 	/** Input props */
 	inputProps?: {
 		placeholder?: string;
@@ -188,6 +189,7 @@ class Datovelger extends React.Component<Props, State> {
 			avgrensninger,
 			locale = 'nb',
 			kalenderplassering = 'under',
+            onInputChange,
 			...kalenderProps
 		} = this.props;
 
@@ -219,6 +221,7 @@ class Datovelger extends React.Component<Props, State> {
 							ref={(c) => (this.input = c)}
 							date={dato}
 							onDateChange={this.onDatoDateChange}
+                            onInputChange={onInputChange}
 						/>
 						<KalenderKnapp
 							ref={(c) => (this.kalenderKnapp = c)}
