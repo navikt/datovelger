@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Avgrensninger } from '../types';
 import { formatDateInputValue } from '../utils';
+import { Tekster } from '../tekster';
 
 export interface Props {
 	id: string;
@@ -19,17 +20,17 @@ const AvgrensningerInfo: React.StatelessComponent<Props> = ({
 	const fraDato = formatDateInputValue(avgrensninger.minDato);
 	const tilDato = formatDateInputValue(avgrensninger.maksDato);
 	if (avgrensninger.minDato && avgrensninger.maksDato) {
-		msg = `Dato må være mellom "${fraDato}" og "${tilDato}". `;
+		msg = `${Tekster.avgrensninger.måVæreMellom(fraDato, tilDato)}. `;
 	} else {
 		if (avgrensninger.minDato) {
-			msg = `Fra ${fraDato}. `;
+			msg = `${Tekster.avgrensninger.fra(fraDato)}. `;
 		}
 		if (avgrensninger.maksDato) {
-			msg = `Til ${tilDato}. `;
+			msg = `${Tekster.avgrensninger.til(tilDato)}. `;
 		}
 	}
 	if (avgrensninger.helgedagerIkkeTillatt) {
-		msg = `${msg}Lørdager og søndager er ikke valgbare. `;
+		msg = `${msg} ${Tekster.avgrensninger.helg}. `;
 	}
 
 	return (
