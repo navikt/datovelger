@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Avgrensninger, KalenderPlassering } from './types';
 import { DatoValidering } from './utils/datovalidering';
+import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Datoinput from './Datoinput';
 import Kalender from './kalender/Kalender';
@@ -10,7 +11,7 @@ export interface State {
     måned: Date;
     datovalidering: DatoValidering;
     erÅpen?: boolean;
-    statusMessage: string;
+    inputValue: string;
 }
 export interface Props {
     /** Påkrevd id som settes på inputfeltet */
@@ -33,6 +34,10 @@ export interface Props {
     locale?: 'nb';
     /** Hvor kalender skal vises. Default under */
     kalenderplassering?: KalenderPlassering;
+    /** Default false. Tillater bruker å velge ugyldig dato. */
+    kanVelgeUgyldigDato?: boolean;
+    /** dayPickerProps */
+    dayPickerProps?: DayPickerProps;
 }
 declare class Datovelger extends React.Component<Props, State> {
     instansId: string;
@@ -44,6 +49,7 @@ declare class Datovelger extends React.Component<Props, State> {
     componentWillReceiveProps(nextProps: Props): void;
     onVelgDag(dato: Date, lukkKalender?: boolean): void;
     onDatoDateChange(dato: Date): void;
+    onDateInputChange(dato: string): void;
     toggleKalender(): void;
     lukkKalender(settFokusPåKalenderknapp?: boolean): void;
     componentDidUpdate(prevProps: Props, prevState: State): void;

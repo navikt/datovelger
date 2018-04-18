@@ -37,6 +37,7 @@ var Kalender = /** @class */function (_super) {
         var _this = _super.call(this, props) || this;
         _this.navigerMåneder = _this.navigerMåneder.bind(_this);
         _this.settFokus = _this.settFokus.bind(_this);
+        _this.onByttDag = _this.onByttDag.bind(_this);
         _this.onByttMåned = _this.onByttMåned.bind(_this);
         _this.state = {
             måned: props.måned
@@ -52,6 +53,11 @@ var Kalender = /** @class */function (_super) {
     Kalender.prototype.settFokus = function () {
         if (this.kalender) {
             utils_1.fokuserKalender(this.kalender);
+        }
+    };
+    Kalender.prototype.onByttDag = function (dato, modifiers) {
+        if (this.props.kanVelgeUgyldigDato || !modifiers.disabled) {
+            this.props.onVelgDag(dato);
         }
     };
     Kalender.prototype.onByttMåned = function (måned) {
@@ -75,7 +81,6 @@ var Kalender = /** @class */function (_super) {
             min = _a.min,
             maks = _a.maks,
             locale = _a.locale,
-            onVelgDag = _a.onVelgDag,
             onLukk = _a.onLukk,
             visUkenumre = _a.visUkenumre,
             utilgjengeligeDager = _a.utilgjengeligeDager,
@@ -97,7 +102,7 @@ var Kalender = /** @class */function (_super) {
             }, role: "dialog", "aria-label": "Kalender", className: "nav-datovelger__kalender" }, React.createElement(KeyboardNavigation_1.default, { onEscape: onLukk }, React.createElement(FocusTrap, { active: true, focusTrapOptions: {
                 clickOutsideDeactivates: true,
                 onDeactivate: this.props.onLukk
-            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: dato, onDayClick: onVelgDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps)))));
+            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: dato, onDayClick: this.onByttDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps)))));
     };
     return Kalender;
 }(React.Component);

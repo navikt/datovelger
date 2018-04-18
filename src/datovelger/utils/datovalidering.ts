@@ -27,7 +27,7 @@ export const validerDato = (
 		return 'datoErIkkeDefinert';
 	}
 	if (typeof dato === 'string') {
-		dato = moment(dato).toDate();
+		dato = moment(dato, 'DD.MM.YYYY').toDate();
 	}
 	if (!moment(dato).isValid()) {
 		return 'datoErUgyldig';

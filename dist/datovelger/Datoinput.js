@@ -73,7 +73,7 @@ var Input = /** @class */function (_super) {
     Input.prototype.onChange = function (evt) {
         var value = evt.target.value;
         if (this.props.onInputChange) {
-            this.props.onInputChange(evt);
+            this.props.onInputChange(value);
         }
         this.setState({ value: value });
     };
