@@ -31,8 +31,8 @@ export interface Props {
     };
     /** Om ukenumre skal vises - default false */
     visUkenumre?: boolean;
-    /** Språk - default no */
-    locale?: 'nb';
+    /** Språk */
+    locale?: string;
     /** Hvor kalender skal vises. Default under */
     kalenderplassering?: KalenderPlassering;
     /** Default false. Tillater bruker å velge ugyldig dato. */

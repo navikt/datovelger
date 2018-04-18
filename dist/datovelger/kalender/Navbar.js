@@ -5,12 +5,13 @@ var React = require("react");
 var moment = require("moment");
 var classnames = require("classnames");
 var ChevronSvg_1 = require("../elementer/ChevronSvg");
+var tekster_1 = require("../tekster");
 var NavbarKnapp = function (_a) {
     var måned = _a.måned,
         retning = _a.retning,
         disabled = _a.disabled,
         onClick = _a.onClick;
-    var label = retning === 'forrige' ? 'Forrige måned' : 'Neste måned';
+    var label = retning === 'forrige' ? tekster_1.Tekster.navbar_forrigeManed_label : tekster_1.Tekster.navbar_forrigeManed_label;
     return React.createElement("button", { className: classnames('nav-datovelger__navbar__knapp', "nav-datovelger__navbar__knapp--" + retning, {
             'nav-datovelger__navbar__knapp--disabled': disabled
         }), type: "button", onClick: function (e) {

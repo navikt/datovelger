@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var utils_1 = require("../utils");
+var tekster_1 = require("../tekster");
 var AvgrensningerInfo = function (_a) {
     var id = _a.id,
         avgrensninger = _a.avgrensninger;
@@ -13,17 +14,17 @@ var AvgrensningerInfo = function (_a) {
     var fraDato = utils_1.formatDateInputValue(avgrensninger.minDato);
     var tilDato = utils_1.formatDateInputValue(avgrensninger.maksDato);
     if (avgrensninger.minDato && avgrensninger.maksDato) {
-        msg = "Dato m\u00E5 v\u00E6re mellom \"" + fraDato + "\" og \"" + tilDato + "\". ";
+        msg = tekster_1.Tekster.avgrensninger.måVæreMellom(fraDato, tilDato) + ". ";
     } else {
         if (avgrensninger.minDato) {
-            msg = "Fra " + fraDato + ". ";
+            msg = tekster_1.Tekster.avgrensninger.fra(fraDato) + ". ";
         }
         if (avgrensninger.maksDato) {
-            msg = "Til " + tilDato + ". ";
+            msg = tekster_1.Tekster.avgrensninger.til(tilDato) + ". ";
         }
     }
     if (avgrensninger.helgedagerIkkeTillatt) {
-        msg = msg + "L\u00F8rdager og s\u00F8ndager er ikke valgbare. ";
+        msg = msg + " " + tekster_1.Tekster.avgrensninger.helg + ". ";
     }
     return React.createElement("p", { className: "sr-only", id: id }, msg);
 };

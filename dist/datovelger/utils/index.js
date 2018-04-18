@@ -6,11 +6,19 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = require("moment");
 __export(require("./kalenderFokusUtils"));
+exports.isDateObject = function (date) {
+    return date && typeof date === "object" && date.getDate;
+};
 exports.normaliserDato = function (d) {
     return moment(d).startOf('day');
 };
 exports.formatDateInputValue = function (date) {
-    return date ? moment(date).format('DD.MM.YYYY') : '';
+    if (exports.isDateObject(date)) {
+        return moment(date).format('DD.MM.YYYY');
+    } else if (typeof date === "string") {
+        return date;
+    }
+    return '';
 };
 exports.formaterDayAriaLabel = function (dato, locale) {
     return moment(dato).format('DD.MM.YYYY, dddd');
@@ -32,12 +40,3 @@ exports.erMånedTilgjengelig = function (måned, avgrensninger) {
     var erFørMaks = maks ? mnd.startOf('month').isBefore(moment(maks).endOf('month')) : true;
     return erEtterMin && erFørMaks;
 };
-// export function getSammeDatoIMåned(
-// 	dato: Date,
-// 	måned: Date,
-// 	nesteMåned: Date
-// ): Date {
-// 	return moment(dato)
-// 		.add(getMånedDiff(nesteMåned, måned), 'months')
-// 		.toDate();
-// }

@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 export * from './kalenderFokusUtils';
+export declare const isDateObject: (date: any) => any;
 export declare const normaliserDato: (d: Date) => moment.Moment;
 export declare const formatDateInputValue: (date?: Date | undefined) => string;
 export declare const formaterDayAriaLabel: (dato: Date, locale: string) => string;

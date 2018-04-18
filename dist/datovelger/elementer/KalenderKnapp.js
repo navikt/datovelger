@@ -17,6 +17,7 @@ var __extends = this && this.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var KalenderIkon_1 = require("./KalenderIkon");
+var tekster_1 = require("../tekster");
 var KalenderKnapp = /** @class */function (_super) {
     __extends(KalenderKnapp, _super);
     function KalenderKnapp(props) {
@@ -37,7 +38,7 @@ var KalenderKnapp = /** @class */function (_super) {
             }, type: "button", className: "nav-datovelger__kalenderknapp", onClick: function (e) {
                 e.preventDefault();
                 onClick();
-            }, role: "button", "aria-label": 'Kalender', "aria-expanded": erÅpen }, React.createElement(KalenderIkon_1.default, null));
+            }, role: "button", "aria-label": tekster_1.Tekster.kalenderLabel, "aria-expanded": erÅpen }, React.createElement(KalenderIkon_1.default, null));
     };
     return KalenderKnapp;
 }(React.Component);
