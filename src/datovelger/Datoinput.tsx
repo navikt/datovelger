@@ -5,7 +5,7 @@ export interface Props {
 	date?: Date;
 	onDateChange: (date: Date | undefined) => void;
 	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-	onInputChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+	onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface State {
@@ -68,7 +68,7 @@ export class Input extends React.Component<Props, State> {
 	onChange(evt: React.ChangeEvent<HTMLInputElement>) {
 		const value = evt.target.value;
 		if (this.props.onInputChange) {
-			this.props.onInputChange(evt);
+			this.props.onInputChange(value, evt);
 		}
 		this.setState({ value });
 	}

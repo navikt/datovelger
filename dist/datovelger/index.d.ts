@@ -22,6 +22,7 @@ export interface Props {
     avgrensninger?: Avgrensninger;
     /** Kalles når en dato velges */
     onChange: (date: Date, validering?: DatoValidering) => void;
+    onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
     /** Input props */
     inputProps?: {
         placeholder?: string;
@@ -49,7 +50,7 @@ declare class Datovelger extends React.Component<Props, State> {
     componentWillReceiveProps(nextProps: Props): void;
     onVelgDag(dato: Date, lukkKalender?: boolean): void;
     onDatoDateChange(dato: Date): void;
-    onDateInputChange(dato: string): void;
+    onDateInputChange(value: string, event: React.ChangeEvent<HTMLInputElement>): void;
     toggleKalender(): void;
     lukkKalender(settFokusPåKalenderknapp?: boolean): void;
     componentDidUpdate(prevProps: Props, prevState: State): void;
