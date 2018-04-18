@@ -112,13 +112,20 @@ var Datovelger = /** @class */function (_super) {
         });
         this.props.onChange(dato);
     };
-    Datovelger.prototype.onDateInputChange = function (dato) {
-        var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
+    Datovelger.prototype.onDateInputChange = function (value, event) {
+        var _a = this.props,
+            avgrensninger = _a.avgrensninger,
+            onInputChange = _a.onInputChange;
+        var dato = event.target.value;
+        var datovalidering = datovalidering_1.validerDato(dato, avgrensninger || {});
         this.setState({
             erÅpen: false,
             datovalidering: datovalidering,
             inputValue: dato
         });
+        if (onInputChange) {
+            onInputChange(value, event);
+        }
     };
     Datovelger.prototype.toggleKalender = function () {
         this.setFokusPåKalenderKnapp = true;
