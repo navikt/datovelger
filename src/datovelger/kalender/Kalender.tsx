@@ -11,7 +11,8 @@ import {
 	getFokusertDato,
 	getSammeDatoIMåned,
 	erMånedTilgjengelig,
-	fokuserKalender
+	fokuserKalender,
+	isDateObject
 } from '../utils';
 import Navbar from './Navbar';
 import KeyboardNavigation from '../common/KeyboardNavigation';
@@ -160,7 +161,7 @@ export class Kalender extends React.Component<Props, State> {
 							toMonth={maks}
 							month={måned}
 							canChangeMonth={false}
-							selectedDays={dato}
+							selectedDays={isDateObject(dato) ? dato : undefined}
 							onDayClick={this.onByttDag}
 							onMonthChange={this.onByttMåned}
 							disabledDays={utilgjengeligeDager}

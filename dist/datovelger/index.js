@@ -58,7 +58,7 @@ var getUtilgjengeligeDager = function (avgrensninger) {
     return ugyldigeDager.concat(maksDato ? [{ after: maksDato.toDate() }] : [], minDato ? [{ before: minDato.toDate() }] : [], [helgedager]);
 };
 var getDefaultMåned = function (props) {
-    if (props.dato) {
+    if (props.dato && utils_1.isDateObject(props.dato)) {
         return props.dato;
     }
     var idag = utils_1.normaliserDato(new Date()).toDate();

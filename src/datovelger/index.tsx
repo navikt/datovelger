@@ -3,7 +3,7 @@ import * as classnames from 'classnames';
 import * as moment from 'moment';
 import { guid } from 'nav-frontend-js-utils';
 import { Avgrensninger, KalenderPlassering } from './types';
-import { normaliserDato } from './utils';
+import { normaliserDato, isDateObject } from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
 import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
@@ -85,7 +85,7 @@ const getUtilgjengeligeDager = (avgrensninger: Avgrensninger): Modifier[] => {
 };
 
 const getDefaultMåned = (props: Props): Date => {
-	if (props.dato) {
+	if (props.dato && isDateObject(props.dato)) {
 		return props.dato;
 	}
 	const idag = normaliserDato(new Date()).toDate();

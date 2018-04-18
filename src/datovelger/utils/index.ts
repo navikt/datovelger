@@ -3,10 +3,19 @@ import { Moment } from 'moment';
 
 export * from './kalenderFokusUtils';
 
+export const isDateObject = (date: any) => (
+	date && typeof date === "object" && date.getDate
+);
+
 export const normaliserDato = (d: Date): Moment => moment(d).startOf('day');
 
 export const formatDateInputValue = (date?: Date) => {
-	return date ? moment(date).format('DD.MM.YYYY') : '';
+	if (isDateObject(date)) {
+		return moment(date).format('DD.MM.YYYY');
+	} else if (typeof date === "string") {
+		return date;
+	}
+	return '';
 };
 
 export const formaterDayAriaLabel = (dato: Date, locale: string) => {
