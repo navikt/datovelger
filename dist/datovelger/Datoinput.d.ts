@@ -4,7 +4,7 @@ export interface Props {
     date?: Date;
     onDateChange: (date: Date | undefined) => void;
     inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-    onInputChange?: (value: string) => void;
+    onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export interface State {
     value: string;

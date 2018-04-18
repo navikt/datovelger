@@ -38,6 +38,7 @@ export interface Props {
 	avgrensninger?: Avgrensninger;
 	/** Kalles når en dato velges */
 	onChange: (date: Date, validering?: DatoValidering) => void;
+	onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
 	/** Input props */
 	inputProps?: {
 		placeholder?: string;
@@ -157,13 +158,18 @@ class Datovelger extends React.Component<Props, State> {
 		this.props.onChange(dato);
 	}
 
-	onDateInputChange(dato: string) {
-		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
+	onDateInputChange(value: string, event: React.ChangeEvent<HTMLInputElement>) {
+		const { avgrensninger, onInputChange } = this.props;
+		const dato = event.target.value;
+		const datovalidering = validerDato(dato, avgrensninger || {});
 		this.setState({
 			erÅpen: false,
 			datovalidering,
 			inputValue: dato
 		});
+		if (onInputChange) {
+			onInputChange(value, event)
+		}
 	}
 
 	toggleKalender() {
