@@ -38,7 +38,7 @@ export interface Props {
 	avgrensninger?: Avgrensninger;
 	/** Kalles når en dato velges */
 	onChange: (date: Date, validering?: DatoValidering) => void;
-	onInputChange?: (evt: React.SyntheticEvent<HTMLInputElement>) => void;
+	onInputChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 	/** Input props */
 	inputProps?: {
 		placeholder?: string;
@@ -158,9 +158,9 @@ class Datovelger extends React.Component<Props, State> {
 		this.props.onChange(dato);
 	}
 
-	onDateInputChange(event: React.SyntheticEvent<HTMLInputElement>) {
+	onDateInputChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { avgrensninger, onInputChange } = this.props;
-        const dato = event.currentTarget.value;
+        const dato = event.target.value;
         const datovalidering = validerDato(dato, avgrensninger || {});
         this.setState({
             erÅpen: false,
