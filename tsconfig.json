@@ -17,7 +17,6 @@
 		"suppressImplicitAnyIndexErrors": true,
 		"noUnusedLocals": true,
 		"baseUrl": "./src",
-		"allowSyntheticDefaultImports": true,
 		"typeRoots": ["./node_modules/@types", "./src/@types"]
 	},
 
