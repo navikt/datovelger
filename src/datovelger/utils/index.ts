@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { Avgrensninger } from '../../../dist/datovelger';
+import { Avgrensninger } from '../';
 import {
 	Modifier,
 	RangeModifier,

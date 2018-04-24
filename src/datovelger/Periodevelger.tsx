@@ -5,7 +5,7 @@ import KalenderKnapp from './elementer/KalenderKnapp';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
-import { RangeModifier } from 'react-day-picker';
+import { RangeModifier, DayModifiers } from 'react-day-picker';
 
 export interface Props extends DatovelgerCommonProps {
 	startdato?: Date;
@@ -52,8 +52,6 @@ class Periodevelger extends React.Component<Props, State> {
 		this.state = {
 			måned: getDefaultMåned(props.startdato || undefined, props.avgrensninger),
 			erÅpen: false,
-			// startInputValue: '',
-			// sluttInputValue: '',
 			fra: props.startdato,
 			til: props.sluttdato
 		};
@@ -114,6 +112,16 @@ class Periodevelger extends React.Component<Props, State> {
 	onMouseEnter(dato: Date) {
 		if (this.state.fra && !this.state.til) {
 			this.setState({ hoverTil: dato });
+		}
+	}
+
+	onDayKeyDown(
+		day: Date,
+		modifiers: DayModifiers,
+		evt: React.KeyboardEvent<HTMLDivElement>
+	) {
+		if (evt.key === 'Enter') {
+			console.log(modifiers);
 		}
 	}
 
@@ -196,6 +204,7 @@ class Periodevelger extends React.Component<Props, State> {
 			onDayMouseEnter: this.onMouseEnter,
 			selectedDays: this.getSelectedDays(),
 			numberOfMonths: 1,
+			onDayKeyDown: this.onDayKeyDown,
 			className: 'DayPicker--range'
 		};
 		return (

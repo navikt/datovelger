@@ -15,7 +15,6 @@ import {
 	isDateObject
 } from '../utils';
 import Navbar from './Navbar';
-import KeyboardNavigation from '../common/KeyboardNavigation';
 import { TittelOgNavigasjon } from './TittelOgNavigasjon';
 import kalenderLocaleUtils from './localeUtils';
 import { LocaleUtils } from 'react-day-picker/types/utils';
@@ -106,7 +105,6 @@ export class Kalender extends React.Component<Props, State> {
 			min,
 			maks,
 			locale,
-			onLukk,
 			visUkenumre,
 			utilgjengeligeDager,
 			dayPickerProps
@@ -147,29 +145,27 @@ export class Kalender extends React.Component<Props, State> {
 				role="dialog"
 				aria-label="Kalender"
 				className="nav-datovelger__kalender">
-				<KeyboardNavigation onEscape={onLukk}>
-					<FocusTrap
-						active={true}
-						focusTrapOptions={{
-							clickOutsideDeactivates: true,
-							onDeactivate: this.props.onLukk
-						}}>
-						<DayPicker
-							locale={locale}
-							localeUtils={localeUtils}
-							fromMonth={min}
-							toMonth={maks}
-							month={måned}
-							canChangeMonth={false}
-							selectedDays={isDateObject(dato) ? dato : undefined}
-							onDayClick={this.onByttDag}
-							onMonthChange={this.onByttMåned}
-							disabledDays={utilgjengeligeDager}
-							{...innstillinger}
-							{...dayPickerProps}
-						/>
-					</FocusTrap>
-				</KeyboardNavigation>
+				<FocusTrap
+					active={true}
+					focusTrapOptions={{
+						clickOutsideDeactivates: true,
+						onDeactivate: this.props.onLukk
+					}}>
+					<DayPicker
+						locale={locale}
+						localeUtils={localeUtils}
+						fromMonth={min}
+						toMonth={maks}
+						month={måned}
+						canChangeMonth={false}
+						selectedDays={isDateObject(dato) ? dato : undefined}
+						onDayClick={this.onByttDag}
+						onMonthChange={this.onByttMåned}
+						disabledDays={utilgjengeligeDager}
+						{...innstillinger}
+						{...dayPickerProps}
+					/>
+				</FocusTrap>
 			</div>
 		);
 	}
