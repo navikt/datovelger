@@ -13,32 +13,36 @@ export interface State {
     erÅpen?: boolean;
     inputValue: string;
 }
-export interface Props {
-    /** Påkrevd id som settes på inputfeltet */
+export interface DateInputProps {
     id: string;
-    /** Valgt dato */
-    dato?: Date;
+    placeholder?: string;
+    required?: boolean;
+    ariaDescribedby?: string;
+    onChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
+}
+export interface DatovelgerCommonProps {
+    kalender?: {
+        /** Om ukenumre skal vises - default false */
+        visUkenumre?: boolean;
+        /** Hvor kalender skal vises. Default under */
+        plassering?: KalenderPlassering;
+    };
     /** Begrensninger på hvilke datoer bruker kan velge */
     avgrensninger?: Avgrensninger;
-    /** Kalles når en dato velges */
-    onChange: (date: Date, validering?: DatoValidering) => void;
-    onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
-    /** Input props */
-    inputProps?: {
-        placeholder?: string;
-        required?: boolean;
-        ariaDescribedby?: string;
-    };
-    /** Om ukenumre skal vises - default false */
-    visUkenumre?: boolean;
-    /** Språk */
-    locale?: string;
-    /** Hvor kalender skal vises. Default under */
-    kalenderplassering?: KalenderPlassering;
     /** Default false. Tillater bruker å velge ugyldig dato. */
     kanVelgeUgyldigDato?: boolean;
     /** dayPickerProps */
     dayPickerProps?: DayPickerProps;
+    /** Språk */
+    locale?: string;
+}
+export interface Props extends DatovelgerCommonProps {
+    /** Props for tekstinput feltet */
+    input: DateInputProps;
+    /** Valgt dato */
+    dato?: Date;
+    /** Kalles når en dato velges */
+    onChange: (date: Date, validering?: DatoValidering) => void;
 }
 declare class Datovelger extends React.Component<Props, State> {
     instansId: string;

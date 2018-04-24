@@ -30,7 +30,6 @@ var __rest = this && this.__rest || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var classnames = require("classnames");
-var moment = require("moment");
 var nav_frontend_js_utils_1 = require("nav-frontend-js-utils");
 var utils_1 = require("./utils");
 var datovalidering_1 = require("./utils/datovalidering");
@@ -40,35 +39,6 @@ var Datoinput_1 = require("./Datoinput");
 var AvgrensningerInfo_1 = require("./elementer/AvgrensningerInfo");
 var Kalender_1 = require("./kalender/Kalender");
 var KalenderPortal_1 = require("./elementer/KalenderPortal");
-var getUtilgjengeligeDager = function (avgrensninger) {
-    var ugyldigeDager = [];
-    if (avgrensninger.ugyldigeTidsperioder) {
-        ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(function (t) {
-            return {
-                from: t.startdato,
-                to: t.sluttdato
-            };
-        });
-    }
-    var minDato = avgrensninger.minDato && utils_1.normaliserDato(avgrensninger.minDato);
-    var maksDato = avgrensninger.maksDato && utils_1.normaliserDato(avgrensninger.maksDato);
-    var helgedager = {
-        daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : []
-    };
-    return ugyldigeDager.concat(maksDato ? [{ after: maksDato.toDate() }] : [], minDato ? [{ before: minDato.toDate() }] : [], [helgedager]);
-};
-var getDefaultMåned = function (props) {
-    if (props.dato && utils_1.isDateObject(props.dato)) {
-        return props.dato;
-    }
-    var idag = utils_1.normaliserDato(new Date()).toDate();
-    if (props.avgrensninger) {
-        if (props.avgrensninger.minDato) {
-            return moment(props.avgrensninger.minDato).isAfter(idag) ? props.avgrensninger.minDato : idag;
-        }
-    }
-    return idag;
-};
 var Datovelger = /** @class */function (_super) {
     __extends(Datovelger, _super);
     function Datovelger(props) {
@@ -80,7 +50,7 @@ var Datovelger = /** @class */function (_super) {
         _this.lukkKalender = _this.lukkKalender.bind(_this);
         _this.onDateInputChange = _this.onDateInputChange.bind(_this);
         _this.state = {
-            måned: getDefaultMåned(props),
+            måned: utils_1.getDefaultMåned(props.dato, props.avgrensninger),
             datovalidering: props.dato ? datovalidering_1.validerDato(props.dato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
             erÅpen: false,
             inputValue: ''
@@ -90,7 +60,7 @@ var Datovelger = /** @class */function (_super) {
     Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
         this.setState({
             datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {}),
-            måned: getDefaultMåned(nextProps)
+            måned: utils_1.getDefaultMåned(nextProps.dato, nextProps.avgrensninger)
         });
     };
     Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
@@ -115,7 +85,7 @@ var Datovelger = /** @class */function (_super) {
     Datovelger.prototype.onDateInputChange = function (value, event) {
         var _a = this.props,
             avgrensninger = _a.avgrensninger,
-            onInputChange = _a.onInputChange;
+            input = _a.input;
         var dato = event.target.value;
         var datovalidering = datovalidering_1.validerDato(dato, avgrensninger || {});
         this.setState({
@@ -123,8 +93,8 @@ var Datovelger = /** @class */function (_super) {
             datovalidering: datovalidering,
             inputValue: dato
         });
-        if (onInputChange) {
-            onInputChange(value, event);
+        if (input.onChange) {
+            input.onChange(value, event);
         }
     };
     Datovelger.prototype.toggleKalender = function () {
@@ -147,29 +117,30 @@ var Datovelger = /** @class */function (_super) {
         var _this = this;
         var _a = this.props,
             dato = _a.dato,
-            id = _a.id,
-            inputProps = _a.inputProps,
+            input = _a.input,
+            kalender = _a.kalender,
             avgrensninger = _a.avgrensninger,
             _b = _a.locale,
             locale = _b === void 0 ? 'nb' : _b,
-            _c = _a.kalenderplassering,
-            kalenderplassering = _c === void 0 ? 'under' : _c,
-            _d = _a.kanVelgeUgyldigDato,
-            kanVelgeUgyldigDato = _d === void 0 ? false : _d,
-            kalenderProps = __rest(_a, ["dato", "id", "inputProps", "avgrensninger", "locale", "kalenderplassering", "kanVelgeUgyldigDato"]);
-        var _e = this.state,
-            erÅpen = _e.erÅpen,
-            datovalidering = _e.datovalidering;
+            _c = _a.kanVelgeUgyldigDato,
+            kanVelgeUgyldigDato = _c === void 0 ? false : _c,
+            kalenderProps = __rest(_a, ["dato", "input", "kalender", "avgrensninger", "locale", "kanVelgeUgyldigDato"]);
+        var _d = this.state,
+            erÅpen = _d.erÅpen,
+            datovalidering = _d.datovalidering;
         var avgrensningerInfoId = avgrensninger ? this.instansId + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
-        var dateInputProps = __assign({}, inputProps, { id: id, 'aria-invalid': invalidDate, 'aria-describedby': avgrensningerInfoId });
+        // Fjern onChange fra input props
+        var onChange = input.onChange,
+            restOfInputProps = __rest(input, ["onChange"]);
+        var dateInputProps = __assign({}, restOfInputProps, { 'aria-invalid': invalidDate, 'aria-describedby': avgrensningerInfoId });
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
             }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.kalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalenderplassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalender && kalender.plassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
                 return _this.kalender = c;
-            } }, kalenderProps, { locale: locale, dato: dato, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
+            } }, kalenderProps, { locale: locale, dato: dato, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
                 return _this.onVelgDag(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);

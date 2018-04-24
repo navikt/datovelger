@@ -21,6 +21,7 @@ export interface State {
 	fra?: Date;
 	til?: Date;
 	hoverTil?: Date;
+	inputTarget?: 'fra' | 'til';
 }
 
 const trimInputProps = (props: DateInputProps) => {
@@ -94,13 +95,15 @@ class Periodevelger extends React.Component<Props, State> {
 			this.setState({
 				fra: dato,
 				til: undefined,
-				hoverTil: this.props.sluttdato
+				hoverTil: this.props.sluttdato,
+				inputTarget: 'til'
 			});
 		}
 		if (!fra) {
 			this.setState({
 				fra: dato,
-				til: this.props.sluttdato
+				til: this.props.sluttdato,
+				inputTarget: 'til'
 			});
 		} else if (fra && !til) {
 			this.setState({
@@ -135,6 +138,7 @@ class Periodevelger extends React.Component<Props, State> {
 		this.setFokusPåKalenderKnapp = true;
 		this.setState({
 			erÅpen: !this.state.erÅpen,
+			inputTarget: 'fra',
 			fra: start || startdato,
 			til: sluttdato
 		});
@@ -194,7 +198,7 @@ class Periodevelger extends React.Component<Props, State> {
 			...kalenderProps
 		} = this.props;
 
-		const { erÅpen, fra, til, hoverTil } = this.state;
+		const { erÅpen, fra, til, hoverTil, inputTarget } = this.state;
 
 		let mod;
 		if ((fra && til) || hoverTil) {
@@ -212,6 +216,7 @@ class Periodevelger extends React.Component<Props, State> {
 			onDayFocus: this.onDayFocus,
 			className: 'DayPicker--range'
 		};
+
 		return (
 			<div className="nav-datovelger">
 				<div className="nav-datovelger__periode">
@@ -223,6 +228,7 @@ class Periodevelger extends React.Component<Props, State> {
 								date={fra || startdato}
 								onDateChange={this.onStartdateChange}
 								onInputChange={this.onStartInputChange}
+								isDatePickerTarget={erÅpen && inputTarget === 'fra'}
 							/>
 							<KalenderKnapp
 								ref={(c) => (this.startKalenderKnapp = c)}
@@ -239,6 +245,7 @@ class Periodevelger extends React.Component<Props, State> {
 								date={til || sluttdato}
 								onDateChange={this.onSluttdateChange}
 								onInputChange={this.onSluttInputChange}
+								isDatePickerTarget={erÅpen && inputTarget === 'til'}
 							/>
 							<KalenderKnapp
 								ref={(c) => (this.sluttKalenderKnapp = c)}
