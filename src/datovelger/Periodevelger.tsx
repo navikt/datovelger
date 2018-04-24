@@ -48,6 +48,7 @@ class Periodevelger extends React.Component<Props, State> {
 		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.lukkKalender = this.lukkKalender.bind(this);
 		this.getSelectedDays = this.getSelectedDays.bind(this);
+		this.onDayFocus = this.onDayFocus.bind(this);
 
 		this.state = {
 			måned: getDefaultMåned(props.startdato || undefined, props.avgrensninger),
@@ -92,12 +93,14 @@ class Periodevelger extends React.Component<Props, State> {
 		if (fra && til) {
 			this.setState({
 				fra: dato,
-				til: undefined
+				til: undefined,
+				hoverTil: this.props.sluttdato
 			});
 		}
 		if (!fra) {
 			this.setState({
-				fra: dato
+				fra: dato,
+				til: this.props.sluttdato
 			});
 		} else if (fra && !til) {
 			this.setState({
@@ -115,13 +118,15 @@ class Periodevelger extends React.Component<Props, State> {
 		}
 	}
 
-	onDayKeyDown(
-		day: Date,
+	onDayFocus(
+		dato: Date,
 		modifiers: DayModifiers,
 		evt: React.KeyboardEvent<HTMLDivElement>
 	) {
-		if (evt.key === 'Enter') {
-			console.log(modifiers);
+		if (this.state.fra) {
+			this.setState({
+				hoverTil: dato
+			});
 		}
 	}
 
@@ -147,10 +152,10 @@ class Periodevelger extends React.Component<Props, State> {
 			prevState.erÅpen &&
 			!this.state.erÅpen &&
 			this.setFokusPåKalenderKnapp &&
-			this.startKalenderKnapp
+			this.sluttKalenderKnapp
 		) {
 			this.setFokusPåKalenderKnapp = false;
-			this.startKalenderKnapp.focus();
+			this.sluttKalenderKnapp.focus();
 		}
 	}
 
@@ -204,7 +209,7 @@ class Periodevelger extends React.Component<Props, State> {
 			onDayMouseEnter: this.onMouseEnter,
 			selectedDays: this.getSelectedDays(),
 			numberOfMonths: 1,
-			onDayKeyDown: this.onDayKeyDown,
+			onDayFocus: this.onDayFocus,
 			className: 'DayPicker--range'
 		};
 		return (
