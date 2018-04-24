@@ -1,33 +1,26 @@
 import * as React from 'react';
-import { DatovelgerCommonProps, DateInputProps, Tidsperiode } from '.';
+import { DatovelgerCommonProps, DateInputProps } from '.';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
 import { RangeModifier } from 'react-day-picker';
-// import { RangeModifier } from 'react-day-picker';
-
-// import { RangeModifier } from 'react-day-picker';
-export interface NyPeriode {
-	startdato?: Date;
-	sluttdato?: Date;
-}
 
 export interface Props extends DatovelgerCommonProps {
-	periode?: Tidsperiode;
-	startInput: DateInputProps;
-	sluttInput: DateInputProps;
-	onChange: (periode: Tidsperiode) => void;
+	startdato?: Date;
+	sluttdato?: Date;
+	startInputProps: DateInputProps;
+	sluttInputProps: DateInputProps;
+	onChange: (fra: Date, til: Date) => void;
 }
 
 export interface State {
 	måned: Date;
-	startInputValue: string;
-	sluttInputValue: string;
 	erÅpen?: boolean;
-	nyPeriode?: NyPeriode;
-	tildato?: Date;
+	fra?: Date;
+	til?: Date;
+	hoverTil?: Date;
 }
 
 const trimInputProps = (props: DateInputProps) => {
@@ -52,91 +45,90 @@ class Periodevelger extends React.Component<Props, State> {
 		this.onSluttInputChange = this.onSluttInputChange.bind(this);
 		this.toggleKalender = this.toggleKalender.bind(this);
 		this.onVelgDato = this.onVelgDato.bind(this);
+		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.lukkKalender = this.lukkKalender.bind(this);
 		this.getSelectedDays = this.getSelectedDays.bind(this);
 
 		this.state = {
-			måned: getDefaultMåned(
-				props.periode ? props.periode.startdato : undefined,
-				props.avgrensninger
-			),
+			måned: getDefaultMåned(props.startdato || undefined, props.avgrensninger),
 			erÅpen: false,
-			startInputValue: '',
-			sluttInputValue: '',
-			tildato: undefined,
-			nyPeriode: undefined
+			// startInputValue: '',
+			// sluttInputValue: '',
+			fra: props.startdato,
+			til: props.sluttdato
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		if (
-			nextProps.periode &&
-			nextProps.periode.startdato &&
-			nextProps.periode.sluttdato
-		) {
-			this.setState({
-				nyPeriode: { ...nextProps.periode }
-			});
-		} else {
-			this.setState({
-				nyPeriode: undefined
-			});
-		}
+		this.setState({
+			fra: nextProps.startdato,
+			til: nextProps.sluttdato,
+			hoverTil: undefined
+		});
 	}
 
-	onStartdateChange(dato: Date) {
-		// console.log(dato);
-		// this.setState({
-		// 	startDato: dato
-		// });
+	onStartdateChange(fra: Date) {
+		this.setState({
+			fra
+		});
+		const { sluttdato } = this.props;
+		const { til } = this.state;
+		if (sluttdato !== undefined || til !== undefined) {
+			this.props.onChange(fra, (sluttdato || til) as Date);
+		}
 	}
 	onStartInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {}
-	onSluttdateChange(dato: Date) {
-		// this.setState({
-		// 	sluttDato: dato
-		// });
+	onSluttdateChange(til: Date) {
+		this.setState({
+			til
+		});
+		const { startdato } = this.props;
+		const { fra } = this.state;
+		if (startdato !== undefined || fra !== undefined) {
+			this.props.onChange((startdato || fra) as Date, til);
+		}
 	}
 	onSluttInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {}
 	onVelgDato(dato: Date, lukkKalender?: boolean) {
-		const { nyPeriode } = this.state;
-		if (!nyPeriode) {
+		const { fra, til } = this.state;
+		if (fra && til) {
 			this.setState({
-				nyPeriode: {
-					startdato: dato
-				}
-			});
-		} else if (nyPeriode && !nyPeriode.sluttdato) {
-			this.setState({
-				nyPeriode: undefined
-			});
-			this.props.onChange({
-				startdato: nyPeriode.startdato,
-				sluttdato: dato
-			} as Tidsperiode);
-			this.lukkKalender();
-		} else {
-			this.setState({
-				nyPeriode: {
-					startdato: dato
-				}
+				fra: dato,
+				til: undefined
 			});
 		}
+		if (!fra) {
+			this.setState({
+				fra: dato
+			});
+		} else if (fra && !til) {
+			this.setState({
+				fra,
+				til: dato
+			});
+			this.props.onChange(fra, dato);
+			this.lukkKalender();
+		}
 	}
+
+	onMouseEnter(dato: Date) {
+		if (this.state.fra && !this.state.til) {
+			this.setState({ hoverTil: dato });
+		}
+	}
+
 	toggleKalender(start?: Date) {
+		const { startdato, sluttdato } = this.props;
 		this.setFokusPåKalenderKnapp = true;
 		this.setState({
 			erÅpen: !this.state.erÅpen,
-			nyPeriode: start ? { startdato: start } : undefined,
-			tildato: start
-				? this.props.periode
-					? this.props.periode.sluttdato
-					: undefined
-				: undefined
+			fra: start || startdato,
+			til: sluttdato
 		});
 	}
 
 	lukkKalender(settFokusPåKalenderknapp?: boolean) {
-		this.setState({ erÅpen: false, tildato: undefined });
+		this.setState({ erÅpen: false });
 		this.setFokusPåKalenderKnapp = settFokusPåKalenderknapp;
 	}
 
@@ -155,26 +147,21 @@ class Periodevelger extends React.Component<Props, State> {
 	}
 
 	getSelectedDays() {
-		const { nyPeriode, tildato } = this.state;
-		if (nyPeriode && nyPeriode.startdato && nyPeriode.sluttdato) {
+		const { fra, til } = this.state;
+		if (fra && til) {
 			return [
-				nyPeriode.startdato,
+				fra,
 				{
-					from: nyPeriode.startdato,
-					to: nyPeriode.sluttdato
+					from: fra,
+					to: til
 				} as RangeModifier
 			];
-		} else if (
-			nyPeriode &&
-			nyPeriode.startdato &&
-			!nyPeriode.sluttdato &&
-			tildato
-		) {
+		} else if (fra && !til && this.state.hoverTil) {
 			return [
-				nyPeriode.startdato,
+				fra,
 				{
-					from: nyPeriode.startdato,
-					to: tildato
+					from: fra,
+					to: this.state.hoverTil
 				} as RangeModifier
 			];
 		}
@@ -183,39 +170,32 @@ class Periodevelger extends React.Component<Props, State> {
 
 	render() {
 		const {
-			periode = { startdato: undefined, sluttdato: undefined },
+			startdato,
+			sluttdato,
 			kalender,
 			avgrensninger,
 			locale = 'nb',
 			kanVelgeUgyldigDato = false,
-			startInput,
-			sluttInput,
+			startInputProps,
+			sluttInputProps,
 			...kalenderProps
 		} = this.props;
 
-		const { erÅpen, nyPeriode, tildato } = this.state;
+		const { erÅpen, fra, til, hoverTil } = this.state;
 
 		let mod;
-		if (nyPeriode && tildato) {
+		if ((fra && til) || hoverTil) {
 			mod = {
-				start: nyPeriode.startdato,
-				end: tildato
+				start: fra,
+				end: til || hoverTil
 			};
 		}
 		const dayPickerProps = {
 			...this.props.dayPickerProps,
 			modifiers: mod,
-			onDayMouseEnter: (dato: Date) => {
-				if (
-					this.state.nyPeriode &&
-					this.state.nyPeriode.startdato &&
-					!this.state.nyPeriode.sluttdato
-				) {
-					this.setState({ tildato: dato });
-				}
-			},
+			onDayMouseEnter: this.onMouseEnter,
 			selectedDays: this.getSelectedDays(),
-			numberOfMonths: 2,
+			numberOfMonths: 1,
 			className: 'DayPicker--range'
 		};
 		return (
@@ -224,9 +204,9 @@ class Periodevelger extends React.Component<Props, State> {
 					<div className="nav-datovelger__periode__startInput">
 						<div className="nav-datovelger__inputContainer">
 							<Datoinput
-								inputProps={trimInputProps(startInput)}
+								inputProps={trimInputProps(startInputProps)}
 								ref={(c) => (this.startInput = c)}
-								date={nyPeriode ? nyPeriode.startdato : periode.startdato}
+								date={fra || startdato}
 								onDateChange={this.onStartdateChange}
 								onInputChange={this.onStartInputChange}
 							/>
@@ -240,21 +220,15 @@ class Periodevelger extends React.Component<Props, State> {
 					<div className="nav-datovelger__periode__sluttInput">
 						<div className="nav-datovelger__inputContainer">
 							<Datoinput
-								inputProps={trimInputProps(sluttInput)}
+								inputProps={trimInputProps(sluttInputProps)}
 								ref={(c) => (this.sluttInput = c)}
-								date={periode.sluttdato}
+								date={til || sluttdato}
 								onDateChange={this.onSluttdateChange}
 								onInputChange={this.onSluttInputChange}
 							/>
 							<KalenderKnapp
 								ref={(c) => (this.sluttKalenderKnapp = c)}
-								onClick={() =>
-									this.toggleKalender(
-										this.props.periode
-											? this.props.periode.startdato
-											: undefined
-									)
-								}
+								onClick={() => this.toggleKalender(startdato)}
 								erÅpen={erÅpen || false}
 							/>
 						</div>
