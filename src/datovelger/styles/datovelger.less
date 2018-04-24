@@ -114,4 +114,17 @@
 		overflow: hidden;
 	}
 	.DayPicker();
+	&__periode {
+		display: flex;
+		padding-right: 2.5rem;
+		&__startInput {
+			padding-right: 1.5rem;
+			&:after {
+				content: '—';
+				margin-left: 0.35rem;
+				line-height: 2rem;
+				position: absolute;
+			}
+		}
+	}
 }

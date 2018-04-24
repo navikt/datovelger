@@ -5,7 +5,10 @@
 	"main": "dist/datovelger/index.js",
 	"types": "dist/datovelger/index.d.ts",
 	"license": "MIT",
-	"files": ["/src", "/dist"],
+	"files": [
+		"/src",
+		"/dist"
+	],
 	"author": "NAV developer",
 	"repository": {
 		"type": "git",
@@ -22,7 +25,7 @@
 		"nav-frontend-core": "^4.0.5",
 		"nav-frontend-js-utils": "^1.0.3",
 		"nav-frontend-typografi": "^2.0.2",
-		"react-day-picker": "^7.1.4",
+		"react-day-picker": "^7.1.6",
 		"react-dom": "^16.2.0"
 	},
 	"devDependencies": {
@@ -32,6 +35,7 @@
 		"babel-plugin-transform-react-display-name": "^6.25.0",
 		"chokidar": "^2.0.2",
 		"classnames": "^2.2.5",
+		"gulp": "^3.9.1",
 		"gulp-babel": "^7.0.1",
 		"gulp-batch": "^1.0.5",
 		"gulp-insert": "^0.5.0",
@@ -40,7 +44,6 @@
 		"gulp-plumber": "^1.2.0",
 		"gulp-typescript": "^4.0.1",
 		"gulp-watch": "^5.0.0",
-		"gulp": "^3.9.1",
 		"merge2": "^1.2.1",
 		"nav-frontend-knapper-style": "^0.3.7",
 		"nav-frontend-skjema-style": "^0.3.16",

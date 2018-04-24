@@ -22,7 +22,7 @@ import { LocaleUtils } from 'react-day-picker/types/utils';
 
 export interface Props {
 	måned: Date;
-	dato?: Date;
+	dato?: Date | Date[];
 	locale: string;
 	min?: Date;
 	maks?: Date;
