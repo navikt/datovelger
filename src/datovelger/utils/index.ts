@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { Avgrensninger } from '../';
+import { Avgrensninger } from '../types';
 import {
 	Modifier,
 	RangeModifier,

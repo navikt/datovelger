@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DatovelgerCommonProps, DateInputProps } from '.';
+import { DatovelgerCommonProps, DateInputProps } from './Datovelger';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
@@ -77,7 +77,13 @@ class Periodevelger extends React.Component<Props, State> {
 			this.props.onChange(fra, (sluttdato || til) as Date);
 		}
 	}
-	onStartInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {}
+
+	onStartInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {
+		if (this.props.startInputProps.onChange) {
+			this.props.startInputProps.onChange(verdi, evt);
+		}
+	}
+
 	onSluttdateChange(til: Date) {
 		this.setState({
 			til
@@ -88,7 +94,13 @@ class Periodevelger extends React.Component<Props, State> {
 			this.props.onChange((startdato || fra) as Date, til);
 		}
 	}
-	onSluttInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {}
+
+	onSluttInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {
+		if (this.props.sluttInputProps.onChange) {
+			this.props.sluttInputProps.onChange(verdi, evt);
+		}
+	}
+
 	onVelgDato(dato: Date, lukkKalender?: boolean) {
 		const { fra, til } = this.state;
 		if (fra && til) {

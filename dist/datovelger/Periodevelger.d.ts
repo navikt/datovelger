@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import * as React from 'react';
-import { DatovelgerCommonProps, DateInputProps } from '.';
+import { DatovelgerCommonProps, DateInputProps } from './Datovelger';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Kalender from './kalender/Kalender';

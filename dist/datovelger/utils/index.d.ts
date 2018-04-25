@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { Avgrensninger } from '../';
+import { Avgrensninger } from '../types';
 import { Modifier } from 'react-day-picker';
 export * from './kalenderFokusUtils';
 export declare const isDateObject: (date: any) => any;

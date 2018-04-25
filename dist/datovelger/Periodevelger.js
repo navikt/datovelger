@@ -78,7 +78,11 @@ var Periodevelger = /** @class */function (_super) {
             this.props.onChange(fra, sluttdato || til);
         }
     };
-    Periodevelger.prototype.onStartInputChange = function (verdi, evt) {};
+    Periodevelger.prototype.onStartInputChange = function (verdi, evt) {
+        if (this.props.startInputProps.onChange) {
+            this.props.startInputProps.onChange(verdi, evt);
+        }
+    };
     Periodevelger.prototype.onSluttdateChange = function (til) {
         this.setState({
             til: til
@@ -89,7 +93,11 @@ var Periodevelger = /** @class */function (_super) {
             this.props.onChange(startdato || fra, til);
         }
     };
-    Periodevelger.prototype.onSluttInputChange = function (verdi, evt) {};
+    Periodevelger.prototype.onSluttInputChange = function (verdi, evt) {
+        if (this.props.sluttInputProps.onChange) {
+            this.props.sluttInputProps.onChange(verdi, evt);
+        }
+    };
     Periodevelger.prototype.onVelgDato = function (dato, lukkKalender) {
         var _a = this.state,
             fra = _a.fra,
