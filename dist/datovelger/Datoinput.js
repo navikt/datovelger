@@ -23,6 +23,7 @@ var __assign = this && this.__assign || Object.assign || function (t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+var classnames = require("classnames");
 var utils_1 = require("./utils");
 exports.dateRegExp = /^(\d{1,2}).(\d{1,2}).(\d{4})$/;
 var getDateFromString = function (value) {
@@ -85,9 +86,11 @@ var Input = /** @class */function (_super) {
     Input.prototype.render = function () {
         var _this = this;
         var inputProps = this.props.inputProps;
-        return React.createElement("input", __assign({}, inputProps, { autoComplete: "off", autoCorrect: "off", pattern: "\\d{2}.\\d{2}.\\d{4}", type: "text", ref: function (c) {
+        return React.createElement("input", __assign({}, inputProps, { className: classnames('nav-datovelger__input', {
+                'nav-datovelger__input--datePickerTarget': this.props.isDatePickerTarget
+            }), autoComplete: "off", autoCorrect: "off", pattern: "\\d{2}.\\d{2}.\\d{4}", type: "text", ref: function (c) {
                 return _this.input = c;
-            }, value: this.state.value, className: "nav-datovelger__input", maxLength: 10, onChange: this.onChange, onBlur: this.onBlur, onKeyDown: this.onKeyDown }));
+            }, value: this.state.value, maxLength: 10, onChange: this.onChange, onBlur: this.onBlur, onKeyDown: this.onKeyDown }));
     };
     return Input;
 }(React.Component);

@@ -1,18 +1,25 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { Avgrensninger } from '../types';
+import {
+	Modifier,
+	RangeModifier,
+	AfterModifier,
+	BeforeModifier,
+	DaysOfWeekModifier
+} from 'react-day-picker';
 
 export * from './kalenderFokusUtils';
 
-export const isDateObject = (date: any) => (
-	date && typeof date === "object" && date.getDate
-);
+export const isDateObject = (date: any) =>
+	date && typeof date === 'object' && date.getDate;
 
 export const normaliserDato = (d: Date): Moment => moment(d).startOf('day');
 
 export const formatDateInputValue = (date?: Date) => {
 	if (isDateObject(date)) {
 		return moment(date).format('DD.MM.YYYY');
-	} else if (typeof date === "string") {
+	} else if (typeof date === 'string') {
 		return date;
 	}
 	return '';
@@ -48,3 +55,49 @@ export const erMånedTilgjengelig = (
 	return erEtterMin && erFørMaks;
 };
 
+export const getUtilgjengeligeDager = (
+	avgrensninger: Avgrensninger
+): Modifier[] => {
+	let ugyldigeDager: Modifier[] = [];
+	if (avgrensninger.ugyldigeTidsperioder) {
+		ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
+			(t): RangeModifier => {
+				return {
+					from: t.startdato,
+					to: t.sluttdato
+				};
+			}
+		);
+	}
+	const minDato =
+		avgrensninger.minDato && normaliserDato(avgrensninger.minDato);
+	const maksDato =
+		avgrensninger.maksDato && normaliserDato(avgrensninger.maksDato);
+	const helgedager = {
+		daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : []
+	};
+	return [
+		...ugyldigeDager,
+		...(maksDato ? [{ after: maksDato.toDate() } as AfterModifier] : []),
+		...(minDato ? [{ before: minDato.toDate() } as BeforeModifier] : []),
+		...[helgedager as DaysOfWeekModifier]
+	];
+};
+
+export const getDefaultMåned = (
+	dato: Date | undefined,
+	avgrensninger?: Avgrensninger
+): Date => {
+	if (dato && isDateObject(dato)) {
+		return dato;
+	}
+	const idag = normaliserDato(new Date()).toDate();
+	if (avgrensninger) {
+		if (avgrensninger.minDato) {
+			return moment(avgrensninger.minDato).isAfter(idag)
+				? avgrensninger.minDato
+				: idag;
+		}
+	}
+	return idag;
+};

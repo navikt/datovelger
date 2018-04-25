@@ -11,6 +11,8 @@
 		box-sizing: border-box;
 	}
 	@input-width: 11rem;
+	@input-width-range: 9rem;
+
 	position: relative;
 	display: inline-block;
 	&__inputContainer {
@@ -50,6 +52,9 @@
 		.inputStyling();
 		width: 100%;
 		padding-right: 3rem;
+		&--datePickerTarget {
+			.focusOutline();
+		}
 	}
 	&__navbar {
 		position: absolute;
@@ -114,4 +119,20 @@
 		overflow: hidden;
 	}
 	.DayPicker();
+	&__periode {
+		display: flex;
+		padding-right: 2.5rem;
+		.nav-datovelger__inputContainer {
+			width: @input-width-range;
+		}
+		&__startInput {
+			padding-right: 1.5rem;
+			&:after {
+				content: '—';
+				margin-left: 0.35rem;
+				line-height: 2rem;
+				position: absolute;
+			}
+		}
+	}
 }
