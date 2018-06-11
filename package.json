@@ -1,11 +1,14 @@
 {
 	"name": "nav-datovelger",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"description": "Enkel datovelger",
 	"main": "dist/datovelger/index.js",
 	"types": "dist/datovelger/index.d.ts",
 	"license": "MIT",
-	"files": ["/src", "/dist"],
+	"files": [
+		"/src",
+		"/dist"
+	],
 	"author": "NAV developer",
 	"repository": {
 		"type": "git",
