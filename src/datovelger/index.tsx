@@ -38,13 +38,18 @@ export interface Props {
 	avgrensninger?: Avgrensninger;
 	/** Kalles når en dato velges */
 	onChange: (date: Date, validering?: DatoValidering) => void;
-	onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
+	onInputChange?: (
+		value: string,
+		evt: React.ChangeEvent<HTMLInputElement>
+	) => void;
 	/** Input props */
 	inputProps?: {
 		placeholder?: string;
 		required?: boolean;
 		ariaDescribedby?: string;
 	};
+	/** Disabled all funksjonalitet */
+	disabled?: boolean;
 	/** Om ukenumre skal vises - default false */
 	visUkenumre?: boolean;
 	/** Språk */
@@ -168,7 +173,7 @@ class Datovelger extends React.Component<Props, State> {
 			inputValue: dato
 		});
 		if (onInputChange) {
-			onInputChange(value, event)
+			onInputChange(value, event);
 		}
 	}
 
@@ -205,6 +210,7 @@ class Datovelger extends React.Component<Props, State> {
 			locale = 'nb',
 			kalenderplassering = 'under',
 			kanVelgeUgyldigDato = false,
+			disabled,
 			...kalenderProps
 		} = this.props;
 
@@ -241,6 +247,7 @@ class Datovelger extends React.Component<Props, State> {
 							onInputChange={this.onDateInputChange}
 						/>
 						<KalenderKnapp
+							disabled={disabled}
 							ref={(c) => (this.kalenderKnapp = c)}
 							onClick={this.toggleKalender}
 							erÅpen={erÅpen || false}

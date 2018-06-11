@@ -5,7 +5,11 @@ export interface Props {
 	date?: Date;
 	onDateChange: (date: Date | undefined) => void;
 	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-	onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
+	onInputChange?: (
+		value: string,
+		evt: React.ChangeEvent<HTMLInputElement>
+	) => void;
+	disabled?: boolean;
 }
 
 export interface State {
@@ -80,10 +84,11 @@ export class Input extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { inputProps } = this.props;
+		const { inputProps, disabled } = this.props;
 		return (
 			<input
 				{...inputProps}
+				disabled={disabled}
 				autoComplete="off"
 				autoCorrect="off"
 				pattern="\d{2}.\d{2}.\d{4}"

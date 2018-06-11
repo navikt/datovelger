@@ -29,6 +29,8 @@ export interface Props {
         required?: boolean;
         ariaDescribedby?: string;
     };
+    /** Disabled all funksjonalitet */
+    disabled?: boolean;
     /** Om ukenumre skal vises - default false */
     visUkenumre?: boolean;
     /** Språk */

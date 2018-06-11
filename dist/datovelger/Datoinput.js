@@ -84,8 +84,10 @@ var Input = /** @class */function (_super) {
     };
     Input.prototype.render = function () {
         var _this = this;
-        var inputProps = this.props.inputProps;
-        return React.createElement("input", __assign({}, inputProps, { autoComplete: "off", autoCorrect: "off", pattern: "\\d{2}.\\d{2}.\\d{4}", type: "text", ref: function (c) {
+        var _a = this.props,
+            inputProps = _a.inputProps,
+            disabled = _a.disabled;
+        return React.createElement("input", __assign({}, inputProps, { disabled: disabled, autoComplete: "off", autoCorrect: "off", pattern: "\\d{2}.\\d{2}.\\d{4}", type: "text", ref: function (c) {
                 return _this.input = c;
             }, value: this.state.value, className: "nav-datovelger__input", maxLength: 10, onChange: this.onChange, onBlur: this.onBlur, onKeyDown: this.onKeyDown }));
     };
