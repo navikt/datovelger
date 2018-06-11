@@ -873,6 +873,10 @@ body .blokk-xl {
 .nav-datovelger__kalenderknapp:focus {
   outline: none;
 }
+.nav-datovelger__kalenderknapp:disabled {
+  background: transparent;
+  cursor: default;
+}
 .nav-datovelger__caption {
   padding: 0 2rem;
   text-align: center;
