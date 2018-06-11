@@ -32,13 +32,14 @@ var KalenderKnapp = /** @class */function (_super) {
         var _this = this;
         var _a = this.props,
             onClick = _a.onClick,
-            erÅpen = _a.erÅpen;
+            erÅpen = _a.erÅpen,
+            disabled = _a.disabled;
         return React.createElement("button", { ref: function (c) {
                 return _this.button = c;
             }, type: "button", className: "nav-datovelger__kalenderknapp", onClick: function (e) {
                 e.preventDefault();
                 onClick();
-            }, role: "button", "aria-label": tekster_1.Tekster.kalenderLabel, "aria-expanded": erÅpen }, React.createElement(KalenderIkon_1.default, null));
+            }, role: "button", disabled: disabled, "aria-label": tekster_1.Tekster.kalenderLabel, "aria-expanded": erÅpen }, React.createElement(KalenderIkon_1.default, null));
     };
     return KalenderKnapp;
 }(React.Component);

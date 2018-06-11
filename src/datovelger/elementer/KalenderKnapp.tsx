@@ -4,6 +4,7 @@ import { Tekster } from '../tekster';
 
 export interface Props {
 	onClick: () => void;
+	disabled?: boolean;
 	erÅpen: boolean;
 }
 
@@ -18,7 +19,7 @@ class KalenderKnapp extends React.Component<Props> {
 		}
 	}
 	render() {
-		const { onClick, erÅpen } = this.props;
+		const { onClick, erÅpen, disabled } = this.props;
 
 		return (
 			<button
@@ -30,6 +31,7 @@ class KalenderKnapp extends React.Component<Props> {
 					onClick();
 				}}
 				role="button"
+				disabled={disabled}
 				aria-label={Tekster.kalenderLabel}
 				aria-expanded={erÅpen}>
 				<KalenderIkon />
