@@ -245,6 +245,7 @@ class Datovelger extends React.Component<Props, State> {
 							date={dato}
 							onDateChange={this.onDatoDateChange}
 							onInputChange={this.onDateInputChange}
+							disabled={disabled}
 						/>
 						<KalenderKnapp
 							disabled={disabled}
