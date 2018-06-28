@@ -28,7 +28,6 @@ var moment = require("moment");
 var FocusTrap = require("focus-trap-react");
 var utils_1 = require("../utils");
 var Navbar_1 = require("./Navbar");
-var KeyboardNavigation_1 = require("../common/KeyboardNavigation");
 var TittelOgNavigasjon_1 = require("./TittelOgNavigasjon");
 var localeUtils_1 = require("./localeUtils");
 var Kalender = /** @class */function (_super) {
@@ -81,7 +80,6 @@ var Kalender = /** @class */function (_super) {
             min = _a.min,
             maks = _a.maks,
             locale = _a.locale,
-            onLukk = _a.onLukk,
             visUkenumre = _a.visUkenumre,
             utilgjengeligeDager = _a.utilgjengeligeDager,
             dayPickerProps = _a.dayPickerProps;
@@ -99,10 +97,10 @@ var Kalender = /** @class */function (_super) {
         };
         return React.createElement("div", { ref: function (c) {
                 return _this.kalender = c;
-            }, role: "dialog", "aria-label": "Kalender", className: "nav-datovelger__kalender" }, React.createElement(KeyboardNavigation_1.default, { onEscape: onLukk }, React.createElement(FocusTrap, { active: true, focusTrapOptions: {
+            }, role: "dialog", "aria-label": "Kalender", className: "nav-datovelger__kalender" }, React.createElement(FocusTrap, { active: true, focusTrapOptions: {
                 clickOutsideDeactivates: true,
                 onDeactivate: this.props.onLukk
-            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: utils_1.isDateObject(dato) ? dato : undefined, onDayClick: this.onByttDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps)))));
+            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: utils_1.isDateObject(dato) ? dato : undefined, onDayClick: this.onByttDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps))));
     };
     return Kalender;
 }(React.Component);
