@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-import * as moment from 'moment';
 import { guid } from 'nav-frontend-js-utils';
 import { Avgrensninger, KalenderPlassering } from './types';
-import { normaliserDato, isDateObject } from './utils';
+import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
 import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
@@ -11,13 +10,6 @@ import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
 import AvgrensningerInfo from './elementer/AvgrensningerInfo';
 import Kalender from './kalender/Kalender';
-import {
-	Modifier,
-	RangeModifier,
-	DaysOfWeekModifier,
-	BeforeModifier,
-	AfterModifier
-} from 'react-day-picker';
 import KalenderPortal from './elementer/KalenderPortal';
 
 export { Avgrensninger, Tidsperiode } from './types';
@@ -29,80 +21,41 @@ export interface State {
 	inputValue: string;
 }
 
-export interface Props {
-	/** Påkrevd id som settes på inputfeltet */
+export interface DateInputProps {
 	id: string;
-	/** Valgt dato */
-	dato?: Date;
+	placeholder?: string;
+	required?: boolean;
+	ariaDescribedby?: string;
+	onChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface DatovelgerCommonProps {
+	kalender?: {
+		/** Om ukenumre skal vises - default false */
+		visUkenumre?: boolean;
+		/** Hvor kalender skal vises. Default under */
+		plassering?: KalenderPlassering;
+	};
 	/** Begrensninger på hvilke datoer bruker kan velge */
 	avgrensninger?: Avgrensninger;
-	/** Kalles når en dato velges */
-	onChange: (date: Date, validering?: DatoValidering) => void;
-	onInputChange?: (
-		value: string,
-		evt: React.ChangeEvent<HTMLInputElement>
-	) => void;
-	/** Input props */
-	inputProps?: {
-		placeholder?: string;
-		required?: boolean;
-		ariaDescribedby?: string;
-	};
-	/** Disabled all funksjonalitet */
-	disabled?: boolean;
-	/** Om ukenumre skal vises - default false */
-	visUkenumre?: boolean;
-	/** Språk */
-	locale?: string;
-	/** Hvor kalender skal vises. Default under */
-	kalenderplassering?: KalenderPlassering;
 	/** Default false. Tillater bruker å velge ugyldig dato. */
 	kanVelgeUgyldigDato?: boolean;
 	/** dayPickerProps */
 	dayPickerProps?: DayPickerProps;
+	/** Språk */
+	locale?: string;
+	/** Datovelger er låst */
+	disabled?: boolean;
 }
 
-const getUtilgjengeligeDager = (avgrensninger: Avgrensninger): Modifier[] => {
-	let ugyldigeDager: Modifier[] = [];
-	if (avgrensninger.ugyldigeTidsperioder) {
-		ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
-			(t): RangeModifier => {
-				return {
-					from: t.startdato,
-					to: t.sluttdato
-				};
-			}
-		);
-	}
-	const minDato =
-		avgrensninger.minDato && normaliserDato(avgrensninger.minDato);
-	const maksDato =
-		avgrensninger.maksDato && normaliserDato(avgrensninger.maksDato);
-	const helgedager = {
-		daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : []
-	};
-	return [
-		...ugyldigeDager,
-		...(maksDato ? [{ after: maksDato.toDate() } as AfterModifier] : []),
-		...(minDato ? [{ before: minDato.toDate() } as BeforeModifier] : []),
-		...[helgedager as DaysOfWeekModifier]
-	];
-};
-
-const getDefaultMåned = (props: Props): Date => {
-	if (props.dato && isDateObject(props.dato)) {
-		return props.dato;
-	}
-	const idag = normaliserDato(new Date()).toDate();
-	if (props.avgrensninger) {
-		if (props.avgrensninger.minDato) {
-			return moment(props.avgrensninger.minDato).isAfter(idag)
-				? props.avgrensninger.minDato
-				: idag;
-		}
-	}
-	return idag;
-};
+export interface Props extends DatovelgerCommonProps {
+	/** Props for tekstinput feltet */
+	input: DateInputProps;
+	/** Valgt dato */
+	dato?: Date;
+	/** Kalles når en dato velges */
+	onChange: (date: Date, validering?: DatoValidering) => void;
+}
 
 class Datovelger extends React.Component<Props, State> {
 	instansId: string;
@@ -123,7 +76,7 @@ class Datovelger extends React.Component<Props, State> {
 		this.onDateInputChange = this.onDateInputChange.bind(this);
 
 		this.state = {
-			måned: getDefaultMåned(props),
+			måned: getDefaultMåned(props.dato, props.avgrensninger),
 			datovalidering: props.dato
 				? validerDato(props.dato, props.avgrensninger || {})
 				: 'datoErIkkeDefinert',
@@ -138,7 +91,7 @@ class Datovelger extends React.Component<Props, State> {
 				nextProps.dato,
 				nextProps.avgrensninger || {}
 			),
-			måned: getDefaultMåned(nextProps)
+			måned: getDefaultMåned(nextProps.dato, nextProps.avgrensninger)
 		});
 	}
 
@@ -164,7 +117,7 @@ class Datovelger extends React.Component<Props, State> {
 	}
 
 	onDateInputChange(value: string, event: React.ChangeEvent<HTMLInputElement>) {
-		const { avgrensninger, onInputChange } = this.props;
+		const { avgrensninger, input } = this.props;
 		const dato = event.target.value;
 		const datovalidering = validerDato(dato, avgrensninger || {});
 		this.setState({
@@ -172,8 +125,8 @@ class Datovelger extends React.Component<Props, State> {
 			datovalidering,
 			inputValue: dato
 		});
-		if (onInputChange) {
-			onInputChange(value, event);
+		if (input.onChange) {
+			input.onChange(value, event);
 		}
 	}
 
@@ -204,13 +157,12 @@ class Datovelger extends React.Component<Props, State> {
 	render() {
 		const {
 			dato,
-			id,
-			inputProps,
+			input,
+			kalender,
 			avgrensninger,
 			locale = 'nb',
-			kalenderplassering = 'under',
-			kanVelgeUgyldigDato = false,
 			disabled,
+			kanVelgeUgyldigDato = false,
 			...kalenderProps
 		} = this.props;
 
@@ -221,9 +173,10 @@ class Datovelger extends React.Component<Props, State> {
 		const invalidDate =
 			datovalidering !== 'gyldig' && this.state.inputValue !== '';
 
+		// Fjern onChange fra input props
+		const { onChange, ...restOfInputProps } = input;
 		const dateInputProps = {
-			...inputProps,
-			id,
+			...restOfInputProps,
 			'aria-invalid': invalidDate,
 			'aria-describedby': avgrensningerInfoId
 		};
@@ -255,7 +208,7 @@ class Datovelger extends React.Component<Props, State> {
 						/>
 					</div>
 					{erÅpen && (
-						<KalenderPortal plassering={kalenderplassering}>
+						<KalenderPortal plassering={kalender && kalender.plassering}>
 							<Kalender
 								ref={(c) => (this.kalender = c)}
 								{...kalenderProps}

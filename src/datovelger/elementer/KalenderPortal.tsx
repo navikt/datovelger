@@ -3,11 +3,11 @@ import * as classnames from 'classnames';
 import { KalenderPlassering } from '../types';
 
 export interface Props {
-	plassering: KalenderPlassering;
+	plassering?: KalenderPlassering;
 }
 
 const KalenderPortal: React.StatelessComponent<Props> = ({
-	plassering,
+	plassering = 'under',
 	children
 }) => (
 	<div
