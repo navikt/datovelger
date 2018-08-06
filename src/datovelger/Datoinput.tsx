@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as classnames from 'classnames';
 import { formatDateInputValue } from './utils';
 
 export interface Props {
@@ -9,6 +10,7 @@ export interface Props {
 		value: string,
 		evt: React.ChangeEvent<HTMLInputElement>
 	) => void;
+	isDatePickerTarget?: boolean;
 	disabled?: boolean;
 }
 
@@ -88,6 +90,10 @@ export class Input extends React.Component<Props, State> {
 		return (
 			<input
 				{...inputProps}
+				className={classnames('nav-datovelger__input', {
+					'nav-datovelger__input--datePickerTarget': this.props
+						.isDatePickerTarget
+				})}
 				disabled={disabled}
 				autoComplete="off"
 				autoCorrect="off"
@@ -95,7 +101,6 @@ export class Input extends React.Component<Props, State> {
 				type="text"
 				ref={(c) => (this.input = c)}
 				value={this.state.value}
-				className="nav-datovelger__input"
 				maxLength={10}
 				onChange={this.onChange}
 				onBlur={this.onBlur}

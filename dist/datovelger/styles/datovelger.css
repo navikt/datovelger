@@ -907,6 +907,11 @@ body .blokk-xl {
   color: #3E3832 !important;
   font-style: normal;
 }
+.nav-datovelger__input--datePickerTarget {
+  outline: none;
+  box-shadow: 0 0 0 3px #FFBD66;
+  border-radius: 3px;
+}
 .nav-datovelger__navbar {
   position: absolute;
   left: 0.6rem;
@@ -1092,5 +1097,33 @@ body .blokk-xl {
   top: 0;
   right: 0.5rem;
   background-color: #C6C2BF;
+  position: absolute;
+}
+.nav-datovelger .DayPicker--range .DayPicker-Day--selected {
+  background-color: #3385d1 !important;
+}
+.nav-datovelger .DayPicker--range .DayPicker-Day--start {
+  background-color: #0067C5 !important;
+}
+.nav-datovelger .DayPicker--range .DayPicker-Day--end {
+  background-color: #0067C5 !important;
+}
+.nav-datovelger .DayPicker--range .DayPicker-Day--outside {
+  visibility: hidden;
+}
+.nav-datovelger__periode {
+  display: flex;
+  padding-right: 2.5rem;
+}
+.nav-datovelger__periode .nav-datovelger__inputContainer {
+  width: 9rem;
+}
+.nav-datovelger__periode__startInput {
+  padding-right: 1.5rem;
+}
+.nav-datovelger__periode__startInput:after {
+  content: '—';
+  margin-left: 0.35rem;
+  line-height: 2rem;
   position: absolute;
 }

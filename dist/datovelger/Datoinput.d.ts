@@ -5,6 +5,7 @@ export interface Props {
     onDateChange: (date: Date | undefined) => void;
     inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
     onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
+    isDatePickerTarget?: boolean;
     disabled?: boolean;
 }
 export interface State {
