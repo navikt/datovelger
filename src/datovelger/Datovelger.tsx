@@ -11,8 +11,6 @@ import AvgrensningerInfo from './elementer/AvgrensningerInfo';
 import Kalender from './kalender/Kalender';
 import KalenderPortal from './elementer/KalenderPortal';
 
-export { Avgrensninger, Tidsperiode } from './types';
-
 export interface State {
 	måned: Date;
 	datovalidering: DatoValidering;

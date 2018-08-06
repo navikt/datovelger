@@ -6,7 +6,6 @@ import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Datoinput from './Datoinput';
 import Kalender from './kalender/Kalender';
-export { Avgrensninger, Tidsperiode } from './types';
 export interface State {
     måned: Date;
     datovalidering: DatoValidering;

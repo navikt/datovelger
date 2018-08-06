@@ -9,3 +9,4 @@ declare const _default: {
 export default _default;
 export { Props as DatovelgerProps } from './Datovelger';
 export { Props as PeriodevelgerProps } from './Periodevelger';
+export { Tidsperiode, Avgrensninger } from './types';
