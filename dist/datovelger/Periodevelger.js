@@ -35,13 +35,16 @@ var utils_1 = require("./utils");
 var KalenderPortal_1 = require("./elementer/KalenderPortal");
 var Kalender_1 = require("./kalender/Kalender");
 var trimInputProps = function (componentId, id, props) {
+    var standardProps = {
+        id: componentId + "_" + id
+    };
     if (!props) {
-        return undefined;
+        return standardProps;
     }
     var onChange = props.onChange,
         ariaDescribedby = props.ariaDescribedby,
         rest = __rest(props, ["onChange", "ariaDescribedby"]);
-    return __assign({}, rest, { id: componentId + "_" + id, 'aria-describedby': ariaDescribedby });
+    return __assign({}, standardProps, { 'aria-describedby': ariaDescribedby }, rest);
 };
 var Periodevelger = /** @class */function (_super) {
     __extends(Periodevelger, _super);
