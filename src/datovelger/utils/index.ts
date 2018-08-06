@@ -63,8 +63,8 @@ export const getUtilgjengeligeDager = (
 		ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
 			(t): RangeModifier => {
 				return {
-					from: t.startdato,
-					to: t.sluttdato
+					from: t.fom,
+					to: t.tom
 				};
 			}
 		);

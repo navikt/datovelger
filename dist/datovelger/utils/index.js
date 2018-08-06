@@ -45,8 +45,8 @@ exports.getUtilgjengeligeDager = function (avgrensninger) {
     if (avgrensninger.ugyldigeTidsperioder) {
         ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(function (t) {
             return {
-                from: t.startdato,
-                to: t.sluttdato
+                from: t.fom,
+                to: t.tom
             };
         });
     }

@@ -56,7 +56,7 @@ exports.erDatoITidsperioder = function (dato, tidsperioder) {
     var d = _1.normaliserDato(dato);
     var gyldig = false;
     tidsperioder.forEach(function (periode) {
-        if (gyldig && d.isSameOrAfter(_1.normaliserDato(periode.startdato)) && d.isSameOrBefore(_1.normaliserDato(periode.sluttdato))) {
+        if (gyldig && d.isSameOrAfter(_1.normaliserDato(periode.fom)) && d.isSameOrBefore(_1.normaliserDato(periode.tom))) {
             gyldig = true;
         }
     });

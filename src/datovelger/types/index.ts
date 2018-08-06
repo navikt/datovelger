@@ -1,8 +1,8 @@
 export interface Tidsperiode {
 	/** Dato fra og med */
-	startdato: Date;
+	fom: Date;
 	/** Dato til og med */
-	sluttdato: Date;
+	tom: Date;
 }
 
 export interface Avgrensninger {

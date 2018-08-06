@@ -81,8 +81,8 @@ export const erDatoITidsperioder = (
 	tidsperioder.forEach((periode) => {
 		if (
 			gyldig &&
-			d.isSameOrAfter(normaliserDato(periode.startdato)) &&
-			d.isSameOrBefore(normaliserDato(periode.sluttdato))
+			d.isSameOrAfter(normaliserDato(periode.fom)) &&
+			d.isSameOrBefore(normaliserDato(periode.tom))
 		) {
 			gyldig = true;
 		}
