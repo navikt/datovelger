@@ -21,7 +21,6 @@ export interface State {
 }
 
 export interface DateInputProps {
-	id: string;
 	placeholder?: string;
 	required?: boolean;
 	ariaDescribedby?: string;
@@ -29,6 +28,9 @@ export interface DateInputProps {
 }
 
 export interface DatovelgerCommonProps {
+	/** Component ID */
+	id: string;
+	/** Kalenderprops */
 	kalender?: {
 		/** Om ukenumre skal vises - default false */
 		visUkenumre?: boolean;
@@ -49,7 +51,7 @@ export interface DatovelgerCommonProps {
 
 export interface Props extends DatovelgerCommonProps {
 	/** Props for tekstinput feltet */
-	input: DateInputProps;
+	input?: DateInputProps;
 	/** Valgt dato */
 	dato?: Date;
 	/** Kalles når en dato velges */
@@ -121,7 +123,7 @@ class Datovelger extends React.Component<Props, State> {
 			datovalidering,
 			inputValue: dato
 		});
-		if (input.onChange) {
+		if (input && input.onChange) {
 			input.onChange(value, event);
 		}
 	}
@@ -164,18 +166,20 @@ class Datovelger extends React.Component<Props, State> {
 
 		const { erÅpen, datovalidering } = this.state;
 		const avgrensningerInfoId = avgrensninger
-			? `${this.props.input.id}_srDesc`
+			? `${this.props.id}_srDesc`
 			: undefined;
 		const invalidDate =
 			datovalidering !== 'gyldig' && this.state.inputValue !== '';
 
-		// Fjern onChange fra input props
-		const { onChange, ...restOfInputProps } = input;
-		const dateInputProps = {
-			...restOfInputProps,
+		let dateInputProps: React.HTMLProps<HTMLInputElement> = {
+			id: `${this.props.id}__input`,
 			'aria-invalid': invalidDate,
 			'aria-describedby': avgrensningerInfoId
 		};
+		if (input) {
+			const { onChange, ariaDescribedby, ...restOfInputProps } = input;
+			dateInputProps = { ...dateInputProps, ...restOfInputProps };
+		}
 
 		return (
 			<DomEventContainer>

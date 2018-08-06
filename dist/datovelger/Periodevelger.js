@@ -34,10 +34,14 @@ var KalenderKnapp_1 = require("./elementer/KalenderKnapp");
 var utils_1 = require("./utils");
 var KalenderPortal_1 = require("./elementer/KalenderPortal");
 var Kalender_1 = require("./kalender/Kalender");
-var trimInputProps = function (props) {
+var trimInputProps = function (componentId, id, props) {
+    if (!props) {
+        return undefined;
+    }
     var onChange = props.onChange,
-        rest = __rest(props, ["onChange"]);
-    return rest;
+        ariaDescribedby = props.ariaDescribedby,
+        rest = __rest(props, ["onChange", "ariaDescribedby"]);
+    return __assign({}, rest, { id: componentId + "_" + id, 'aria-describedby': ariaDescribedby });
 };
 var Periodevelger = /** @class */function (_super) {
     __extends(Periodevelger, _super);
@@ -79,7 +83,7 @@ var Periodevelger = /** @class */function (_super) {
         }
     };
     Periodevelger.prototype.onStartInputChange = function (verdi, evt) {
-        if (this.props.startInputProps.onChange) {
+        if (this.props.startInputProps && this.props.startInputProps.onChange) {
             this.props.startInputProps.onChange(verdi, evt);
         }
     };
@@ -94,7 +98,7 @@ var Periodevelger = /** @class */function (_super) {
         }
     };
     Periodevelger.prototype.onSluttInputChange = function (verdi, evt) {
-        if (this.props.sluttInputProps.onChange) {
+        if (this.props.sluttInputProps && this.props.sluttInputProps.onChange) {
             this.props.sluttInputProps.onChange(verdi, evt);
         }
     };
@@ -207,11 +211,11 @@ var Periodevelger = /** @class */function (_super) {
             };
         }
         var dayPickerProps = __assign({}, this.props.dayPickerProps, { modifiers: mod, onDayMouseEnter: this.onMouseEnter, selectedDays: this.getSelectedDays(), numberOfMonths: 1, onDayFocus: this.onDayFocus, className: 'DayPicker--range' });
-        return React.createElement("div", { className: "nav-datovelger" }, React.createElement("div", { className: "nav-datovelger__periode" }, React.createElement("div", { className: "nav-datovelger__periode__startInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: trimInputProps(startInputProps), ref: function (c) {
+        return React.createElement("div", { className: "nav-datovelger" }, React.createElement("div", { className: "nav-datovelger__periode" }, React.createElement("div", { className: "nav-datovelger__periode__startInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'start', startInputProps)), ref: function (c) {
                 return _this.startInput = c;
             }, date: fra || startdato, onDateChange: this.onStartdateChange, onInputChange: this.onStartInputChange, isDatePickerTarget: erÅpen && inputTarget === 'fra', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.startKalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: trimInputProps(sluttInputProps), ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps)), ref: function (c) {
                 return _this.sluttInput = c;
             }, date: til || sluttdato, onDateChange: this.onSluttdateChange, onInputChange: this.onSluttInputChange, isDatePickerTarget: erÅpen && inputTarget === 'til', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.sluttKalenderKnapp = c;

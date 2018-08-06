@@ -7,3 +7,5 @@ declare const _default: {
     Datovelger: typeof Datovelger;
 };
 export default _default;
+export { Props as DatovelgerProps } from './Datovelger';
+export { Props as PeriodevelgerProps } from './Periodevelger';

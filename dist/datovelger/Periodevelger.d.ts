@@ -8,8 +8,8 @@ import { RangeModifier, DayModifiers } from 'react-day-picker';
 export interface Props extends DatovelgerCommonProps {
     startdato?: Date;
     sluttdato?: Date;
-    startInputProps: DateInputProps;
-    sluttInputProps: DateInputProps;
+    startInputProps?: DateInputProps;
+    sluttInputProps?: DateInputProps;
     onChange: (fra: Date, til: Date) => void;
 }
 export interface State {

@@ -91,7 +91,7 @@ var Datovelger = /** @class */function (_super) {
             datovalidering: datovalidering,
             inputValue: dato
         });
-        if (input.onChange) {
+        if (input && input.onChange) {
             input.onChange(value, event);
         }
     };
@@ -127,12 +127,19 @@ var Datovelger = /** @class */function (_super) {
         var _d = this.state,
             erÅpen = _d.erÅpen,
             datovalidering = _d.datovalidering;
-        var avgrensningerInfoId = avgrensninger ? this.props.input.id + "_srDesc" : undefined;
+        var avgrensningerInfoId = avgrensninger ? this.props.id + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
-        // Fjern onChange fra input props
-        var onChange = input.onChange,
-            restOfInputProps = __rest(input, ["onChange"]);
-        var dateInputProps = __assign({}, restOfInputProps, { 'aria-invalid': invalidDate, 'aria-describedby': avgrensningerInfoId });
+        var dateInputProps = {
+            id: this.props.id + "__input",
+            'aria-invalid': invalidDate,
+            'aria-describedby': avgrensningerInfoId
+        };
+        if (input) {
+            var onChange = input.onChange,
+                ariaDescribedby = input.ariaDescribedby,
+                restOfInputProps = __rest(input, ["onChange", "ariaDescribedby"]);
+            dateInputProps = __assign({}, dateInputProps, restOfInputProps);
+        }
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
             }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {

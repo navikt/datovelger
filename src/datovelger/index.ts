@@ -7,3 +7,6 @@ export default {
 	Datoinput,
 	Datovelger
 };
+
+export { Props as DatovelgerProps } from './Datovelger';
+export { Props as PeriodevelgerProps } from './Periodevelger';

@@ -10,8 +10,8 @@ import { RangeModifier, DayModifiers } from 'react-day-picker';
 export interface Props extends DatovelgerCommonProps {
 	startdato?: Date;
 	sluttdato?: Date;
-	startInputProps: DateInputProps;
-	sluttInputProps: DateInputProps;
+	startInputProps?: DateInputProps;
+	sluttInputProps?: DateInputProps;
 	onChange: (fra: Date, til: Date) => void;
 }
 
@@ -24,9 +24,20 @@ export interface State {
 	inputTarget?: 'fra' | 'til';
 }
 
-const trimInputProps = (props: DateInputProps) => {
-	const { onChange, ...rest } = props;
-	return rest;
+const trimInputProps = (
+	componentId: string,
+	id: string,
+	props?: DateInputProps
+) => {
+	if (!props) {
+		return undefined;
+	}
+	const { onChange, ariaDescribedby, ...rest } = props;
+	return {
+		...rest,
+		id: `${componentId}_${id}`,
+		'aria-describedby': ariaDescribedby
+	};
 };
 
 class Periodevelger extends React.Component<Props, State> {
@@ -79,7 +90,7 @@ class Periodevelger extends React.Component<Props, State> {
 	}
 
 	onStartInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {
-		if (this.props.startInputProps.onChange) {
+		if (this.props.startInputProps && this.props.startInputProps.onChange) {
 			this.props.startInputProps.onChange(verdi, evt);
 		}
 	}
@@ -96,7 +107,7 @@ class Periodevelger extends React.Component<Props, State> {
 	}
 
 	onSluttInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>) {
-		if (this.props.sluttInputProps.onChange) {
+		if (this.props.sluttInputProps && this.props.sluttInputProps.onChange) {
 			this.props.sluttInputProps.onChange(verdi, evt);
 		}
 	}
@@ -236,7 +247,9 @@ class Periodevelger extends React.Component<Props, State> {
 					<div className="nav-datovelger__periode__startInput">
 						<div className="nav-datovelger__inputContainer">
 							<Datoinput
-								inputProps={trimInputProps(startInputProps)}
+								inputProps={{
+									...trimInputProps(this.props.id, 'start', startInputProps)
+								}}
 								ref={(c) => (this.startInput = c)}
 								date={fra || startdato}
 								onDateChange={this.onStartdateChange}
@@ -255,7 +268,9 @@ class Periodevelger extends React.Component<Props, State> {
 					<div className="nav-datovelger__periode__sluttInput">
 						<div className="nav-datovelger__inputContainer">
 							<Datoinput
-								inputProps={trimInputProps(sluttInputProps)}
+								inputProps={{
+									...trimInputProps(this.props.id, 'slutt', sluttInputProps)
+								}}
 								ref={(c) => (this.sluttInput = c)}
 								date={til || sluttdato}
 								onDateChange={this.onSluttdateChange}
