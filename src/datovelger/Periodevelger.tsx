@@ -29,14 +29,17 @@ const trimInputProps = (
 	id: string,
 	props?: DateInputProps
 ) => {
+	const standardProps = {
+		id: `${componentId}_${id}`
+	};
 	if (!props) {
-		return undefined;
+		return standardProps;
 	}
 	const { onChange, ariaDescribedby, ...rest } = props;
 	return {
-		...rest,
-		id: `${componentId}_${id}`,
-		'aria-describedby': ariaDescribedby
+		...standardProps,
+		'aria-describedby': ariaDescribedby,
+		...rest
 	};
 };
 
