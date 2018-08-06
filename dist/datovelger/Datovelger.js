@@ -30,7 +30,6 @@ var __rest = this && this.__rest || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var classnames = require("classnames");
-var nav_frontend_js_utils_1 = require("nav-frontend-js-utils");
 var utils_1 = require("./utils");
 var datovalidering_1 = require("./utils/datovalidering");
 var KalenderKnapp_1 = require("./elementer/KalenderKnapp");
@@ -43,7 +42,6 @@ var Datovelger = /** @class */function (_super) {
     __extends(Datovelger, _super);
     function Datovelger(props) {
         var _this = _super.call(this, props) || this;
-        _this.instansId = nav_frontend_js_utils_1.guid();
         _this.onVelgDag = _this.onVelgDag.bind(_this);
         _this.onDatoDateChange = _this.onDatoDateChange.bind(_this);
         _this.toggleKalender = _this.toggleKalender.bind(_this);
@@ -129,7 +127,7 @@ var Datovelger = /** @class */function (_super) {
         var _d = this.state,
             erÅpen = _d.erÅpen,
             datovalidering = _d.datovalidering;
-        var avgrensningerInfoId = avgrensninger ? this.instansId + "_srDesc" : undefined;
+        var avgrensningerInfoId = avgrensninger ? this.props.input.id + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
         // Fjern onChange fra input props
         var onChange = input.onChange,

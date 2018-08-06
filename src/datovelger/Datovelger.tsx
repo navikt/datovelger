@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-import { guid } from 'nav-frontend-js-utils';
 import { Avgrensninger, KalenderPlassering } from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
@@ -58,7 +57,6 @@ export interface Props extends DatovelgerCommonProps {
 }
 
 class Datovelger extends React.Component<Props, State> {
-	instansId: string;
 	input: Datoinput | null;
 	setFokusPåKalenderKnapp: boolean | undefined;
 	kalender: Kalender | null;
@@ -66,8 +64,6 @@ class Datovelger extends React.Component<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
-
-		this.instansId = guid();
 
 		this.onVelgDag = this.onVelgDag.bind(this);
 		this.onDatoDateChange = this.onDatoDateChange.bind(this);
@@ -168,7 +164,7 @@ class Datovelger extends React.Component<Props, State> {
 
 		const { erÅpen, datovalidering } = this.state;
 		const avgrensningerInfoId = avgrensninger
-			? `${this.instansId}_srDesc`
+			? `${this.props.input.id}_srDesc`
 			: undefined;
 		const invalidDate =
 			datovalidering !== 'gyldig' && this.state.inputValue !== '';

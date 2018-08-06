@@ -47,7 +47,6 @@ export interface Props extends DatovelgerCommonProps {
     onChange: (date: Date, validering?: DatoValidering) => void;
 }
 declare class Datovelger extends React.Component<Props, State> {
-    instansId: string;
     input: Datoinput | null;
     setFokusPåKalenderKnapp: boolean | undefined;
     kalender: Kalender | null;
