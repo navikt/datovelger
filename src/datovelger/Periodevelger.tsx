@@ -7,7 +7,6 @@ import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
 import { RangeModifier, DayModifiers } from 'react-day-picker';
 import * as moment from 'moment';
-import { min, max } from 'moment';
 
 export interface Props extends DatovelgerCommonProps {
 	startdato?: Date;
@@ -134,8 +133,8 @@ class Periodevelger extends React.Component<Props, State> {
 				inputTarget: 'til'
 			});
 		} else if (fra && !til) {
-			const f = min(moment(fra), moment(dato)).toDate();
-			const t = max(moment(fra), moment(dato)).toDate();
+			const f = moment.min(moment(fra), moment(dato)).toDate();
+			const t = moment.max(moment(fra), moment(dato)).toDate();
 			this.setState({
 				fra: f,
 				til: t
