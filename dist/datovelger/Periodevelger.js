@@ -34,6 +34,8 @@ var KalenderKnapp_1 = require("./elementer/KalenderKnapp");
 var utils_1 = require("./utils");
 var KalenderPortal_1 = require("./elementer/KalenderPortal");
 var Kalender_1 = require("./kalender/Kalender");
+var moment = require("moment");
+var moment_1 = require("moment");
 var trimInputProps = function (componentId, id, props) {
     var standardProps = {
         id: componentId + "_" + id
@@ -124,11 +126,13 @@ var Periodevelger = /** @class */function (_super) {
                 inputTarget: 'til'
             });
         } else if (fra && !til) {
+            var f = moment_1.min(moment(fra), moment(dato)).toDate();
+            var t = moment_1.max(moment(fra), moment(dato)).toDate();
             this.setState({
-                fra: fra,
-                til: dato
+                fra: f,
+                til: t
             });
-            this.props.onChange(fra, dato);
+            this.props.onChange(f, t);
             this.lukkKalender();
         }
     };

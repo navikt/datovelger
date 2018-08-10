@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import { formatDateInputValue } from './utils';
+import * as moment from 'moment';
 
 export interface Props {
 	date?: Date;
@@ -23,10 +24,7 @@ export const dateRegExp = /^(\d{1,2}).(\d{1,2}).(\d{4})$/;
 const getDateFromString = (value: string) => {
 	const values = value.match(dateRegExp);
 	if (values && values.length === 4) {
-		const year = parseInt(values[3], 10);
-		const month = parseInt(values[2], 10) - 1;
-		const day = parseInt(values[1], 10);
-		return new Date(year, month, day);
+		return moment.utc(value, 'DD.MM.YYYY').toDate();
 	}
 	return undefined;
 };

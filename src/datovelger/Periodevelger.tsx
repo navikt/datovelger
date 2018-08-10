@@ -6,6 +6,8 @@ import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
 import { RangeModifier, DayModifiers } from 'react-day-picker';
+import * as moment from 'moment';
+import { min, max } from 'moment';
 
 export interface Props extends DatovelgerCommonProps {
 	startdato?: Date;
@@ -132,11 +134,13 @@ class Periodevelger extends React.Component<Props, State> {
 				inputTarget: 'til'
 			});
 		} else if (fra && !til) {
+			const f = min(moment(fra), moment(dato)).toDate();
+			const t = max(moment(fra), moment(dato)).toDate();
 			this.setState({
-				fra,
-				til: dato
+				fra: f,
+				til: t
 			});
-			this.props.onChange(fra, dato);
+			this.props.onChange(f, t);
 			this.lukkKalender();
 		}
 	}
