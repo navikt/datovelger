@@ -25,14 +25,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var classnames = require("classnames");
 var utils_1 = require("./utils");
+var moment = require("moment");
 exports.dateRegExp = /^(\d{1,2}).(\d{1,2}).(\d{4})$/;
 var getDateFromString = function (value) {
     var values = value.match(exports.dateRegExp);
     if (values && values.length === 4) {
-        var year = parseInt(values[3], 10);
-        var month = parseInt(values[2], 10) - 1;
-        var day = parseInt(values[1], 10);
-        return new Date(year, month, day);
+        return moment.utc(value, 'DD.MM.YYYY').toDate();
     }
     return undefined;
 };
