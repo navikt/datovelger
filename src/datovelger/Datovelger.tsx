@@ -7,7 +7,6 @@ import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
-import AvgrensningerInfo from './elementer/AvgrensningerInfo';
 import Kalender from './kalender/Kalender';
 import KalenderPortal from './elementer/KalenderPortal';
 
@@ -182,13 +181,6 @@ class Datovelger extends React.Component<Props, State> {
 		return (
 			<DomEventContainer>
 				<div className={classnames('nav-datovelger')}>
-					{avgrensninger &&
-						avgrensningerInfoId && (
-							<AvgrensningerInfo
-								id={avgrensningerInfoId}
-								avgrensninger={avgrensninger}
-							/>
-						)}
 					<div className="nav-datovelger__inputContainer">
 						<Datoinput
 							inputProps={dateInputProps}

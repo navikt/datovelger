@@ -13,7 +13,7 @@ const AvgrensningerInfo: React.StatelessComponent<Props> = ({
 	avgrensninger
 }) => {
 	if (!avgrensninger.minDato && !avgrensninger.maksDato) {
-		return null;
+		return <span />;
 	}
 
 	let msg = '';

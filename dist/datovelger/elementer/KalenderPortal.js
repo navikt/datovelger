@@ -1,12 +1,37 @@
 "use strict";
 
+var __extends = this && this.__extends || function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+var react_dom_1 = require("react-dom");
 var classnames = require("classnames");
-var KalenderPortal = function (_a) {
-    var _b = _a.plassering,
-        plassering = _b === void 0 ? 'under' : _b,
-        children = _a.children;
-    return React.createElement("div", { className: classnames('nav-datovelger__kalenderPortal', "nav-datovelger__kalenderPortal--" + plassering) }, React.createElement("div", { className: "nav-datovelger__kalenderPortal__content" }, children));
-};
+var KalenderPortal = /** @class */function (_super) {
+    __extends(KalenderPortal, _super);
+    function KalenderPortal() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    KalenderPortal.prototype.render = function () {
+        var _a = this.props,
+            children = _a.children,
+            plassering = _a.plassering;
+        return react_dom_1.createPortal(React.createElement("div", { className: classnames('nav-datovelger__kalenderPortal', "nav-datovelger__kalenderPortal--" + plassering) }, React.createElement("div", { className: "nav-datovelger__kalenderPortal__content" }, children)), document.body);
+    };
+    return KalenderPortal;
+}(React.Component);
 exports.default = KalenderPortal;

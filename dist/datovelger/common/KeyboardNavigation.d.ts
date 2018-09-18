@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 export declare type KeyboarActionEvent = (evt: React.KeyboardEvent<any>) => void;
 export interface Props {

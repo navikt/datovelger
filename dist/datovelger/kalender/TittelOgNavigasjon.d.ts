@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 export interface Props {

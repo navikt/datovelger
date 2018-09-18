@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { DatovelgerCommonProps, DateInputProps } from './Datovelger';
 import Datoinput from './Datoinput';

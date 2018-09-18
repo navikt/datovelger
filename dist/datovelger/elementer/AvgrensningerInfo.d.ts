@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { Avgrensninger } from '../types';
 export interface Props {

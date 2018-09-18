@@ -1,10 +1,13 @@
 "use strict";
 
 var __extends = this && this.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return extendStatics(d, b);
     };
     return function (d, b) {
         extendStatics(d, b);
@@ -14,12 +17,15 @@ var __extends = this && this.__extends || function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 }();
-var __assign = this && this.__assign || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
+var __assign = this && this.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __rest = this && this.__rest || function (s, e) {
     var t = {};
@@ -35,7 +41,6 @@ var datovalidering_1 = require("./utils/datovalidering");
 var KalenderKnapp_1 = require("./elementer/KalenderKnapp");
 var DomEventContainer_1 = require("./common/DomEventContainer");
 var Datoinput_1 = require("./Datoinput");
-var AvgrensningerInfo_1 = require("./elementer/AvgrensningerInfo");
 var Kalender_1 = require("./kalender/Kalender");
 var KalenderPortal_1 = require("./elementer/KalenderPortal");
 var Datovelger = /** @class */function (_super) {
@@ -140,7 +145,7 @@ var Datovelger = /** @class */function (_super) {
                 restOfInputProps = __rest(input, ["onChange", "ariaDescribedby"]);
             dateInputProps = __assign({}, dateInputProps, restOfInputProps);
         }
-        return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, avgrensninger && avgrensningerInfoId && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger }), React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
+        return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
             }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {
                 return _this.kalenderKnapp = c;

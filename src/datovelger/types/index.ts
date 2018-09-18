@@ -20,7 +20,7 @@ export interface FraseDato {
 	date: string;
 }
 
-export type KalenderPlassering = 'under' | 'fullskjerm';
+export type KalenderPlassering = 'under' | 'fullskjerm' | '';
 
 export interface DatovelgerPhrases {
 	calendarLabel: string;

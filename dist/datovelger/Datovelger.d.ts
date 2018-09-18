@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { Avgrensninger, KalenderPlassering } from './types';
 import { DatoValidering } from './utils/datovalidering';

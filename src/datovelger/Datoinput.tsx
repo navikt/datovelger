@@ -87,7 +87,7 @@ export class Input extends React.Component<Props, State> {
 		const { inputProps, disabled } = this.props;
 		return (
 			<input
-				{...inputProps}
+				{...inputProps as any}
 				className={classnames('nav-datovelger__input', {
 					'nav-datovelger__input--datePickerTarget': this.props
 						.isDatePickerTarget

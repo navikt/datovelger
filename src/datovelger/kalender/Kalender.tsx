@@ -2,7 +2,9 @@ import * as React from 'react';
 import DayPicker, {
 	DayPickerProps,
 	Modifier,
-	DayModifiers
+	DayModifiers,
+	CaptionElementProps,
+	NavbarElementProps
 } from 'react-day-picker';
 import * as moment from 'moment';
 import * as FocusTrap from 'focus-trap-react';
@@ -119,8 +121,8 @@ export class Kalender extends React.Component<Props, State> {
 		const innstillinger: DayPickerProps = {
 			locale,
 			localeUtils,
-			navbarElement: <span />,
-			captionElement: (
+			navbarElement: (props: NavbarElementProps) => <span />,
+			captionElement: (props: CaptionElementProps) => (
 				<TittelOgNavigasjon
 					date={måned}
 					locale={locale}
