@@ -43,6 +43,7 @@ var DomEventContainer_1 = require("./common/DomEventContainer");
 var Datoinput_1 = require("./Datoinput");
 var Kalender_1 = require("./kalender/Kalender");
 var KalenderPortal_1 = require("./elementer/KalenderPortal");
+var AvgrensningerInfo_1 = require("./elementer/AvgrensningerInfo");
 var Datovelger = /** @class */function (_super) {
     __extends(Datovelger, _super);
     function Datovelger(props) {
@@ -134,22 +135,21 @@ var Datovelger = /** @class */function (_super) {
             datovalidering = _d.datovalidering;
         var avgrensningerInfoId = avgrensninger ? this.props.id + "_srDesc" : undefined;
         var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
-        var dateInputProps = {
-            id: this.props.id + "__input",
+        var onChange = input.onChange,
+            ariaDescribedby = input.ariaDescribedby,
+            label = input.label,
+            restOfInputProps = __rest(input, ["onChange", "ariaDescribedby", "label"]);
+        var dateInputProps = __assign({
+            name: input && input.name ? input.name : this.props.id + "__input",
             'aria-invalid': invalidDate,
-            'aria-describedby': avgrensningerInfoId
-        };
-        if (input) {
-            var onChange = input.onChange,
-                ariaDescribedby = input.ariaDescribedby,
-                restOfInputProps = __rest(input, ["onChange", "ariaDescribedby"]);
-            dateInputProps = __assign({}, dateInputProps, restOfInputProps);
-        }
+            'aria-describedby': avgrensningerInfoId,
+            'aria-label': label
+        }, restOfInputProps);
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
             }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {
                 return _this.kalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalender && kalender.plassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false }), avgrensninger && React.createElement(AvgrensningerInfo_1.default, { id: avgrensningerInfoId, avgrensninger: avgrensninger })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalender && kalender.plassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
                 return _this.kalender = c;
             } }, kalenderProps, { locale: locale, dato: dato, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
                 return _this.onVelgDag(d, true);

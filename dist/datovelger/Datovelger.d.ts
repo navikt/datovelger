@@ -12,6 +12,9 @@ export interface State {
     inputValue: string;
 }
 export interface DateInputProps {
+    label: string;
+    name: string;
+    id?: string;
     placeholder?: string;
     required?: boolean;
     ariaDescribedby?: string;
@@ -40,7 +43,7 @@ export interface DatovelgerCommonProps {
 }
 export interface Props extends DatovelgerCommonProps {
     /** Props for tekstinput feltet */
-    input?: DateInputProps;
+    input: DateInputProps;
     /** Valgt dato */
     dato?: Date;
     /** Kalles når en dato velges */

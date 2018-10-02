@@ -94,10 +94,14 @@ var Kalender = /** @class */function (_super) {
         var innstillinger = {
             locale: locale,
             localeUtils: localeUtils,
-            navbarElement: React.createElement("span", null),
-            captionElement: React.createElement(TittelOgNavigasjon_1.TittelOgNavigasjon, { date: måned, locale: locale, localeUtils: localeUtils, navbar: React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
-                        return _this.onByttMåned(d);
-                    }, min: min, maks: maks }) }),
+            navbarElement: function (props) {
+                return React.createElement("span", null);
+            },
+            captionElement: function (props) {
+                return React.createElement(TittelOgNavigasjon_1.TittelOgNavigasjon, { date: måned, locale: locale, localeUtils: localeUtils, navbar: React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
+                            return _this.onByttMåned(d);
+                        }, min: min, maks: maks }) });
+            },
             firstDayOfWeek: 1,
             showWeekNumbers: visUkenumre
         };

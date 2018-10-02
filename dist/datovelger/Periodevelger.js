@@ -50,8 +50,9 @@ var trimInputProps = function (componentId, id, props) {
     }
     var onChange = props.onChange,
         ariaDescribedby = props.ariaDescribedby,
-        rest = __rest(props, ["onChange", "ariaDescribedby"]);
-    return __assign({}, standardProps, { 'aria-describedby': ariaDescribedby }, rest);
+        label = props.label,
+        rest = __rest(props, ["onChange", "ariaDescribedby", "label"]);
+    return __assign({}, standardProps, { 'aria-describedby': ariaDescribedby, 'aria-label': label }, rest);
 };
 var Periodevelger = /** @class */function (_super) {
     __extends(Periodevelger, _super);
@@ -227,7 +228,7 @@ var Periodevelger = /** @class */function (_super) {
                 return _this.startInput = c;
             }, date: fra || startdato, onDateChange: this.onStartdateChange, onInputChange: this.onStartInputChange, isDatePickerTarget: erÅpen && inputTarget === 'fra', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.startKalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps)), ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps), { 'aria-label': 'Til dato' }), ref: function (c) {
                 return _this.sluttInput = c;
             }, date: til || sluttdato, onDateChange: this.onSluttdateChange, onInputChange: this.onSluttInputChange, isDatePickerTarget: erÅpen && inputTarget === 'til', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.sluttKalenderKnapp = c;
