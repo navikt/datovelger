@@ -19,7 +19,6 @@ var __extends = this && this.__extends || function () {
 }();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var react_dom_1 = require("react-dom");
 var classnames = require("classnames");
 var KalenderPortal = /** @class */function (_super) {
     __extends(KalenderPortal, _super);
@@ -30,7 +29,7 @@ var KalenderPortal = /** @class */function (_super) {
         var _a = this.props,
             children = _a.children,
             plassering = _a.plassering;
-        return react_dom_1.createPortal(React.createElement("div", { className: classnames('nav-datovelger__kalenderPortal', "nav-datovelger__kalenderPortal--" + plassering) }, React.createElement("div", { className: "nav-datovelger__kalenderPortal__content" }, children)), document.body);
+        return React.createElement("div", { className: classnames('nav-datovelger__kalenderPortal', "nav-datovelger__kalenderPortal--" + plassering) }, React.createElement("div", { className: "nav-datovelger__kalenderPortal__content" }, children));
     };
     return KalenderPortal;
 }(React.Component);

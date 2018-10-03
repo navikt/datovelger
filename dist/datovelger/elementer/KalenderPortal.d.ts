@@ -4,6 +4,6 @@ export interface Props {
     plassering?: KalenderPlassering;
 }
 declare class KalenderPortal extends React.Component<Props, {}> {
-    render(): React.ReactPortal;
+    render(): JSX.Element;
 }
 export default KalenderPortal;
