@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 export declare type NavigationKeys = 'ArrowDown' | 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'End' | 'Home' | 'PageDown' | 'PageUp';
 export declare type WhitespaceKeys = 'Tab' | 'Enter';

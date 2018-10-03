@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 export interface ContainerBlurEvent {
     source: 'esc' | 'blur';

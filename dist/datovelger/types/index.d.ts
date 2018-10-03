@@ -17,7 +17,7 @@ export interface Avgrensninger {
 export interface FraseDato {
     date: string;
 }
-export declare type KalenderPlassering = 'under' | 'fullskjerm';
+export declare type KalenderPlassering = 'under' | 'fullskjerm' | '';
 export interface DatovelgerPhrases {
     calendarLabel: string;
     closeDatePicker: string;

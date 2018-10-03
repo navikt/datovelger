@@ -1,10 +1,13 @@
 "use strict";
 
 var __extends = this && this.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return extendStatics(d, b);
     };
     return function (d, b) {
         extendStatics(d, b);
@@ -14,12 +17,15 @@ var __extends = this && this.__extends || function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 }();
-var __assign = this && this.__assign || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
+var __assign = this && this.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
@@ -88,10 +94,14 @@ var Kalender = /** @class */function (_super) {
         var innstillinger = {
             locale: locale,
             localeUtils: localeUtils,
-            navbarElement: React.createElement("span", null),
-            captionElement: React.createElement(TittelOgNavigasjon_1.TittelOgNavigasjon, { date: måned, locale: locale, localeUtils: localeUtils, navbar: React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
-                        return _this.onByttMåned(d);
-                    }, min: min, maks: maks }) }),
+            navbarElement: function (props) {
+                return React.createElement("span", null);
+            },
+            captionElement: function (props) {
+                return React.createElement(TittelOgNavigasjon_1.TittelOgNavigasjon, { date: måned, locale: locale, localeUtils: localeUtils, navbar: React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
+                            return _this.onByttMåned(d);
+                        }, min: min, maks: maks }) });
+            },
             firstDayOfWeek: 1,
             showWeekNumbers: visUkenumre
         };

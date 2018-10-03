@@ -6,7 +6,7 @@ export interface Props {
 	retning?: ChevronRetning;
 }
 
-const getRotationTransform = (retning?: ChevronRetning): {} | undefined => {
+const getRotationTransform = (retning?: ChevronRetning): string | undefined => {
 	switch (retning) {
 		case 'venstre':
 			return 'rotate(180deg)';

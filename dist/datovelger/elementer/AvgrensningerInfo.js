@@ -8,7 +8,7 @@ var AvgrensningerInfo = function (_a) {
     var id = _a.id,
         avgrensninger = _a.avgrensninger;
     if (!avgrensninger.minDato && !avgrensninger.maksDato) {
-        return null;
+        return React.createElement("span", null);
     }
     var msg = '';
     var fraDato = utils_1.formatDateInputValue(avgrensninger.minDato);

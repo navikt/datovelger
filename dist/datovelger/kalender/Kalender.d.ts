@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { DayPickerProps, Modifier, DayModifiers } from 'react-day-picker';
 import { LocaleUtils } from 'react-day-picker/types/utils';

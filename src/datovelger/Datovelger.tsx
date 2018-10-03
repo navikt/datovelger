@@ -7,9 +7,9 @@ import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
-import AvgrensningerInfo from './elementer/AvgrensningerInfo';
 import Kalender from './kalender/Kalender';
 import KalenderPortal from './elementer/KalenderPortal';
+import AvgrensningerInfo from './elementer/AvgrensningerInfo';
 
 export interface State {
 	måned: Date;
@@ -19,6 +19,9 @@ export interface State {
 }
 
 export interface DateInputProps {
+	label: string;
+	name: string;
+	id?: string;
 	placeholder?: string;
 	required?: boolean;
 	ariaDescribedby?: string;
@@ -49,7 +52,7 @@ export interface DatovelgerCommonProps {
 
 export interface Props extends DatovelgerCommonProps {
 	/** Props for tekstinput feltet */
-	input?: DateInputProps;
+	input: DateInputProps;
 	/** Valgt dato */
 	dato?: Date;
 	/** Kalles når en dato velges */
@@ -166,29 +169,24 @@ class Datovelger extends React.Component<Props, State> {
 		const avgrensningerInfoId = avgrensninger
 			? `${this.props.id}_srDesc`
 			: undefined;
+
 		const invalidDate =
 			datovalidering !== 'gyldig' && this.state.inputValue !== '';
 
-		let dateInputProps: React.HTMLProps<HTMLInputElement> = {
-			id: `${this.props.id}__input`,
-			'aria-invalid': invalidDate,
-			'aria-describedby': avgrensningerInfoId
+		const { onChange, ariaDescribedby, label, ...restOfInputProps } = input;
+		const dateInputProps = {
+			...{
+				name: input && input.name ? input.name : `${this.props.id}__input`,
+				'aria-invalid': invalidDate,
+				'aria-describedby': avgrensningerInfoId,
+				'aria-label': label
+			},
+			...restOfInputProps
 		};
-		if (input) {
-			const { onChange, ariaDescribedby, ...restOfInputProps } = input;
-			dateInputProps = { ...dateInputProps, ...restOfInputProps };
-		}
 
 		return (
 			<DomEventContainer>
 				<div className={classnames('nav-datovelger')}>
-					{avgrensninger &&
-						avgrensningerInfoId && (
-							<AvgrensningerInfo
-								id={avgrensningerInfoId}
-								avgrensninger={avgrensninger}
-							/>
-						)}
 					<div className="nav-datovelger__inputContainer">
 						<Datoinput
 							inputProps={dateInputProps}
@@ -204,6 +202,12 @@ class Datovelger extends React.Component<Props, State> {
 							onClick={this.toggleKalender}
 							erÅpen={erÅpen || false}
 						/>
+						{avgrensninger && (
+							<AvgrensningerInfo
+								id={avgrensningerInfoId}
+								avgrensninger={avgrensninger}
+							/>
+						)}
 					</div>
 					{erÅpen && (
 						<KalenderPortal plassering={kalender && kalender.plassering}>

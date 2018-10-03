@@ -11,8 +11,8 @@ import * as moment from 'moment';
 export interface Props extends DatovelgerCommonProps {
 	startdato?: Date;
 	sluttdato?: Date;
-	startInputProps?: DateInputProps;
-	sluttInputProps?: DateInputProps;
+	startInputProps: DateInputProps;
+	sluttInputProps: DateInputProps;
 	onChange: (fra: Date, til: Date) => void;
 }
 
@@ -36,10 +36,11 @@ const trimInputProps = (
 	if (!props) {
 		return standardProps;
 	}
-	const { onChange, ariaDescribedby, ...rest } = props;
+	const { onChange, ariaDescribedby, label, ...rest } = props;
 	return {
 		...standardProps,
 		'aria-describedby': ariaDescribedby,
+		'aria-label': label,
 		...rest
 	};
 };
@@ -275,7 +276,8 @@ class Periodevelger extends React.Component<Props, State> {
 						<div className="nav-datovelger__inputContainer">
 							<Datoinput
 								inputProps={{
-									...trimInputProps(this.props.id, 'slutt', sluttInputProps)
+									...trimInputProps(this.props.id, 'slutt', sluttInputProps),
+									'aria-label': 'Til dato'
 								}}
 								ref={(c) => (this.sluttInput = c)}
 								date={til || sluttdato}

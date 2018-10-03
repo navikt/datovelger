@@ -1,8 +1,9 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { KalenderPlassering } from '../types';
 export interface Props {
     plassering?: KalenderPlassering;
 }
-declare const KalenderPortal: React.StatelessComponent<Props>;
+declare class KalenderPortal extends React.Component<Props, {}> {
+    render(): React.ReactPortal;
+}
 export default KalenderPortal;
