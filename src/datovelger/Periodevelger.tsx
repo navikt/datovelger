@@ -36,11 +36,11 @@ const trimInputProps = (
 	if (!props) {
 		return standardProps;
 	}
-	const { onChange, ariaDescribedby, label, ...rest } = props;
+	const { onChange, ariaDescribedby, ariaLabel, ...rest } = props;
 	return {
 		...standardProps,
 		'aria-describedby': ariaDescribedby,
-		'aria-label': label,
+		'aria-label': ariaLabel,
 		...rest
 	};
 };

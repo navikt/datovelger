@@ -137,14 +137,9 @@ var Datovelger = /** @class */function (_super) {
         var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
         var onChange = input.onChange,
             ariaDescribedby = input.ariaDescribedby,
-            label = input.label,
-            restOfInputProps = __rest(input, ["onChange", "ariaDescribedby", "label"]);
-        var dateInputProps = __assign({
-            name: input && input.name ? input.name : this.props.id + "__input",
-            'aria-invalid': invalidDate,
-            'aria-describedby': avgrensningerInfoId,
-            'aria-label': label
-        }, restOfInputProps);
+            ariaLabel = input.ariaLabel,
+            restOfInputProps = __rest(input, ["onChange", "ariaDescribedby", "ariaLabel"]);
+        var dateInputProps = __assign({ name: input && input.name ? input.name : this.props.id + "__input", 'aria-invalid': invalidDate, 'aria-describedby': avgrensningerInfoId, 'aria-label': ariaLabel }, restOfInputProps);
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
             }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {

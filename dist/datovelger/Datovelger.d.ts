@@ -12,9 +12,9 @@ export interface State {
     inputValue: string;
 }
 export interface DateInputProps {
-    label: string;
+    id: string;
     name: string;
-    id?: string;
+    ariaLabel?: string;
     placeholder?: string;
     required?: boolean;
     ariaDescribedby?: string;
