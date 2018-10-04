@@ -57,11 +57,14 @@ exports.getUtilgjengeligeDager = function (avgrensninger) {
     };
     return ugyldigeDager.concat(maksDato ? [{ after: maksDato.toDate() }] : [], minDato ? [{ before: minDato.toDate() }] : [], [helgedager]);
 };
-exports.getDefaultMåned = function (dato, avgrensninger) {
+exports.getDefaultMåned = function (dato, avgrensninger, dayPickerProps) {
     if (dato && exports.isDateObject(dato)) {
         return dato;
     }
     var idag = exports.normaliserDato(new Date()).toDate();
+    if (dayPickerProps && dayPickerProps.initialMonth) {
+        return dayPickerProps.initialMonth;
+    }
     if (avgrensninger) {
         if (avgrensninger.minDato) {
             return moment(avgrensninger.minDato).isAfter(idag) ? avgrensninger.minDato : idag;

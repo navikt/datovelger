@@ -54,7 +54,7 @@ var Datovelger = /** @class */function (_super) {
         _this.lukkKalender = _this.lukkKalender.bind(_this);
         _this.onDateInputChange = _this.onDateInputChange.bind(_this);
         _this.state = {
-            måned: utils_1.getDefaultMåned(props.dato, props.avgrensninger),
+            måned: utils_1.getDefaultMåned(props.dato, props.avgrensninger, props.dayPickerProps),
             datovalidering: props.dato ? datovalidering_1.validerDato(props.dato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
             erÅpen: false,
             inputValue: ''
@@ -64,7 +64,7 @@ var Datovelger = /** @class */function (_super) {
     Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
         this.setState({
             datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {}),
-            måned: utils_1.getDefaultMåned(nextProps.dato, nextProps.avgrensninger)
+            måned: utils_1.getDefaultMåned(nextProps.dato, nextProps.avgrensninger, nextProps.dayPickerProps)
         });
     };
     Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
