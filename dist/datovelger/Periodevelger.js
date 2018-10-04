@@ -69,7 +69,7 @@ var Periodevelger = /** @class */function (_super) {
         _this.getSelectedDays = _this.getSelectedDays.bind(_this);
         _this.onDayFocus = _this.onDayFocus.bind(_this);
         _this.state = {
-            måned: utils_1.getDefaultMåned(props.startdato || undefined, props.avgrensninger),
+            måned: utils_1.getDefaultMåned(props.startdato || undefined, props.avgrensninger, props.dayPickerProps),
             erÅpen: false,
             fra: props.startdato,
             til: props.sluttdato

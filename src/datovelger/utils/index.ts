@@ -6,7 +6,8 @@ import {
 	RangeModifier,
 	AfterModifier,
 	BeforeModifier,
-	DaysOfWeekModifier
+	DaysOfWeekModifier,
+	DayPickerProps
 } from 'react-day-picker';
 
 export * from './kalenderFokusUtils';
@@ -86,12 +87,16 @@ export const getUtilgjengeligeDager = (
 
 export const getDefaultMåned = (
 	dato: Date | undefined,
-	avgrensninger?: Avgrensninger
+	avgrensninger: Avgrensninger | undefined,
+	dayPickerProps: DayPickerProps | undefined
 ): Date => {
 	if (dato && isDateObject(dato)) {
 		return dato;
 	}
 	const idag = normaliserDato(new Date()).toDate();
+	if (dayPickerProps && dayPickerProps.initialMonth) {
+		return dayPickerProps.initialMonth;
+	}
 	if (avgrensninger) {
 		if (avgrensninger.minDato) {
 			return moment(avgrensninger.minDato).isAfter(idag)
