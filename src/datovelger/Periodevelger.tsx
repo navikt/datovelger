@@ -68,7 +68,11 @@ class Periodevelger extends React.Component<Props, State> {
 		this.onDayFocus = this.onDayFocus.bind(this);
 
 		this.state = {
-			måned: getDefaultMåned(props.startdato || undefined, props.avgrensninger),
+			måned: getDefaultMåned(
+				props.startdato || undefined,
+				props.avgrensninger,
+				props.dayPickerProps
+			),
 			erÅpen: false,
 			fra: props.startdato,
 			til: props.sluttdato
