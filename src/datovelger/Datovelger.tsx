@@ -19,9 +19,9 @@ export interface State {
 }
 
 export interface DateInputProps {
-	label: string;
+	id: string;
 	name: string;
-	id?: string;
+	ariaLabel: string;
 	placeholder?: string;
 	required?: boolean;
 	ariaDescribedby?: string;
@@ -173,14 +173,12 @@ class Datovelger extends React.Component<Props, State> {
 		const invalidDate =
 			datovalidering !== 'gyldig' && this.state.inputValue !== '';
 
-		const { onChange, ariaDescribedby, label, ...restOfInputProps } = input;
+		const { onChange, ariaDescribedby, ariaLabel, ...restOfInputProps } = input;
 		const dateInputProps = {
-			...{
-				name: input && input.name ? input.name : `${this.props.id}__input`,
-				'aria-invalid': invalidDate,
-				'aria-describedby': avgrensningerInfoId,
-				'aria-label': label
-			},
+			name: input && input.name ? input.name : `${this.props.id}__input`,
+			'aria-invalid': invalidDate,
+			'aria-describedby': avgrensningerInfoId,
+			'aria-label': ariaLabel,
 			...restOfInputProps
 		};
 

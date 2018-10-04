@@ -50,9 +50,9 @@ var trimInputProps = function (componentId, id, props) {
     }
     var onChange = props.onChange,
         ariaDescribedby = props.ariaDescribedby,
-        label = props.label,
-        rest = __rest(props, ["onChange", "ariaDescribedby", "label"]);
-    return __assign({}, standardProps, { 'aria-describedby': ariaDescribedby, 'aria-label': label }, rest);
+        ariaLabel = props.ariaLabel,
+        rest = __rest(props, ["onChange", "ariaDescribedby", "ariaLabel"]);
+    return __assign({}, standardProps, { 'aria-describedby': ariaDescribedby, 'aria-label': ariaLabel }, rest);
 };
 var Periodevelger = /** @class */function (_super) {
     __extends(Periodevelger, _super);
