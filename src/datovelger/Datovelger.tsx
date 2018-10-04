@@ -21,7 +21,7 @@ export interface State {
 export interface DateInputProps {
 	id: string;
 	name: string;
-	ariaLabel: string;
+	ariaLabel?: string;
 	placeholder?: string;
 	required?: boolean;
 	ariaDescribedby?: string;
