@@ -174,9 +174,6 @@ class Datovelger extends React.Component<Props, State> {
 		} = this.props;
 
 		const { erÅpen, datovalidering } = this.state;
-		const avgrensningerInfoId = avgrensninger
-			? `${this.props.id}_srDesc`
-			: undefined;
 
 		const invalidDate =
 			datovalidering !== 'gyldig' && this.state.inputValue !== '';
@@ -185,7 +182,6 @@ class Datovelger extends React.Component<Props, State> {
 		const dateInputProps = {
 			name: input && input.name ? input.name : `${this.props.id}__input`,
 			'aria-invalid': invalidDate,
-			'aria-describedby': avgrensningerInfoId,
 			'aria-label': ariaLabel,
 			...restOfInputProps
 		};
