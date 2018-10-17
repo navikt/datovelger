@@ -9,7 +9,6 @@ import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
 import Kalender from './kalender/Kalender';
 import KalenderPortal from './elementer/KalenderPortal';
-import AvgrensningerInfo from './elementer/AvgrensningerInfo';
 
 export interface State {
 	måned: Date;
@@ -204,12 +203,6 @@ class Datovelger extends React.Component<Props, State> {
 							onClick={this.toggleKalender}
 							erÅpen={erÅpen || false}
 						/>
-						{avgrensninger && (
-							<AvgrensningerInfo
-								id={avgrensningerInfoId}
-								avgrensninger={avgrensninger}
-							/>
-						)}
 					</div>
 					{erÅpen && (
 						<KalenderPortal plassering={kalender && kalender.plassering}>
