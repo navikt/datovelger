@@ -182,6 +182,7 @@ class Datovelger extends React.Component<Props, State> {
 			name: input && input.name ? input.name : `${this.props.id}__input`,
 			'aria-invalid': invalidDate,
 			'aria-label': ariaLabel,
+			'aria-describedby': ariaDescribedby,
 			...restOfInputProps
 		};
 

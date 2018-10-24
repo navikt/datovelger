@@ -137,7 +137,7 @@ var Datovelger = /** @class */function (_super) {
             ariaDescribedby = input.ariaDescribedby,
             ariaLabel = input.ariaLabel,
             restOfInputProps = __rest(input, ["onChange", "ariaDescribedby", "ariaLabel"]);
-        var dateInputProps = __assign({ name: input && input.name ? input.name : this.props.id + "__input", 'aria-invalid': invalidDate, 'aria-label': ariaLabel }, restOfInputProps);
+        var dateInputProps = __assign({ name: input && input.name ? input.name : this.props.id + "__input", 'aria-invalid': invalidDate, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedby }, restOfInputProps);
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
             }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {
