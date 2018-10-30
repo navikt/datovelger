@@ -87,6 +87,7 @@ var Kalender = /** @class */function (_super) {
             locale = _a.locale,
             visUkenumre = _a.visUkenumre,
             utilgjengeligeDager = _a.utilgjengeligeDager,
+            visÅrVelger = _a.visÅrVelger,
             dayPickerProps = _a.dayPickerProps;
         var måned = this.state.måned;
         var localeUtils = __assign({}, localeUtils_1.default, this.props.localeUtils);
@@ -99,7 +100,7 @@ var Kalender = /** @class */function (_super) {
             captionElement: function (props) {
                 return React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
                         return _this.onByttMåned(d);
-                    }, min: min, maks: maks, locale: locale, localeUtils: localeUtils, "vis\u00C5rVelger": true });
+                    }, min: min, maks: maks, locale: locale, localeUtils: localeUtils, "vis\u00C5rVelger": visÅrVelger });
             },
             firstDayOfWeek: 1,
             showWeekNumbers: visUkenumre
