@@ -12,9 +12,9 @@
 	}
 	@input-width: 11rem;
 	@input-width-range: 9rem;
-
 	position: relative;
 	display: inline-block;
+
 	&__inputContainer {
 		display: inline-block;
 		width: @input-width;
@@ -65,6 +65,13 @@
 		left: 0.6rem;
 		right: 0.6rem;
 		top: 0.4rem;
+		&--withYearSelector {
+			top: 1rem;
+		}
+		&__yearSelector {
+			text-align: center;
+			width: 100%;
+		}
 		&__knapp {
 			.knappbase-mixin(inherit);
 			padding: 0.5rem 0.5rem;
@@ -136,6 +143,19 @@
 				margin-left: 0.35rem;
 				line-height: 2rem;
 				position: absolute;
+			}
+		}
+	}
+	&__yearSelector {
+		.selectContainer {
+			&:first-child {
+				margin-right: 0.25rem;
+			}
+		}
+		.skjemaelement__input {
+			font-size: 1rem;
+			&--year {
+				padding-right: 2.5rem;
 			}
 		}
 	}

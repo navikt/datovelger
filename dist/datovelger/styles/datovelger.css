@@ -919,6 +919,13 @@ body .blokk-xl {
   right: 0.6rem;
   top: 0.4rem;
 }
+.nav-datovelger__navbar--withYearSelector {
+  top: 1rem;
+}
+.nav-datovelger__navbar__yearSelector {
+  text-align: center;
+  width: 100%;
+}
 .nav-datovelger__navbar__knapp {
   display: inline-block;
   font-weight: 600;
@@ -1127,4 +1134,13 @@ body .blokk-xl {
   margin-left: 0.35rem;
   line-height: 2rem;
   position: absolute;
+}
+.nav-datovelger__yearSelector .selectContainer:first-child {
+  margin-right: 0.25rem;
+}
+.nav-datovelger__yearSelector .skjemaelement__input {
+  font-size: 1rem;
+}
+.nav-datovelger__yearSelector .skjemaelement__input--year {
+  padding-right: 2.5rem;
 }
