@@ -98,8 +98,8 @@ class Navbar extends React.Component<Props> {
 				{visÅrVelger && (
 					<div className="nav-datovelger__navbar__yearSelector">
 						<YearSelector
-							dato={måned}
-							maks={maks}
+							date={måned}
+							max={maks}
 							min={min}
 							locale={locale}
 							localeUtils={localeUtils}

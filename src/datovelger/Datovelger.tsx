@@ -55,7 +55,7 @@ export interface Props extends DatovelgerCommonProps {
 	/** Valgt dato */
 	dato?: Date;
 	/** Velg år */
-	navigasjonstype?: 'piler' | 'dropdown';
+	visÅrVelger?: boolean;
 	/** Kalles når en dato velges */
 	onChange: (date: Date, validering?: DatoValidering) => void;
 }
@@ -170,6 +170,7 @@ class Datovelger extends React.Component<Props, State> {
 			avgrensninger,
 			locale = 'nb',
 			disabled,
+			visÅrVelger,
 			kanVelgeUgyldigDato = false,
 			...kalenderProps
 		} = this.props;
@@ -226,6 +227,7 @@ class Datovelger extends React.Component<Props, State> {
 								onLukk={() => this.lukkKalender(true)}
 								kanVelgeUgyldigDato={kanVelgeUgyldigDato}
 								dayPickerProps={this.props.dayPickerProps}
+								visÅrVelger={visÅrVelger}
 							/>
 						</KalenderPortal>
 					)}

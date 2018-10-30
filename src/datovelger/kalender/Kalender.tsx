@@ -32,6 +32,7 @@ export interface Props {
 	utilgjengeligeDager?: Modifier[];
 	visUkenumre?: boolean;
 	kanVelgeUgyldigDato?: boolean;
+	visÅrVelger?: boolean;
 	dayPickerProps?: DayPickerProps;
 }
 
@@ -108,6 +109,7 @@ export class Kalender extends React.Component<Props, State> {
 			locale,
 			visUkenumre,
 			utilgjengeligeDager,
+			visÅrVelger,
 			dayPickerProps
 		} = this.props;
 		const { måned } = this.state;
@@ -129,7 +131,7 @@ export class Kalender extends React.Component<Props, State> {
 					maks={maks}
 					locale={locale}
 					localeUtils={localeUtils}
-					visÅrVelger={true}
+					visÅrVelger={visÅrVelger}
 				/>
 			),
 			firstDayOfWeek: 1,
