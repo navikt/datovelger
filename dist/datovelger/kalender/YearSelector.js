@@ -65,8 +65,10 @@ var YearSelector = /** @class */function (_super) {
     YearSelector.prototype.render = function () {
         var _a = this.props,
             date = _a.date,
-            min = _a.min,
-            max = _a.max,
+            _b = _a.min,
+            min = _b === void 0 ? new Date(1900, 0, 1) : _b,
+            _c = _a.max,
+            max = _c === void 0 ? moment().add(4, 'years').toDate() : _c,
             localeUtils = _a.localeUtils,
             locale = _a.locale;
         var monthNames = localeUtils.getMonths(locale);

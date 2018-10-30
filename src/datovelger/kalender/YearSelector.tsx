@@ -63,7 +63,15 @@ class YearSelector extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { date, min, max, localeUtils, locale } = this.props;
+		const {
+			date,
+			min = new Date(1900, 0, 1),
+			max = moment()
+				.add(4, 'years')
+				.toDate(),
+			localeUtils,
+			locale
+		} = this.props;
 		const monthNames = localeUtils.getMonths(locale);
 		const monthOptions = getAvailableMonths(monthNames, date, min, max);
 		const years = [];
