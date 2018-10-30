@@ -46,6 +46,8 @@ export interface Props extends DatovelgerCommonProps {
     input: DateInputProps;
     /** Valgt dato */
     dato?: Date;
+    /** Velg år */
+    navigasjonstype?: 'piler' | 'dropdown';
     /** Kalles når en dato velges */
     onChange: (date: Date, validering?: DatoValidering) => void;
 }

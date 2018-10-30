@@ -34,7 +34,6 @@ var moment = require("moment");
 var FocusTrap = require("focus-trap-react");
 var utils_1 = require("../utils");
 var Navbar_1 = require("./Navbar");
-var TittelOgNavigasjon_1 = require("./TittelOgNavigasjon");
 var localeUtils_1 = require("./localeUtils");
 var Kalender = /** @class */function (_super) {
     __extends(Kalender, _super);
@@ -98,9 +97,9 @@ var Kalender = /** @class */function (_super) {
                 return React.createElement("span", null);
             },
             captionElement: function (props) {
-                return React.createElement(TittelOgNavigasjon_1.TittelOgNavigasjon, { date: måned, locale: locale, localeUtils: localeUtils, navbar: React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
-                            return _this.onByttMåned(d);
-                        }, min: min, maks: maks }) });
+                return React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
+                        return _this.onByttMåned(d);
+                    }, min: min, maks: maks, locale: locale, localeUtils: localeUtils, "vis\u00C5rVelger": true });
             },
             firstDayOfWeek: 1,
             showWeekNumbers: visUkenumre

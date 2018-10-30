@@ -1,10 +1,14 @@
 import * as React from 'react';
+import { LocaleUtils } from 'react-day-picker/types/utils';
 export interface Props {
     måned: Date;
     byttMåned: (month: Date) => void;
     byttÅr?: (month: Date) => void;
     min?: Date;
     maks?: Date;
+    visÅrVelger?: boolean;
+    locale: string;
+    localeUtils: LocaleUtils;
 }
 export interface NavbarKnappProps {
     måned: Date;
@@ -12,5 +16,8 @@ export interface NavbarKnappProps {
     disabled: boolean;
     onClick: (evt: React.MouseEvent<HTMLButtonElement>, måned: Date) => void;
 }
-declare const Navbar: React.StatelessComponent<Props>;
+declare class Navbar extends React.Component<Props> {
+    shouldComponentUpdate(nextProps: any): boolean;
+    render(): JSX.Element;
+}
 export default Navbar;
