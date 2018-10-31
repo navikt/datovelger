@@ -7,7 +7,7 @@ import { LocaleUtils } from 'react-day-picker/types/utils';
 import YearSelector from './YearSelector';
 
 export interface Props {
-	måned: Date;
+	defaultMåned: Date;
 	byttMåned: (month: Date) => void;
 	byttÅr?: (month: Date) => void;
 	min?: Date;
@@ -55,7 +55,7 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 };
 
 const lagCaption = (props: Props) =>
-	props.localeUtils.formatMonthTitle(props.måned, props.locale);
+	props.localeUtils.formatMonthTitle(props.defaultMåned, props.locale);
 
 class Navbar extends React.Component<Props> {
 	shouldComponentUpdate(nextProps: any) {
@@ -64,7 +64,7 @@ class Navbar extends React.Component<Props> {
 
 	render() {
 		const {
-			måned,
+			defaultMåned,
 			byttMåned,
 			min,
 			maks,
@@ -73,8 +73,8 @@ class Navbar extends React.Component<Props> {
 			localeUtils
 		} = this.props;
 
-		const forrigeMåned = moment(måned).add(-1, 'months');
-		const nesteMåned = moment(måned).add(1, 'months');
+		const forrigeMåned = moment(defaultMåned).add(-1, 'months');
+		const nesteMåned = moment(defaultMåned).add(1, 'months');
 
 		const forrigeErDisabled = min
 			? moment(min).isAfter(forrigeMåned.endOf('month'))
@@ -98,7 +98,7 @@ class Navbar extends React.Component<Props> {
 				{visÅrVelger && (
 					<div className="nav-datovelger__navbar__yearSelector">
 						<YearSelector
-							date={måned}
+							defaultMonth={defaultMåned}
 							max={maks}
 							min={min}
 							locale={locale}

@@ -125,7 +125,7 @@ export class Kalender extends React.Component<Props, State> {
 			navbarElement: (props: NavbarElementProps) => <span />,
 			captionElement: (props: CaptionElementProps) => (
 				<Navbar
-					måned={måned}
+					defaultMåned={måned}
 					byttMåned={(d: Date) => this.onByttMåned(d)}
 					min={min}
 					maks={maks}

@@ -4,7 +4,7 @@ import { guid } from 'nav-frontend-js-utils';
 import * as moment from 'moment';
 
 export interface Props {
-	date: Date;
+	defaultMonth: Date;
 	min?: Date;
 	max?: Date;
 	localeUtils: LocaleUtils;
@@ -18,15 +18,19 @@ interface MonthOption {
 }
 const getAvailableMonths = (
 	monthNames: string[],
-	date: Date,
+	defaultMonth: Date,
 	min?: Date,
 	maks?: Date
 ): MonthOption[] => {
 	const options: MonthOption[] = [];
 	const from =
-		min && date.getFullYear() === min.getFullYear() ? min.getMonth() : 0;
+		min && defaultMonth.getFullYear() === min.getFullYear()
+			? min.getMonth()
+			: 0;
 	const to =
-		maks && date.getFullYear() === maks.getFullYear() ? maks.getMonth() : 11;
+		maks && defaultMonth.getFullYear() === maks.getFullYear()
+			? maks.getMonth()
+			: 11;
 	let m = from;
 	while (m <= to) {
 		options.push({
@@ -39,15 +43,33 @@ const getAvailableMonths = (
 };
 
 class YearSelector extends React.Component<Props, {}> {
+	yearSelect: HTMLSelectElement | null;
+	monthSelect: HTMLSelectElement | null;
+
 	constructor(props: Props) {
 		super(props);
 		this.onChange = this.onChange.bind(this);
 		this.onYearChange = this.onYearChange.bind(this);
+		this.getYear = this.getYear.bind(this);
+		this.getMonth = this.getMonth.bind(this);
+	}
+
+	getYear(): number {
+		if (this.yearSelect) {
+			return parseInt(this.yearSelect.value, 10);
+		}
+		return (this.props.min || this.props.max || new Date()).getFullYear();
+	}
+
+	getMonth(): number {
+		if (this.monthSelect) {
+			return parseInt(this.monthSelect.value, 10);
+		}
+		return (this.props.min || this.props.max || new Date()).getMonth();
 	}
 
 	onChange(evt: React.ChangeEvent<HTMLElement>) {
-		const { year, month } = (evt.target as HTMLFormElement).form;
-		this.props.onChange(new Date(year.value, month.value));
+		this.props.onChange(new Date(this.getYear(), this.getMonth()));
 	}
 
 	onYearChange(evt: React.ChangeEvent<HTMLElement>) {
@@ -64,7 +86,7 @@ class YearSelector extends React.Component<Props, {}> {
 
 	render() {
 		const {
-			date,
+			defaultMonth,
 			min = new Date(1900, 0, 1),
 			max = moment()
 				.add(4, 'years')
@@ -73,42 +95,51 @@ class YearSelector extends React.Component<Props, {}> {
 			locale
 		} = this.props;
 		const monthNames = localeUtils.getMonths(locale);
-		const monthOptions = getAvailableMonths(monthNames, date, min, max);
+		const monthOptions = getAvailableMonths(monthNames, defaultMonth, min, max);
 		const years = [];
-		for (let i = min.getFullYear(); i <= max.getFullYear(); i += 1) {
+
+		const minYear = Math.min(defaultMonth.getFullYear(), min.getFullYear());
+		const maxYear = Math.max(defaultMonth.getFullYear(), max.getFullYear());
+		for (let i = minYear; i <= maxYear; i += 1) {
 			years.push(i);
 		}
+
 		const mndSelectId = guid();
 		const yearSelectId = guid();
+
 		return (
 			<div className="nav-datovelger__yearSelector">
-				<div className="selectContainer">
-					<label className="sr-only" htmlFor={yearSelectId}>
-						Velg år
-					</label>
-					<select
-						id={yearSelectId}
-						className="skjemaelement__input skjemaelement__input--year"
-						name="year"
-						onChange={this.onYearChange}
-						value={date.getFullYear()}>
-						{years.map((year) => (
-							<option key={year} value={year}>
-								{year}
-							</option>
-						))}
-					</select>
-				</div>
+				{years.length > 0 && (
+					<div className="selectContainer">
+						<label className="sr-only" htmlFor={yearSelectId}>
+							Velg år
+						</label>
+						<select
+							id={yearSelectId}
+							ref={(c) => (this.yearSelect = c)}
+							className="skjemaelement__input skjemaelement__input--year"
+							name="year"
+							onChange={this.onYearChange}
+							value={defaultMonth.getFullYear()}>
+							{years.map((year) => (
+								<option key={year} value={year}>
+									{year}
+								</option>
+							))}
+						</select>
+					</div>
+				)}
 				<div className="selectContainer">
 					<label className="sr-only" htmlFor={mndSelectId}>
 						Velg måned
 					</label>
 					<select
 						id={mndSelectId}
+						ref={(c) => (this.monthSelect = c)}
 						className="skjemaelement__input"
 						name="month"
 						onChange={this.onChange}
-						value={date.getMonth()}>
+						value={defaultMonth.getMonth()}>
 						{monthOptions.map((m) => (
 							<option key={m.value} value={m.value}>
 								{m.label}
