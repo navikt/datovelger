@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 export interface Props {
-    måned: Date;
+    defaultMåned: Date;
     byttMåned: (month: Date) => void;
     byttÅr?: (month: Date) => void;
     min?: Date;

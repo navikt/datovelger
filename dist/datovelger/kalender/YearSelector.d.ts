@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 export interface Props {
-    date: Date;
+    defaultMonth: Date;
     min?: Date;
     max?: Date;
     localeUtils: LocaleUtils;
@@ -9,7 +9,11 @@ export interface Props {
     onChange: (mnd: Date) => void;
 }
 declare class YearSelector extends React.Component<Props, {}> {
+    yearSelect: HTMLSelectElement | null;
+    monthSelect: HTMLSelectElement | null;
     constructor(props: Props);
+    getYear(): number;
+    getMonth(): number;
     onChange(evt: React.ChangeEvent<HTMLElement>): void;
     onYearChange(evt: React.ChangeEvent<HTMLElement>): void;
     render(): JSX.Element;

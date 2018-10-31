@@ -98,7 +98,7 @@ var Kalender = /** @class */function (_super) {
                 return React.createElement("span", null);
             },
             captionElement: function (props) {
-                return React.createElement(Navbar_1.default, { "m\u00E5ned": måned, "byttM\u00E5ned": function (d) {
+                return React.createElement(Navbar_1.default, { "defaultM\u00E5ned": måned, "byttM\u00E5ned": function (d) {
                         return _this.onByttMåned(d);
                     }, min: min, maks: maks, locale: locale, localeUtils: localeUtils, "vis\u00C5rVelger": visÅrVelger });
             },

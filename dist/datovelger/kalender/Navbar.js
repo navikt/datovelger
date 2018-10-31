@@ -37,7 +37,7 @@ var NavbarKnapp = function (_a) {
         }, "aria-label": label, "aria-disabled": disabled, role: "button" }, React.createElement(ChevronSvg_1.default, { retning: retning === 'forrige' ? 'venstre' : 'høyre' }));
 };
 var lagCaption = function (props) {
-    return props.localeUtils.formatMonthTitle(props.måned, props.locale);
+    return props.localeUtils.formatMonthTitle(props.defaultMåned, props.locale);
 };
 var Navbar = /** @class */function (_super) {
     __extends(Navbar, _super);
@@ -49,15 +49,15 @@ var Navbar = /** @class */function (_super) {
     };
     Navbar.prototype.render = function () {
         var _a = this.props,
-            måned = _a.måned,
+            defaultMåned = _a.defaultMåned,
             byttMåned = _a.byttMåned,
             min = _a.min,
             maks = _a.maks,
             visÅrVelger = _a.visÅrVelger,
             locale = _a.locale,
             localeUtils = _a.localeUtils;
-        var forrigeMåned = moment(måned).add(-1, 'months');
-        var nesteMåned = moment(måned).add(1, 'months');
+        var forrigeMåned = moment(defaultMåned).add(-1, 'months');
+        var nesteMåned = moment(defaultMåned).add(1, 'months');
         var forrigeErDisabled = min ? moment(min).isAfter(forrigeMåned.endOf('month')) : false;
         var nesteErDisabled = maks ? moment(maks).isBefore(nesteMåned.startOf('month')) : false;
         var onClick = function (evt, mnd) {
@@ -65,7 +65,7 @@ var Navbar = /** @class */function (_super) {
             evt.stopPropagation();
             byttMåned(mnd);
         };
-        return React.createElement("div", { className: "DayPicker-Caption" }, React.createElement("span", { "aria-live": "assertive", className: visÅrVelger ? 'sr-only' : '' }, lagCaption(this.props)), visÅrVelger && React.createElement("div", { className: "nav-datovelger__navbar__yearSelector" }, React.createElement(YearSelector_1.default, { date: måned, max: maks, min: min, locale: locale, localeUtils: localeUtils, onChange: function (mnd) {
+        return React.createElement("div", { className: "DayPicker-Caption" }, React.createElement("span", { "aria-live": "assertive", className: visÅrVelger ? 'sr-only' : '' }, lagCaption(this.props)), visÅrVelger && React.createElement("div", { className: "nav-datovelger__navbar__yearSelector" }, React.createElement(YearSelector_1.default, { defaultMonth: defaultMåned, max: maks, min: min, locale: locale, localeUtils: localeUtils, onChange: function (mnd) {
                 return byttMåned(mnd);
             } })), React.createElement("div", { className: "nav-datovelger__navbar " + (visÅrVelger ? 'nav-datovelger__navbar--withYearSelector' : ''), role: "nav" }, React.createElement(NavbarKnapp, { "m\u00E5ned": forrigeMåned.toDate(), retning: "forrige", disabled: forrigeErDisabled, onClick: onClick }), React.createElement(NavbarKnapp, { "m\u00E5ned": nesteMåned.toDate(), retning: "neste", disabled: nesteErDisabled, onClick: onClick })));
     };
