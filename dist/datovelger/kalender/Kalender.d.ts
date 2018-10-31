@@ -13,6 +13,7 @@ export interface Props {
     utilgjengeligeDager?: Modifier[];
     visUkenumre?: boolean;
     kanVelgeUgyldigDato?: boolean;
+    visÅrVelger?: boolean;
     dayPickerProps?: DayPickerProps;
 }
 export interface State {

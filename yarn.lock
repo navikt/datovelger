@@ -2843,6 +2843,10 @@ nav-frontend-skjema-style@0.3.16:
   version "0.3.16"
   resolved "http://registry.npmjs.org/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.16.tgz#df7d358c4427764a263af40645f4b97218235a5d"
 
+nav-frontend-skjema@^1.0.40:
+  version "1.0.40"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-1.0.40.tgz#79b179a0834962889b912fab92c9952db35c4c22"
+
 nav-frontend-typografi-style@1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.8.tgz#34aa32cf33223c4f178b48e767229910b6ab6132"

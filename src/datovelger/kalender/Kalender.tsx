@@ -17,7 +17,6 @@ import {
 	isDateObject
 } from '../utils';
 import Navbar from './Navbar';
-import { TittelOgNavigasjon } from './TittelOgNavigasjon';
 import kalenderLocaleUtils from './localeUtils';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 
@@ -33,6 +32,7 @@ export interface Props {
 	utilgjengeligeDager?: Modifier[];
 	visUkenumre?: boolean;
 	kanVelgeUgyldigDato?: boolean;
+	visÅrVelger?: boolean;
 	dayPickerProps?: DayPickerProps;
 }
 
@@ -109,6 +109,7 @@ export class Kalender extends React.Component<Props, State> {
 			locale,
 			visUkenumre,
 			utilgjengeligeDager,
+			visÅrVelger,
 			dayPickerProps
 		} = this.props;
 		const { måned } = this.state;
@@ -123,18 +124,14 @@ export class Kalender extends React.Component<Props, State> {
 			localeUtils,
 			navbarElement: (props: NavbarElementProps) => <span />,
 			captionElement: (props: CaptionElementProps) => (
-				<TittelOgNavigasjon
-					date={måned}
+				<Navbar
+					defaultMåned={måned}
+					byttMåned={(d: Date) => this.onByttMåned(d)}
+					min={min}
+					maks={maks}
 					locale={locale}
 					localeUtils={localeUtils}
-					navbar={
-						<Navbar
-							måned={måned}
-							byttMåned={(d: Date) => this.onByttMåned(d)}
-							min={min}
-							maks={maks}
-						/>
-					}
+					visÅrVelger={visÅrVelger}
 				/>
 			),
 			firstDayOfWeek: 1,

@@ -3,13 +3,18 @@ import * as moment from 'moment';
 import * as classnames from 'classnames';
 import Chevron from '../elementer/ChevronSvg';
 import { Tekster } from '../tekster';
+import { LocaleUtils } from 'react-day-picker/types/utils';
+import YearSelector from './YearSelector';
 
 export interface Props {
-	måned: Date;
+	defaultMåned: Date;
 	byttMåned: (month: Date) => void;
 	byttÅr?: (month: Date) => void;
 	min?: Date;
 	maks?: Date;
+	visÅrVelger?: boolean;
+	locale: string;
+	localeUtils: LocaleUtils;
 }
 
 export interface NavbarKnappProps {
@@ -25,7 +30,10 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 	disabled,
 	onClick
 }) => {
-	const label = retning === 'forrige' ? Tekster.navbar_forrigeManed_label : Tekster.navbar_forrigeManed_label;
+	const label =
+		retning === 'forrige'
+			? Tekster.navbar_forrigeManed_label
+			: Tekster.navbar_forrigeManed_label;
 
 	return (
 		<button
@@ -46,45 +54,80 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 	);
 };
 
-const Navbar: React.StatelessComponent<Props> = ({
-	måned,
-	byttMåned,
-	min,
-	maks
-}) => {
-	const forrigeMåned = moment(måned).add(-1, 'months');
-	const nesteMåned = moment(måned).add(1, 'months');
+const lagCaption = (props: Props) =>
+	props.localeUtils.formatMonthTitle(props.defaultMåned, props.locale);
 
-	const forrigeErDisabled = min
-		? moment(min).isAfter(forrigeMåned.endOf('month'))
-		: false;
+class Navbar extends React.Component<Props> {
+	shouldComponentUpdate(nextProps: any) {
+		return lagCaption(nextProps) !== lagCaption(this.props);
+	}
 
-	const nesteErDisabled = maks
-		? moment(maks).isBefore(nesteMåned.startOf('month'))
-		: false;
+	render() {
+		const {
+			defaultMåned,
+			byttMåned,
+			min,
+			maks,
+			visÅrVelger,
+			locale,
+			localeUtils
+		} = this.props;
 
-	const onClick = (evt: React.MouseEvent<HTMLButtonElement>, mnd: Date) => {
-		evt.preventDefault();
-		evt.stopPropagation();
-		byttMåned(mnd);
-	};
+		const forrigeMåned = moment(defaultMåned).add(-1, 'months');
+		const nesteMåned = moment(defaultMåned).add(1, 'months');
 
-	return (
-		<div className="nav-datovelger__navbar" role="nav">
-			<NavbarKnapp
-				måned={forrigeMåned.toDate()}
-				retning="forrige"
-				disabled={forrigeErDisabled}
-				onClick={onClick}
-			/>
-			<NavbarKnapp
-				måned={nesteMåned.toDate()}
-				retning="neste"
-				disabled={nesteErDisabled}
-				onClick={onClick}
-			/>
-		</div>
-	);
-};
+		const forrigeErDisabled = min
+			? moment(min).isAfter(forrigeMåned.endOf('month'))
+			: false;
+
+		const nesteErDisabled = maks
+			? moment(maks).isBefore(nesteMåned.startOf('month'))
+			: false;
+
+		const onClick = (evt: React.MouseEvent<HTMLButtonElement>, mnd: Date) => {
+			evt.preventDefault();
+			evt.stopPropagation();
+			byttMåned(mnd);
+		};
+
+		return (
+			<div className="DayPicker-Caption">
+				<span aria-live="assertive" className={visÅrVelger ? 'sr-only' : ''}>
+					{lagCaption(this.props)}
+				</span>
+				{visÅrVelger && (
+					<div className="nav-datovelger__navbar__yearSelector">
+						<YearSelector
+							defaultMonth={defaultMåned}
+							max={maks}
+							min={min}
+							locale={locale}
+							localeUtils={localeUtils}
+							onChange={(mnd: Date) => byttMåned(mnd)}
+						/>
+					</div>
+				)}
+				<div
+					className={`nav-datovelger__navbar ${
+						visÅrVelger ? 'nav-datovelger__navbar--withYearSelector' : ''
+					}`}
+					role="nav">
+					<NavbarKnapp
+						måned={forrigeMåned.toDate()}
+						retning="forrige"
+						disabled={forrigeErDisabled}
+						onClick={onClick}
+					/>
+					<NavbarKnapp
+						måned={nesteMåned.toDate()}
+						retning="neste"
+						disabled={nesteErDisabled}
+						onClick={onClick}
+					/>
+				</div>
+			</div>
+		);
+	}
+}
 
 export default Navbar;

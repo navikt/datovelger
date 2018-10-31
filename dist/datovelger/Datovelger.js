@@ -126,9 +126,10 @@ var Datovelger = /** @class */function (_super) {
             _b = _a.locale,
             locale = _b === void 0 ? 'nb' : _b,
             disabled = _a.disabled,
+            visÅrVelger = _a.visÅrVelger,
             _c = _a.kanVelgeUgyldigDato,
             kanVelgeUgyldigDato = _c === void 0 ? false : _c,
-            kalenderProps = __rest(_a, ["dato", "input", "kalender", "avgrensninger", "locale", "disabled", "kanVelgeUgyldigDato"]);
+            kalenderProps = __rest(_a, ["dato", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
         var _d = this.state,
             erÅpen = _d.erÅpen,
             datovalidering = _d.datovalidering;
@@ -148,7 +149,7 @@ var Datovelger = /** @class */function (_super) {
                 return _this.onVelgDag(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);
-            }, kanVelgeUgyldigDato: kanVelgeUgyldigDato, dayPickerProps: this.props.dayPickerProps })))));
+            }, kanVelgeUgyldigDato: kanVelgeUgyldigDato, dayPickerProps: this.props.dayPickerProps, "vis\u00C5rVelger": visÅrVelger })))));
     };
     return Datovelger;
 }(React.Component);
