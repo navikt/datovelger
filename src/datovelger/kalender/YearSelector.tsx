@@ -106,10 +106,10 @@ class YearSelector extends React.Component<Props, {}> {
 
 		const mndSelectId = guid();
 		const yearSelectId = guid();
-
+		const showYearSelect = years.length > 1;
 		return (
 			<div className="nav-datovelger__yearSelector">
-				{years.length > 0 && (
+				{showYearSelect && (
 					<div className="selectContainer">
 						<label className="sr-only" htmlFor={yearSelectId}>
 							Velg år
@@ -129,7 +129,10 @@ class YearSelector extends React.Component<Props, {}> {
 						</select>
 					</div>
 				)}
-				<div className="selectContainer">
+				<div
+					className={`selectContainer${
+						showYearSelect === false ? ' selectContainer--monthOnly' : ''
+					}`}>
 					<label className="sr-only" htmlFor={mndSelectId}>
 						Velg måned
 					</label>
