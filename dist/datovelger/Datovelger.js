@@ -52,6 +52,7 @@ var Datovelger = /** @class */function (_super) {
         _this.toggleKalender = _this.toggleKalender.bind(_this);
         _this.lukkKalender = _this.lukkKalender.bind(_this);
         _this.onDateInputChange = _this.onDateInputChange.bind(_this);
+        _this.callPropsOnChange = _this.callPropsOnChange.bind(_this);
         _this.state = {
             måned: utils_1.getDefaultMåned(props.dato, props.avgrensninger, props.dayPickerProps),
             datovalidering: props.dato ? datovalidering_1.validerDato(props.dato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
@@ -66,13 +67,16 @@ var Datovelger = /** @class */function (_super) {
             måned: utils_1.getDefaultMåned(nextProps.dato, nextProps.avgrensninger, nextProps.dayPickerProps)
         });
     };
+    Datovelger.prototype.callPropsOnChange = function (dato) {
+        this.props.onChange(utils_1.isDateObject(dato) ? utils_1.normaliserDato(dato).toDate() : undefined);
+    };
     Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
         var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
         this.setState({
             erÅpen: false,
             datovalidering: datovalidering
         });
-        this.props.onChange(dato);
+        this.callPropsOnChange(dato);
         if (lukkKalender) {
             this.lukkKalender(true);
         }
@@ -83,7 +87,7 @@ var Datovelger = /** @class */function (_super) {
             erÅpen: false,
             datovalidering: datovalidering
         });
-        this.props.onChange(dato);
+        this.callPropsOnChange(dato);
     };
     Datovelger.prototype.onDateInputChange = function (value, event) {
         var _a = this.props,

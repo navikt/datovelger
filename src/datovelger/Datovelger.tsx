@@ -1,7 +1,12 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import { Avgrensninger, KalenderPlassering } from './types';
-import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
+import {
+	getDefaultMåned,
+	getUtilgjengeligeDager,
+	normaliserDato,
+	isDateObject
+} from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
 import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
@@ -74,6 +79,7 @@ class Datovelger extends React.Component<Props, State> {
 		this.toggleKalender = this.toggleKalender.bind(this);
 		this.lukkKalender = this.lukkKalender.bind(this);
 		this.onDateInputChange = this.onDateInputChange.bind(this);
+		this.callPropsOnChange = this.callPropsOnChange.bind(this);
 
 		this.state = {
 			måned: getDefaultMåned(
@@ -103,13 +109,19 @@ class Datovelger extends React.Component<Props, State> {
 		});
 	}
 
+	callPropsOnChange(dato: Date) {
+		this.props.onChange(
+			isDateObject(dato) ? normaliserDato(dato).toDate() : undefined
+		);
+	}
+
 	onVelgDag(dato: Date, lukkKalender?: boolean) {
 		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
 		this.setState({
 			erÅpen: false,
 			datovalidering
 		});
-		this.props.onChange(dato);
+		this.callPropsOnChange(dato);
 		if (lukkKalender) {
 			this.lukkKalender(true);
 		}
@@ -121,7 +133,7 @@ class Datovelger extends React.Component<Props, State> {
 			erÅpen: false,
 			datovalidering
 		});
-		this.props.onChange(dato);
+		this.callPropsOnChange(dato);
 	}
 
 	onDateInputChange(value: string, event: React.ChangeEvent<HTMLInputElement>) {
