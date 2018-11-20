@@ -10,7 +10,7 @@ exports.isDateObject = function (date) {
     return date && typeof date === 'object' && date.getDate;
 };
 exports.normaliserDato = function (d) {
-    return moment(d).startOf('day');
+    return moment(d.toISOString().substr(0, 10)).utc(true);
 };
 exports.formatDateInputValue = function (date) {
     if (exports.isDateObject(date)) {

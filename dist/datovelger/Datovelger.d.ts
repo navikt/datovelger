@@ -58,6 +58,7 @@ declare class Datovelger extends React.Component<Props, State> {
     kalenderKnapp: KalenderKnapp | null;
     constructor(props: Props);
     componentWillReceiveProps(nextProps: Props): void;
+    callPropsOnChange(dato: Date): void;
     onVelgDag(dato: Date, lukkKalender?: boolean): void;
     onDatoDateChange(dato: Date): void;
     onDateInputChange(value: string, event: React.ChangeEvent<HTMLInputElement>): void;
