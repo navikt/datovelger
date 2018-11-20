@@ -15,7 +15,9 @@ export * from './kalenderFokusUtils';
 export const isDateObject = (date: any) =>
 	date && typeof date === 'object' && date.getDate;
 
-export const normaliserDato = (d: Date): Moment => moment(d).startOf('day');
+export const normaliserDato = (d: Date): Moment => {
+	return moment(d.toISOString().substr(0, 10)).utc(true);
+};
 
 export const formatDateInputValue = (date?: Date) => {
 	if (isDateObject(date)) {
