@@ -15,6 +15,7 @@
 		"url": "git+https://github.com/navikt/datovelger.git"
 	},
 	"dependencies": {
+		"@types/react-day-picker": "^5.3.0",
 		"babel-preset-env": "1.6.1",
 		"classnames": "2.2.5",
 		"focus-trap": "2.4.3",
@@ -25,18 +26,24 @@
 		"nav-frontend-core": "4.0.5",
 		"nav-frontend-js-utils": "1.0.3",
 		"nav-frontend-typografi": "2.0.2",
-		"react": "16.5.1",
-		"react-day-picker": "7.2.4",
+		"react": "16.8.1",
+		"react-day-picker": "^7.2.4",
 		"react-dom": "16.5.1"
 	},
 	"devDependencies": {
 		"@types/classnames": "2.2.3",
-		"@types/react": "16.4.14",
+		"@types/enzyme": "^3.1.17",
+		"@types/enzyme-adapter-react-16": "^1.0.3",
+		"@types/jest": "^24.0.0",
+		"@types/jsdom": "^12.2.1",
+		"@types/react": "16.8.2",
 		"@types/react-dom": "16.0.7",
 		"babel-core": "6.26.0",
 		"babel-plugin-transform-react-display-name": "6.25.0",
 		"chokidar": "2.0.2",
 		"classnames": "2.2.5",
+		"enzyme": "^3.8.0",
+		"enzyme-adapter-react-16": "^1.9.1",
 		"gulp": "3.9.1",
 		"gulp-babel": "7.0.1",
 		"gulp-batch": "1.0.5",
@@ -46,6 +53,7 @@
 		"gulp-plumber": "1.2.0",
 		"gulp-typescript": "4.0.1",
 		"gulp-watch": "5.0.0",
+		"jest": "23.5.0",
 		"merge2": "1.2.1",
 		"nav-frontend-knapper-style": "0.3.7",
 		"nav-frontend-skjema-style": "0.3.16",
@@ -53,11 +61,14 @@
 		"node-less-chokidar": "0.1.2",
 		"npm-run-all": "4.1.2",
 		"prop-types": "15.5.10",
+		"ts-jest": "^23.10.5",
+		"tslint-react": "^3.6.0",
 		"typescript": "3.0.3"
 	},
 	"scripts": {
 		"build:css": "gulp buildLess",
 		"build:js": "gulp buildTs",
-		"build": "npm-run-all build:css build:js"
+		"build": "npm-run-all build:css build:js",
+		"jest": "jest --config ./jest/jest.config.js"
 	}
 }
