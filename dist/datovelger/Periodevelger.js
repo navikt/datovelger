@@ -228,7 +228,7 @@ var Periodevelger = /** @class */function (_super) {
                 return _this.startInput = c;
             }, date: fra || startdato, onDateChange: this.onStartdateChange, onInputChange: this.onStartInputChange, isDatePickerTarget: erÅpen && inputTarget === 'fra', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.startKalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps), { 'aria-label': 'Til dato' }), ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps), { 'aria-label': 'Til selectedDate' }), ref: function (c) {
                 return _this.sluttInput = c;
             }, date: til || sluttdato, onDateChange: this.onSluttdateChange, onInputChange: this.onSluttInputChange, isDatePickerTarget: erÅpen && inputTarget === 'til', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.sluttKalenderKnapp = c;

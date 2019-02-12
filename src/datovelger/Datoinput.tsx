@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-import { formatDateInputValue } from './utils';
-import * as moment from 'moment';
+import { formatDateInputValue, formatInputToISOString } from './utils';
 
 export interface Props {
-	date?: Date;
-	onDateChange: (date: Date | undefined) => void;
+	selectedDate?: string;
+	onDateChange: (date: string | undefined) => void;
 	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 	onInputChange?: (
 		value: string,
@@ -19,16 +18,6 @@ export interface State {
 	value: string;
 }
 
-export const dateRegExp = /^(\d{1,2}).(\d{1,2}).(\d{4})$/;
-
-const getDateFromString = (value: string) => {
-	const values = value.match(dateRegExp);
-	if (values && values.length === 4) {
-		return moment.utc(value, 'DD.MM.YYYY').toDate();
-	}
-	return undefined;
-};
-
 export class Input extends React.Component<Props, State> {
 	input: HTMLInputElement | null;
 
@@ -40,14 +29,14 @@ export class Input extends React.Component<Props, State> {
 		this.onKeyDown = this.onKeyDown.bind(this);
 		this.triggerDateChange = this.triggerDateChange.bind(this);
 		this.state = {
-			value: formatDateInputValue(props.date)
+			value: formatDateInputValue(props.selectedDate)
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		if (nextProps.date !== this.props.date) {
+		if (nextProps.selectedDate !== this.props.selectedDate) {
 			this.setState({
-				value: formatDateInputValue(nextProps.date)
+				value: formatDateInputValue(nextProps.selectedDate)
 			});
 		}
 	}
@@ -58,7 +47,7 @@ export class Input extends React.Component<Props, State> {
 		}
 	}
 
-	onBlur(evt: React.FocusEvent<HTMLInputElement>) {
+	onBlur() {
 		this.triggerDateChange();
 	}
 
@@ -78,8 +67,9 @@ export class Input extends React.Component<Props, State> {
 	}
 
 	triggerDateChange() {
-		if (getDateFromString(this.state.value) !== this.props.date) {
-			this.props.onDateChange(getDateFromString(this.state.value));
+		const ISOString = formatInputToISOString(this.state.value);
+		if (ISOString !== this.props.selectedDate) {
+			this.props.onDateChange(ISOString);
 		}
 	}
 

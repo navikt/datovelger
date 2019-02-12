@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DatovelgerCommonProps, DateInputProps } from './Datovelger';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
-import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
+import { getUtilgjengeligeDager } from './utils';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
 import { RangeModifier, DayModifiers } from 'react-day-picker';
@@ -68,11 +68,7 @@ class Periodevelger extends React.Component<Props, State> {
 		this.onDayFocus = this.onDayFocus.bind(this);
 
 		this.state = {
-			måned: getDefaultMåned(
-				props.startdato || undefined,
-				props.avgrensninger,
-				props.dayPickerProps
-			),
+			måned: new Date(),
 			erÅpen: false,
 			fra: props.startdato,
 			til: props.sluttdato
@@ -262,8 +258,8 @@ class Periodevelger extends React.Component<Props, State> {
 									...trimInputProps(this.props.id, 'start', startInputProps)
 								}}
 								ref={(c) => (this.startInput = c)}
-								date={fra || startdato}
-								onDateChange={this.onStartdateChange}
+								selectedDate={fra && fra.toISOString() ||startdato && startdato.toISOString()}
+								onDateChange={(d: string) => this.onStartdateChange(new Date(d))}
 								onInputChange={this.onStartInputChange}
 								isDatePickerTarget={erÅpen && inputTarget === 'fra'}
 								disabled={disabled}
@@ -284,8 +280,8 @@ class Periodevelger extends React.Component<Props, State> {
 									'aria-label': 'Til dato'
 								}}
 								ref={(c) => (this.sluttInput = c)}
-								date={til || sluttdato}
-								onDateChange={this.onSluttdateChange}
+								selectedDate={til && til.toISOString() || sluttdato && sluttdato.toISOString()}
+								onDateChange={(d: string) => this.onSluttdateChange(new Date(d))}
 								onInputChange={this.onSluttInputChange}
 								isDatePickerTarget={erÅpen && inputTarget === 'til'}
 								disabled={disabled}
@@ -312,7 +308,7 @@ class Periodevelger extends React.Component<Props, State> {
 										? getUtilgjengeligeDager(avgrensninger)
 										: undefined
 								}
-								onVelgDag={(d) => this.onVelgDato(d, true)}
+								onVelgDag={(d) => this.onVelgDato(new Date(d), true)}
 								onLukk={() => this.lukkKalender(true)}
 								kanVelgeUgyldigDato={kanVelgeUgyldigDato}
 								dayPickerProps={dayPickerProps}

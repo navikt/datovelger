@@ -3,9 +3,7 @@ import * as classnames from 'classnames';
 import { Avgrensninger, KalenderPlassering } from './types';
 import {
 	getDefaultMåned,
-	getUtilgjengeligeDager,
-	normaliserDato,
-	isDateObject
+	getUtilgjengeligeDager
 } from './utils';
 import { validerDato, DatoValidering } from './utils/datovalidering';
 import { DayPickerProps } from 'react-day-picker';
@@ -33,36 +31,23 @@ export interface DateInputProps {
 }
 
 export interface DatovelgerCommonProps {
-	/** Component ID */
 	id: string;
-	/** Kalenderprops */
 	kalender?: {
-		/** Om ukenumre skal vises - default false */
 		visUkenumre?: boolean;
-		/** Hvor kalender skal vises. Default under */
 		plassering?: KalenderPlassering;
 	};
-	/** Begrensninger på hvilke datoer bruker kan velge */
 	avgrensninger?: Avgrensninger;
-	/** Default false. Tillater bruker å velge ugyldig dato. */
 	kanVelgeUgyldigDato?: boolean;
-	/** dayPickerProps */
 	dayPickerProps?: DayPickerProps;
-	/** Språk */
 	locale?: string;
-	/** Datovelger er låst */
 	disabled?: boolean;
 }
 
 export interface Props extends DatovelgerCommonProps {
-	/** Props for tekstinput feltet */
 	input: DateInputProps;
-	/** Valgt dato */
-	dato?: Date;
-	/** Velg år */
+	selectedDate?: string;
 	visÅrVelger?: boolean;
-	/** Kalles når en dato velges */
-	onChange: (date: Date, validering?: DatoValidering) => void;
+	onChange: (date: string, validering?: DatoValidering) => void;
 }
 
 class Datovelger extends React.Component<Props, State> {
@@ -83,12 +68,12 @@ class Datovelger extends React.Component<Props, State> {
 
 		this.state = {
 			måned: getDefaultMåned(
-				props.dato,
+				props.selectedDate,
 				props.avgrensninger,
 				props.dayPickerProps
 			),
-			datovalidering: props.dato
-				? validerDato(props.dato, props.avgrensninger || {})
+			datovalidering: props.selectedDate
+				? validerDato(props.selectedDate, props.avgrensninger || {})
 				: 'datoErIkkeDefinert',
 			erÅpen: false,
 			inputValue: ''
@@ -98,24 +83,22 @@ class Datovelger extends React.Component<Props, State> {
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState({
 			datovalidering: validerDato(
-				nextProps.dato,
+				nextProps.selectedDate,
 				nextProps.avgrensninger || {}
 			),
 			måned: getDefaultMåned(
-				nextProps.dato,
+				nextProps.selectedDate,
 				nextProps.avgrensninger,
 				nextProps.dayPickerProps
 			)
 		});
 	}
 
-	callPropsOnChange(dato: Date) {
-		this.props.onChange(
-			isDateObject(dato) ? normaliserDato(dato).toDate() : undefined
-		);
+	callPropsOnChange(dato: string) {
+		this.props.onChange(dato);
 	}
 
-	onVelgDag(dato: Date, lukkKalender?: boolean) {
+	onVelgDag(dato: string, lukkKalender?: boolean) {
 		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
 		this.setState({
 			erÅpen: false,
@@ -127,7 +110,7 @@ class Datovelger extends React.Component<Props, State> {
 		}
 	}
 
-	onDatoDateChange(dato: Date) {
+	onDatoDateChange(dato: string) {
 		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
 		this.setState({
 			erÅpen: false,
@@ -176,7 +159,7 @@ class Datovelger extends React.Component<Props, State> {
 
 	render() {
 		const {
-			dato,
+			selectedDate,
 			input,
 			kalender,
 			avgrensninger,
@@ -208,7 +191,7 @@ class Datovelger extends React.Component<Props, State> {
 						<Datoinput
 							inputProps={dateInputProps}
 							ref={(c) => (this.input = c)}
-							date={dato}
+							selectedDate={selectedDate}
 							onDateChange={this.onDatoDateChange}
 							onInputChange={this.onDateInputChange}
 							disabled={disabled}
@@ -226,8 +209,8 @@ class Datovelger extends React.Component<Props, State> {
 								ref={(c) => (this.kalender = c)}
 								{...kalenderProps}
 								locale={locale}
-								dato={dato}
-								måned={this.state.måned}
+								dato={selectedDate}
+								måned={new Date()}
 								min={avgrensninger && avgrensninger.minDato}
 								maks={avgrensninger && avgrensninger.maksDato}
 								utilgjengeligeDager={
@@ -235,7 +218,7 @@ class Datovelger extends React.Component<Props, State> {
 										? getUtilgjengeligeDager(avgrensninger)
 										: undefined
 								}
-								onVelgDag={(d) => this.onVelgDag(d, true)}
+								onVelgDag={(d: string) => this.onVelgDag(d, true)}
 								onLukk={() => this.lukkKalender(true)}
 								kanVelgeUgyldigDato={kanVelgeUgyldigDato}
 								dayPickerProps={this.props.dayPickerProps}

@@ -54,8 +54,8 @@ var Datovelger = /** @class */function (_super) {
         _this.onDateInputChange = _this.onDateInputChange.bind(_this);
         _this.callPropsOnChange = _this.callPropsOnChange.bind(_this);
         _this.state = {
-            måned: utils_1.getDefaultMåned(props.dato, props.avgrensninger, props.dayPickerProps),
-            datovalidering: props.dato ? datovalidering_1.validerDato(props.dato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
+            måned: utils_1.getDefaultMåned(props.selectedDate, props.avgrensninger, props.dayPickerProps),
+            datovalidering: props.selectedDate ? datovalidering_1.validerDato(props.selectedDate, props.avgrensninger || {}) : 'datoErIkkeDefinert',
             erÅpen: false,
             inputValue: ''
         };
@@ -63,8 +63,8 @@ var Datovelger = /** @class */function (_super) {
     }
     Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
         this.setState({
-            datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {}),
-            måned: utils_1.getDefaultMåned(nextProps.dato, nextProps.avgrensninger, nextProps.dayPickerProps)
+            datovalidering: datovalidering_1.validerDato(nextProps.selectedDate, nextProps.avgrensninger || {}),
+            måned: utils_1.getDefaultMåned(nextProps.selectedDate, nextProps.avgrensninger, nextProps.dayPickerProps)
         });
     };
     Datovelger.prototype.callPropsOnChange = function (dato) {
@@ -123,7 +123,7 @@ var Datovelger = /** @class */function (_super) {
     Datovelger.prototype.render = function () {
         var _this = this;
         var _a = this.props,
-            dato = _a.dato,
+            dato = _a.selectedDate,
             input = _a.input,
             kalender = _a.kalender,
             avgrensninger = _a.avgrensninger,
@@ -133,7 +133,7 @@ var Datovelger = /** @class */function (_super) {
             visÅrVelger = _a.visÅrVelger,
             _c = _a.kanVelgeUgyldigDato,
             kanVelgeUgyldigDato = _c === void 0 ? false : _c,
-            kalenderProps = __rest(_a, ["dato", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
+            kalenderProps = __rest(_a, ["selectedDate", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
         var _d = this.state,
             erÅpen = _d.erÅpen,
             datovalidering = _d.datovalidering;

@@ -1,14 +1,12 @@
 export interface Tidsperiode {
-	/** Dato fra og med */
-	fom: Date;
-	/** Dato til og med */
-	tom: Date;
+	fom: string;
+	tom: string;
 }
 
 export interface Avgrensninger {
-	/** Første valgbare dato */
+	/** Første valgbare selectedDate */
 	minDato?: Date;
-	/** Siste valgbare dato */
+	/** Siste valgbare selectedDate */
 	maksDato?: Date;
 	/** Tidsperioder som en ikke skal kunne velge */
 	ugyldigeTidsperioder?: Tidsperiode[];

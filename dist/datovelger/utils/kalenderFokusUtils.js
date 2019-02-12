@@ -8,7 +8,7 @@ exports.getFokusertDato = function (kalender) {
         if (document.activeElement.classList.contains('DayPicker-Day')) {
             var dagElement = document.activeElement.childNodes.item(0);
             if (dagElement) {
-                var attr = dagElement.attributes.getNamedItem('data-date');
+                var attr = dagElement.attributes.getNamedItem('data-selectedDate');
                 if (attr) {
                     return moment(attr.value, 'DD.MM.YYYY').toDate();
                 }
@@ -22,7 +22,7 @@ exports.getSammeDatoIMåned = function (dato, måned, nesteMåned) {
 };
 exports.fokuserPåDato = function (kalender, dato) {
     if (kalender) {
-        var el = kalender.querySelector("[data-date=\"" + _1.dagDatoNøkkel(dato) + "\"]");
+        var el = kalender.querySelector("[data-selectedDate=\"" + _1.dagDatoNøkkel(dato) + "\"]");
         if (el) {
             el.parentNode.focus();
         }

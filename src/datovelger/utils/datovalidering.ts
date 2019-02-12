@@ -11,11 +11,6 @@ export type DatoValidering =
 	| 'datoErIUgyldigPeriode'
 	| 'gyldig';
 
-export const erDatoGyldig = (
-	dato: Date | string | null | undefined,
-	avgrensninger: Avgrensninger
-) => validerDato(dato, avgrensninger) !== undefined;
-
 export const validerDato = (
 	dato: Date | string | null | undefined,
 	avgrensninger: Avgrensninger
@@ -47,11 +42,6 @@ export const validerDato = (
 	return 'gyldig';
 };
 
-export const erDatoDefinert = (dato: Date) =>
-	dato !== undefined && dato !== null;
-
-export const erDatoEnDato = (dato: Date) => moment.isDate(dato);
-
 export const erDatoEtterMinDato = (dato: Date, minDato?: Date) => {
 	return (
 		!minDato || normaliserDato(dato).isSameOrAfter(normaliserDato(minDato))
@@ -81,14 +71,11 @@ export const erDatoITidsperioder = (
 	tidsperioder.forEach((periode) => {
 		if (
 			gyldig &&
-			d.isSameOrAfter(normaliserDato(periode.fom)) &&
-			d.isSameOrBefore(normaliserDato(periode.tom))
+			d.isSameOrAfter(periode.fom) &&
+			d.isSameOrBefore(periode.tom)
 		) {
 			gyldig = true;
 		}
 	});
 	return gyldig;
 };
-
-export const erDagTilgjengelig = (dato: Date, avgrensninger?: Avgrensninger) =>
-	!avgrensninger || validerDato(dato, avgrensninger);

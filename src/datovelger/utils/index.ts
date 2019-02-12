@@ -12,24 +12,12 @@ import {
 
 export * from './kalenderFokusUtils';
 
-export const isDateObject = (date: any) =>
-	date && typeof date === 'object' && date.getDate;
-
 export const normaliserDato = (d: Date): Moment => {
 	return moment(d.toISOString().substr(0, 10)).utc(true);
 };
 
-export const formatDateInputValue = (date?: Date) => {
-	if (isDateObject(date)) {
-		return moment(date).format('DD.MM.YYYY');
-	} else if (typeof date === 'string') {
-		return date;
-	}
-	return '';
-};
-
-export const formaterDayAriaLabel = (dato: Date, locale: string) => {
-	return moment(dato).format('DD.MM.YYYY, dddd');
+export const formatDateInputValue = (dato?: string): string => {
+	return dato ? moment(dato).format('DD.MM.YYYY') : '';
 };
 
 export const dagDatoNøkkel = (dato: Date) =>
@@ -66,8 +54,8 @@ export const getUtilgjengeligeDager = (
 		ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
 			(t): RangeModifier => {
 				return {
-					from: t.fom,
-					to: t.tom
+					from: moment(t.fom).toDate(),
+					to: moment(t.tom).toDate()
 				};
 			}
 		);
@@ -88,12 +76,12 @@ export const getUtilgjengeligeDager = (
 };
 
 export const getDefaultMåned = (
-	dato: Date | undefined,
+	dato: string | undefined,
 	avgrensninger: Avgrensninger | undefined,
 	dayPickerProps: DayPickerProps | undefined
 ): Date => {
-	if (dato && isDateObject(dato)) {
-		return dato;
+	if (dato) {
+		return new Date(dato);
 	}
 	const idag = normaliserDato(new Date()).toDate();
 	if (dayPickerProps && dayPickerProps.initialMonth) {
@@ -107,4 +95,8 @@ export const getDefaultMåned = (
 		}
 	}
 	return idag;
+};
+
+export const formatInputToISOString = (input: string): string => {
+	return moment.utc(input, 'DD.MM.YYYY').format('YYYY-MM-DD');
 };
