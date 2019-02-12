@@ -637,7 +637,7 @@ body .blokk-xl {
     display: none !important;
   }
 }
-.knappmini-mixin--mini {
+.knappmini-mixin {
   font-size: 0.875em;
   text-transform: none;
   padding-left: 1.5em;
@@ -846,11 +846,11 @@ body .blokk-xl {
   cursor: pointer;
   user-select: none;
   letter-spacing: 0.0625em;
-  line-height: 1;
+  line-height: 1.375rem;
   text-transform: uppercase;
   text-decoration: none;
   background-color: transparent;
-  padding: calc(.5em - 2px) calc(2.5em - 2px) calc(.625em - 2px) calc(2.5em - 2px);
+  padding: calc(.475rem - 1px) 2.5rem calc(.525rem - 1px) 2.5rem;
   padding: 0.1rem 0.5rem;
   background-color: #FFF;
   border: 1px solid #0067c5;
@@ -936,11 +936,11 @@ body .blokk-xl {
   cursor: pointer;
   user-select: none;
   letter-spacing: 0.0625em;
-  line-height: 1;
+  line-height: 1.375rem;
   text-transform: uppercase;
   text-decoration: none;
   background-color: transparent;
-  padding: calc(.5em - 2px) calc(2.5em - 2px) calc(.625em - 2px) calc(2.5em - 2px);
+  padding: calc(.475rem - 1px) 2.5rem calc(.525rem - 1px) 2.5rem;
   padding: 0.5rem 0.5rem;
   position: absolute;
   border: none;

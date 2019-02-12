@@ -161,11 +161,11 @@ function buildAndWatchTs() {
 	);
 }
 
-gulp.task('buildAndWatchLess', buildAndWatchLess);
-gulp.task('buildAndWatchTs', buildAndWatchTs);
-gulp.task('buildLess', buildLess);
-gulp.task('buildTs', buildTs);
-gulp.task('watch', buildAndWatchTs);
-// gulp.task('dev', ['buildAndWatchLess', 'buildAndWatchTs']);
+const build = gulp.series(buildTs, buildLess);
 
-gulp.task('default', ['buildTs', 'buildLess']);
+exports.buildAndWatchLess = buildAndWatchLess;
+exports.buildAndWatchTs = buildAndWatchTs;
+exports.buildLess = buildLess;
+exports.buildTs = buildTs;
+exports.buildAndWatchTs = buildAndWatchTs;
+exports.default = build;
