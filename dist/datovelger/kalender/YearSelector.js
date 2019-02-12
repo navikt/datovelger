@@ -87,10 +87,14 @@ function (_super) {
   };
 
   YearSelector.prototype.onYearChange = function (evt) {
-    var _a = evt.target.form,
-        year = _a.year,
-        month = _a.month;
-    var newDate = new Date(year.value, month.value);
+    // const { form } = evt.target as HTMLFormElement;
+    // if (!form) {
+    // 	console.error('DatoVelger not wrapped in a form tag');
+    // } else {
+    var year = parseInt(this.yearSelect.value, 10);
+    var month = parseInt(this.monthSelect.value, 10); // const { year, month } = (evt.target as HTMLFormElement).form;
+
+    var newDate = new Date(year, month);
 
     if (this.props.min && moment(newDate).isBefore(this.props.min)) {
       this.props.onChange(this.props.min);
@@ -98,7 +102,8 @@ function (_super) {
       this.props.onChange(this.props.max);
     } else {
       this.props.onChange(newDate);
-    }
+    } // }
+
   };
 
   YearSelector.prototype.render = function () {
