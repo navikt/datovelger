@@ -1,81 +1,36 @@
-import * as moment from 'moment';
-import { normaliserDato } from './';
 import { Avgrensninger, Tidsperiode } from '../types';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
-export type DatoValidering =
-	| 'datoErIkkeDefinert'
-	| 'datoErUgyldig'
-	| 'datoErFørMinDato'
-	| 'datoErEtterMaksDato'
-	| 'datoErIkkeUkedag'
-	| 'datoErIUgyldigPeriode'
-	| 'gyldig';
-
-export const validerDato = (
-	dato: Date | string | null | undefined,
-	avgrensninger: Avgrensninger
-): DatoValidering => {
-	if (dato === 'string' && dato.length < 8) {
-		dato = undefined;
-	}
-	if (!dato) {
-		return 'datoErIkkeDefinert';
-	}
-	if (typeof dato === 'string') {
-		dato = moment(dato, 'DD.MM.YYYY').toDate();
-	}
-	if (!moment(dato).isValid()) {
-		return 'datoErUgyldig';
-	}
-	if (!erDatoEtterMinDato(dato, avgrensninger.minDato)) {
-		return 'datoErFørMinDato';
-	}
-	if (!erDatoFørSluttdato(dato, avgrensninger.maksDato)) {
-		return 'datoErEtterMaksDato';
-	}
-	if (!erDatoUkedag(dato)) {
-		return 'datoErIkkeUkedag';
-	}
-	if (erDatoITidsperioder(dato, avgrensninger.ugyldigeTidsperioder)) {
-		return 'datoErIUgyldigPeriode';
-	}
-	return 'gyldig';
+export const erDatoGyldig = (
+	dato: string| undefined,
+	avgrensninger?: Avgrensninger
+): boolean => {
+	const d = moment(dato, moment.HTML5_FMT.DATE, true);
+	return avgrensninger === undefined ? d.isValid() : d.isValid() && erDatoInnenforAvgrensninger(d, avgrensninger)
 };
 
-export const erDatoEtterMinDato = (dato: Date, minDato?: Date) => {
-	return (
-		!minDato || normaliserDato(dato).isSameOrAfter(normaliserDato(minDato))
-	);
-};
-
-export const erDatoFørSluttdato = (dato: Date, maksDato?: Date) => {
-	return (
-		!maksDato || normaliserDato(dato).isSameOrBefore(normaliserDato(maksDato))
-	);
-};
-
-export const erDatoUkedag = (dato: Date) => {
-	const dag = normaliserDato(dato).isoWeekday();
-	return dag <= 5;
-};
-
-export const erDatoITidsperioder = (
-	dato: Date,
-	tidsperioder?: Tidsperiode[]
-) => {
-	if (!tidsperioder || tidsperioder.length === 0) {
-		return false;
+const erDatoInnenforAvgrensninger = (dato: Moment, avgrensninger: Avgrensninger) => {
+	if(avgrensninger.minDato) {
+		return dato.isSameOrAfter(avgrensninger.minDato, 'day');
 	}
-	const d = normaliserDato(dato);
-	let gyldig: boolean = false;
-	tidsperioder.forEach((periode) => {
-		if (
-			gyldig &&
-			d.isSameOrAfter(periode.fom) &&
-			d.isSameOrBefore(periode.tom)
-		) {
-			gyldig = true;
-		}
-	});
-	return gyldig;
+
+	if(avgrensninger.maksDato) {
+		return dato.isSameOrBefore(avgrensninger.maksDato, 'day');
+	}
+
+	if(avgrensninger.helgedagerIkkeTillatt) {
+		return dato.isoWeekday() <= 5;
+	}
+
+	if(avgrensninger.ugyldigeTidsperioder) {
+		return !erDatoIEnUgyldigTidsperiode(dato, avgrensninger.ugyldigeTidsperioder);
+	}
+	return true;
+}
+
+export const erDatoIEnUgyldigTidsperiode = (dato: Moment, ugyldigeTidsperioder: Tidsperiode[]): boolean => {
+		return ugyldigeTidsperioder.some((t: Tidsperiode) => {
+			return dato.isBetween(t.fom, t.tom, 'day', "[]");
+		})
 };

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-import { formatDateInputValue, formatInputToISOString } from './utils';
+import { formatDateInputValue, formatInputToISODateFormatStrig } from './utils';
+import { erDatoGyldig } from './utils/datovalidering';
 
 export interface Props {
 	selectedDate?: string;
@@ -18,7 +19,7 @@ export interface State {
 	value: string;
 }
 
-export class Input extends React.Component<Props, State> {
+export class Datoinput extends React.Component<Props, State> {
 	input: HTMLInputElement | null;
 
 	constructor(props: Props) {
@@ -29,26 +30,31 @@ export class Input extends React.Component<Props, State> {
 		this.onKeyDown = this.onKeyDown.bind(this);
 		this.triggerDateChange = this.triggerDateChange.bind(this);
 		this.state = {
-			value: formatDateInputValue(props.selectedDate)
+			value: formatDateInputValue(props.selectedDate || '')
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		if (nextProps.selectedDate !== this.props.selectedDate) {
+		this.updateAfterDateChange(nextProps.selectedDate);
+	}
+
+	updateAfterDateChange(nextSelectedDate: string) {
+		if (this.props.selectedDate !== nextSelectedDate && erDatoGyldig(nextSelectedDate)) {
 			this.setState({
-				value: formatDateInputValue(nextProps.selectedDate)
+				value: formatDateInputValue(nextSelectedDate)
 			});
 		}
 	}
 
-	focus() {
-		if (this.input) {
-			this.input.focus();
+	triggerDateChange() {
+		const ISODateString = formatInputToISODateFormatStrig(this.state.value);
+		if (ISODateString !== this.props.selectedDate) {
+			this.props.onDateChange(ISODateString);
 		}
 	}
 
 	onBlur() {
-		this.triggerDateChange();
+			this.triggerDateChange();
 	}
 
 	onKeyDown(evt: React.KeyboardEvent<HTMLInputElement>) {
@@ -58,19 +64,18 @@ export class Input extends React.Component<Props, State> {
 		}
 	}
 
+	focus() {
+		if (this.input) {
+			this.input.focus();
+		}
+	}
+
 	onChange(evt: React.ChangeEvent<HTMLInputElement>) {
 		const value = evt.target.value;
 		if (this.props.onInputChange) {
 			this.props.onInputChange(value, evt);
 		}
 		this.setState({ value });
-	}
-
-	triggerDateChange() {
-		const ISOString = formatInputToISOString(this.state.value);
-		if (ISOString !== this.props.selectedDate) {
-			this.props.onDateChange(ISOString);
-		}
 	}
 
 	render() {
@@ -88,13 +93,13 @@ export class Input extends React.Component<Props, State> {
 				pattern="\d{2}.\d{2}.\d{4}"
 				type="text"
 				ref={(c) => (this.input = c)}
-				value={this.state.value}
+				value={this.state.value || ''}
 				maxLength={10}
 				onChange={this.onChange}
-				onBlur={this.onBlur}
+				onBlur={this.triggerDateChange}
 				onKeyDown={this.onKeyDown}
 			/>
 		);
 	}
 }
-export default Input;
+export default Datoinput;

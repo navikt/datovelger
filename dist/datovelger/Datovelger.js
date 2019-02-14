@@ -136,7 +136,7 @@ var Datovelger = /** @class */function (_super) {
             kalenderProps = __rest(_a, ["selectedDate", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
         var _d = this.state,
             erÅpen = _d.erÅpen,
-            datovalidering = _d.datovalidering;
+            datovalidering = _d.erDatoGyldig;
         var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
         var onChange = input.onChange,
             ariaDescribedby = input.ariaDescribedby,

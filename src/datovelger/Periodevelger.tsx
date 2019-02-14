@@ -301,8 +301,8 @@ class Periodevelger extends React.Component<Props, State> {
 								{...kalenderProps}
 								locale={locale}
 								måned={this.state.måned}
-								min={avgrensninger && avgrensninger.minDato}
-								maks={avgrensninger && avgrensninger.maksDato}
+								//min={avgrensninger && avgrensninger.minDato}
+								//maks={avgrensninger && avgrensninger.maksDato}
 								utilgjengeligeDager={
 									avgrensninger
 										? getUtilgjengeligeDager(avgrensninger)
