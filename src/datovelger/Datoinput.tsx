@@ -26,7 +26,6 @@ export class Datoinput extends React.Component<Props, State> {
 		super(props);
 		this.focus = this.focus.bind(this);
 		this.onChange = this.onChange.bind(this);
-		this.onBlur = this.onBlur.bind(this);
 		this.onKeyDown = this.onKeyDown.bind(this);
 		this.triggerDateChange = this.triggerDateChange.bind(this);
 		this.state = {
@@ -51,10 +50,6 @@ export class Datoinput extends React.Component<Props, State> {
 		if (ISODateString !== this.props.selectedDate) {
 			this.props.onDateChange(ISODateString);
 		}
-	}
-
-	onBlur() {
-			this.triggerDateChange();
 	}
 
 	onKeyDown(evt: React.KeyboardEvent<HTMLInputElement>) {

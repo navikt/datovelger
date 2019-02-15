@@ -47,7 +47,7 @@ export interface Props extends DatovelgerCommonProps {
 	input: DateInputProps;
 	selectedDate?: string;
 	visÅrVelger?: boolean;
-	onChange: (date: string, isDateValid?: boolean) => void;
+	onChange: (date: string) => void;
 }
 
 class Datovelger extends React.Component<Props, State> {
@@ -196,9 +196,9 @@ class Datovelger extends React.Component<Props, State> {
 								{...kalenderProps}
 								locale={locale}
 								dato={selectedDate}
-								måned={new Date()}
-								//min={avgrensninger && avgrensninger.minDato}
-								//maks={avgrensninger && avgrensninger.maksDato}
+								måned={this.state.måned}
+								min={avgrensninger && avgrensninger.minDato}
+								maks={avgrensninger && avgrensninger.maksDato}
 								utilgjengeligeDager={
 									avgrensninger
 										? getUtilgjengeligeDager(avgrensninger)

@@ -16,6 +16,11 @@ export const formatDateInputValue = (dato: string): string => {
 		return d.isValid()  ? d.format('DD.MM.YYYY') : dato;
 };
 
+export const formatInputToISODateFormatStrig = (input: string): string | 'Invalid Date' => {
+	const d = moment.utc(input, 'DD.MM.YYYY', true);
+	return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
+};
+
 export const dagDatoNøkkel = (dato: Date) => moment(dato).format('DD.MM.YYYY');
 
 export const getMånedDiff = (måned1: Date, måned2: Date) =>
@@ -49,8 +54,8 @@ export const getUtilgjengeligeDager = (
 		ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
 			(t): RangeModifier => {
 				return {
-					from: moment(t.fom).toDate(),
-					to: moment(t.tom).toDate()
+					from: moment(t.fom, moment.HTML5_FMT.DATE).toDate(),
+					to: moment(t.tom, moment.HTML5_FMT.DATE).toDate()
 				};
 			}
 		);
@@ -62,8 +67,8 @@ export const getUtilgjengeligeDager = (
 	};
 	return [
 		...ugyldigeDager,
-		...(maksDato ? [{ after: moment(maksDato).toDate() } as AfterModifier] : []),
-		...(minDato ? [{ before: moment(minDato).toDate() } as BeforeModifier] : []),
+		...(maksDato ? [{ after: moment(maksDato, moment.HTML5_FMT.DATE).toDate() } as AfterModifier] : []),
+		...(minDato ? [{ before: moment(minDato, moment.HTML5_FMT.DATE).toDate() } as BeforeModifier] : []),
 		...[helgedager as DaysOfWeekModifier]
 	];
 };
@@ -74,23 +79,19 @@ export const getDefaultMåned = (
 	dayPickerProps: DayPickerProps | undefined
 ): Date => {
 	if (dato) {
-		return new Date(dato);
+		moment(dato, moment.HTML5_FMT.DATE).toDate();
+		return moment(dato, moment.HTML5_FMT.DATE).toDate();
 	}
-	const idag = new Date();
+
 	if (dayPickerProps && dayPickerProps.initialMonth) {
 		return dayPickerProps.initialMonth;
 	}
-	if (avgrensninger) {
-		if (avgrensninger.minDato) {
+
+	const idag = moment().toDate();
+	if (avgrensninger && avgrensninger.minDato) {
 			return moment(avgrensninger.minDato).isAfter(idag)
-				? moment(avgrensninger.minDato).toDate()
+				? moment(avgrensninger.minDato, moment.HTML5_FMT.DATE).toDate()
 				: idag;
-		}
 	}
 	return idag;
-};
-
-export const formatInputToISODateFormatStrig = (input: string): string | 'Invalid Date' => {
-	const d = moment.utc(input, 'DD.MM.YYYY', true);
-	return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
 };

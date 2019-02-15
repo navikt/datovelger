@@ -12,11 +12,11 @@ export const erDatoGyldig = (
 
 const erDatoInnenforAvgrensninger = (dato: Moment, avgrensninger: Avgrensninger) => {
 	if(avgrensninger.minDato) {
-		return dato.isSameOrAfter(avgrensninger.minDato, 'day');
+		return dato.isSameOrAfter(moment(avgrensninger.minDato, moment.HTML5_FMT.DATE), 'day');
 	}
 
 	if(avgrensninger.maksDato) {
-		return dato.isSameOrBefore(avgrensninger.maksDato, 'day');
+		return dato.isSameOrBefore(moment(avgrensninger.minDato, moment.HTML5_FMT.DATE), 'day');
 	}
 
 	if(avgrensninger.helgedagerIkkeTillatt) {
@@ -31,6 +31,8 @@ const erDatoInnenforAvgrensninger = (dato: Moment, avgrensninger: Avgrensninger)
 
 export const erDatoIEnUgyldigTidsperiode = (dato: Moment, ugyldigeTidsperioder: Tidsperiode[]): boolean => {
 		return ugyldigeTidsperioder.some((t: Tidsperiode) => {
-			return dato.isBetween(t.fom, t.tom, 'day', "[]");
+			const fom  =  moment(t.fom, moment.HTML5_FMT.DATE);
+			const tom  =  moment(t.tom, moment.HTML5_FMT.DATE);
+			return dato.isBetween(fom, tom, 'day', "[]");
 		})
 };

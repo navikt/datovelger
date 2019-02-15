@@ -44,8 +44,4 @@ describe('DatoInput', () => {
         component.find('input').simulate('blur');
         expect(onDateChangeMock).toHaveBeenCalledWith('Invalid date');
     });
-
-
-
-    // TODO skrive test for diverse timezone
 });

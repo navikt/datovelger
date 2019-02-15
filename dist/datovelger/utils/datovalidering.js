@@ -16,7 +16,7 @@ exports.validerDato = function (dato, avgrensninger) {
     if (typeof dato === 'string') {
         dato = moment(dato, 'DD.MM.YYYY').toDate();
     }
-    if (!moment(dato).isValid()) {
+    if (!moment(dato,moment.HTML5_FMT.DATE,true).isValid()) {
         return 'datoErUgyldig';
     }
     if (!exports.erDatoEtterMinDato(dato, avgrensninger.minDato)) {
