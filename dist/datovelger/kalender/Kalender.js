@@ -61,7 +61,7 @@ var Kalender = /** @class */function (_super) {
     };
     Kalender.prototype.onByttDag = function (dato, modifiers) {
         if (this.props.kanVelgeUgyldigDato || !modifiers.disabled) {
-            this.props.onVelgDag(dato);
+            this.props.onVelgDag(moment.utc(dato).format('YYYY-MM-DD'));
         }
     };
     Kalender.prototype.onByttMåned = function (måned) {
@@ -81,7 +81,7 @@ var Kalender = /** @class */function (_super) {
     Kalender.prototype.render = function () {
         var _this = this;
         var _a = this.props,
-            dato = _a.selectedDate,
+            dato = _a.dato,
             min = _a.min,
             maks = _a.maks,
             locale = _a.locale,
@@ -100,7 +100,7 @@ var Kalender = /** @class */function (_super) {
             captionElement: function (props) {
                 return React.createElement(Navbar_1.default, { "defaultM\u00E5ned": måned, "byttM\u00E5ned": function (d) {
                         return _this.onByttMåned(d);
-                    }, min: min, maks: maks, locale: locale, localeUtils: localeUtils, "vis\u00C5rVelger": visÅrVelger });
+                    }, min: min ? moment.utc(min, moment.HTML5_FMT.DATE, true).toDate() : undefined, maks: maks ? moment.utc(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined, locale: locale, localeUtils: localeUtils, "vis\u00C5rVelger": visÅrVelger });
             },
             firstDayOfWeek: 1,
             showWeekNumbers: visUkenumre
@@ -110,7 +110,7 @@ var Kalender = /** @class */function (_super) {
             }, role: "dialog", "aria-label": "Kalender", className: "nav-datovelger__kalender" }, React.createElement(FocusTrap, { active: true, focusTrapOptions: {
                 clickOutsideDeactivates: true,
                 onDeactivate: this.props.onLukk
-            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min, toMonth: maks, month: måned, canChangeMonth: false, selectedDays: utils_1.isDateObject(dato) ? dato : undefined, onDayClick: this.onByttDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps))));
+            } }, React.createElement(react_day_picker_1.default, __assign({ locale: locale, localeUtils: localeUtils, fromMonth: min ? moment(min, moment.HTML5_FMT.DATE, true).toDate() : undefined, toMonth: maks ? moment(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined, month: moment(måned).toDate(), canChangeMonth: false, selectedDays: dato ? moment(dato, moment.HTML5_FMT.DATE, true).toDate() : undefined, onDayClick: this.onByttDag, onMonthChange: this.onByttMåned, disabledDays: utilgjengeligeDager }, innstillinger, dayPickerProps))));
     };
     return Kalender;
 }(React.Component);

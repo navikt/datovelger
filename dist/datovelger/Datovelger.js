@@ -47,15 +47,14 @@ var Datovelger = /** @class */function (_super) {
     __extends(Datovelger, _super);
     function Datovelger(props) {
         var _this = _super.call(this, props) || this;
-        _this.onVelgDag = _this.onVelgDag.bind(_this);
-        _this.onDatoDateChange = _this.onDatoDateChange.bind(_this);
+        _this.onKalenderChange = _this.onKalenderChange.bind(_this);
+        _this.onDatoinputChange = _this.onDatoinputChange.bind(_this);
         _this.toggleKalender = _this.toggleKalender.bind(_this);
         _this.lukkKalender = _this.lukkKalender.bind(_this);
-        _this.onDateInputChange = _this.onDateInputChange.bind(_this);
-        _this.callPropsOnChange = _this.callPropsOnChange.bind(_this);
+        _this.onDatoInputOnChange = _this.onDatoInputOnChange.bind(_this);
         _this.state = {
             måned: utils_1.getDefaultMåned(props.selectedDate, props.avgrensninger, props.dayPickerProps),
-            datovalidering: props.selectedDate ? datovalidering_1.validerDato(props.selectedDate, props.avgrensninger || {}) : 'datoErIkkeDefinert',
+            erDatoGyldig: datovalidering_1.erDatoGyldig(props.selectedDate),
             erÅpen: false,
             inputValue: ''
         };
@@ -63,41 +62,39 @@ var Datovelger = /** @class */function (_super) {
     }
     Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
         this.setState({
-            datovalidering: datovalidering_1.validerDato(nextProps.selectedDate, nextProps.avgrensninger || {}),
+            erDatoGyldig: datovalidering_1.erDatoGyldig(nextProps.selectedDate, nextProps.avgrensninger),
             måned: utils_1.getDefaultMåned(nextProps.selectedDate, nextProps.avgrensninger, nextProps.dayPickerProps)
         });
     };
-    Datovelger.prototype.callPropsOnChange = function (dato) {
-        this.props.onChange(utils_1.isDateObject(dato) ? utils_1.normaliserDato(dato).toDate() : undefined);
-    };
-    Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
-        var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
+    Datovelger.prototype.onKalenderChange = function (dato, lukkKalender) {
+        var _this = this;
         this.setState({
             erÅpen: false,
-            datovalidering: datovalidering
+            erDatoGyldig: datovalidering_1.erDatoGyldig(dato, this.props.avgrensninger)
+        }, function () {
+            _this.props.onChange(dato);
+            if (lukkKalender) {
+                _this.lukkKalender(true);
+            }
         });
-        this.callPropsOnChange(dato);
-        if (lukkKalender) {
-            this.lukkKalender(true);
-        }
     };
-    Datovelger.prototype.onDatoDateChange = function (dato) {
-        var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
+    Datovelger.prototype.onDatoinputChange = function (dato) {
+        var _this = this;
         this.setState({
             erÅpen: false,
-            datovalidering: datovalidering
+            erDatoGyldig: datovalidering_1.erDatoGyldig(dato, this.props.avgrensninger)
+        }, function () {
+            _this.props.onChange(dato);
         });
-        this.callPropsOnChange(dato);
     };
-    Datovelger.prototype.onDateInputChange = function (value, event) {
+    Datovelger.prototype.onDatoInputOnChange = function (value, event) {
         var _a = this.props,
             avgrensninger = _a.avgrensninger,
             input = _a.input;
         var dato = event.target.value;
-        var datovalidering = datovalidering_1.validerDato(dato, avgrensninger || {});
         this.setState({
             erÅpen: false,
-            datovalidering: datovalidering,
+            erDatoGyldig: datovalidering_1.erDatoGyldig(dato, avgrensninger),
             inputValue: dato
         });
         if (input && input.onChange) {
@@ -123,7 +120,7 @@ var Datovelger = /** @class */function (_super) {
     Datovelger.prototype.render = function () {
         var _this = this;
         var _a = this.props,
-            dato = _a.selectedDate,
+            selectedDate = _a.selectedDate,
             input = _a.input,
             kalender = _a.kalender,
             avgrensninger = _a.avgrensninger,
@@ -136,21 +133,20 @@ var Datovelger = /** @class */function (_super) {
             kalenderProps = __rest(_a, ["selectedDate", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
         var _d = this.state,
             erÅpen = _d.erÅpen,
-            datovalidering = _d.erDatoGyldig;
-        var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
+            erDatoGyldig = _d.erDatoGyldig;
         var onChange = input.onChange,
             ariaDescribedby = input.ariaDescribedby,
             ariaLabel = input.ariaLabel,
             restOfInputProps = __rest(input, ["onChange", "ariaDescribedby", "ariaLabel"]);
-        var dateInputProps = __assign({ name: input && input.name ? input.name : this.props.id + "__input", 'aria-invalid': invalidDate, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedby }, restOfInputProps);
+        var dateInputProps = __assign({ name: input && input.name ? input.name : this.props.id + "__input", 'aria-invalid': erDatoGyldig, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedby }, restOfInputProps);
         return React.createElement(DomEventContainer_1.default, null, React.createElement("div", { className: classnames('nav-datovelger') }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: dateInputProps, ref: function (c) {
                 return _this.input = c;
-            }, date: dato, onDateChange: this.onDatoDateChange, onInputChange: this.onDateInputChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {
+            }, selectedDate: selectedDate, onDateChange: this.onDatoinputChange, onInputChange: this.onDatoInputOnChange, disabled: disabled }), React.createElement(KalenderKnapp_1.default, { disabled: disabled, ref: function (c) {
                 return _this.kalenderKnapp = c;
             }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false })), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalender && kalender.plassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
                 return _this.kalender = c;
-            } }, kalenderProps, { locale: locale, dato: dato, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
-                return _this.onVelgDag(d, true);
+            } }, kalenderProps, { locale: locale, dato: selectedDate, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
+                return _this.onKalenderChange(d, true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);
             }, kanVelgeUgyldigDato: kanVelgeUgyldigDato, dayPickerProps: this.props.dayPickerProps, "vis\u00C5rVelger": visÅrVelger })))));

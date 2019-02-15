@@ -1,17 +1,11 @@
 export interface Tidsperiode {
-    /** Dato fra og med */
-    fom: Date;
-    /** Dato til og med */
-    tom: Date;
+    fom: string;
+    tom: string;
 }
 export interface Avgrensninger {
-    /** Første valgbare selectedDate */
-    minDato?: Date;
-    /** Siste valgbare selectedDate */
-    maksDato?: Date;
-    /** Tidsperioder som en ikke skal kunne velge */
+    minDato?: string;
+    maksDato?: string;
     ugyldigeTidsperioder?: Tidsperiode[];
-    /** Om bruker skal kunne velge lørdag eller søndag. Default true  */
     helgedagerIkkeTillatt?: boolean;
 }
 export interface FraseDato {

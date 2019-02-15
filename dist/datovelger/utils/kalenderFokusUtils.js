@@ -22,35 +22,11 @@ exports.getSammeDatoIMåned = function (dato, måned, nesteMåned) {
 };
 exports.fokuserPåDato = function (kalender, dato) {
     if (kalender) {
-        var el = kalender.querySelector("[data-selectedDate=\"" + _1.dagDatoNøkkel(dato) + "\"]");
+        var el = kalender.querySelector("[data-date=\"" + _1.dagDatoNøkkel(dato) + "\"]");
         if (el) {
             el.parentNode.focus();
         }
     }
-};
-exports.fokuserFørsteDagIUke = function (kalender, dato, evt) {
-    evt.preventDefault();
-    var dag = moment(dato).startOf('week').toDate();
-    if (moment(dag).get('month') !== moment(dato).get('month')) {
-        dag = moment(dato).startOf('month').toDate();
-    }
-    exports.fokuserPåDato(kalender, dag);
-};
-exports.fokuserFørsteDagIMåned = function (kalender, måned, evt) {
-    evt.preventDefault();
-    exports.fokuserPåDato(kalender, moment(måned).startOf('month').toDate());
-};
-exports.fokuserSisteDagIMåned = function (kalender, måned, evt) {
-    evt.preventDefault();
-    exports.fokuserPåDato(kalender, moment(måned).endOf('month').toDate());
-};
-exports.fokuserSisteDagIUke = function (kalender, dato, evt) {
-    evt.preventDefault();
-    var dag = moment(dato).endOf('week').toDate();
-    if (moment(dag).get('month') !== moment(dato).get('month')) {
-        dag = moment(dato).endOf('month').toDate();
-    }
-    exports.fokuserPåDato(kalender, dag);
 };
 exports.fokuserKalender = function (kalender) {
     if (kalender) {

@@ -69,7 +69,7 @@ var Periodevelger = /** @class */function (_super) {
         _this.getSelectedDays = _this.getSelectedDays.bind(_this);
         _this.onDayFocus = _this.onDayFocus.bind(_this);
         _this.state = {
-            måned: utils_1.getDefaultMåned(props.startdato || undefined, props.avgrensninger, props.dayPickerProps),
+            måned: new Date(),
             erÅpen: false,
             fra: props.startdato,
             til: props.sluttdato
@@ -226,18 +226,25 @@ var Periodevelger = /** @class */function (_super) {
         var dayPickerProps = __assign({}, this.props.dayPickerProps, { modifiers: mod, onDayMouseEnter: this.onMouseEnter, selectedDays: this.getSelectedDays(), numberOfMonths: 1, onDayFocus: this.onDayFocus, className: 'DayPicker--range' });
         return React.createElement("div", { className: "nav-datovelger" }, React.createElement("div", { className: "nav-datovelger__periode" }, React.createElement("div", { className: "nav-datovelger__periode__startInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'start', startInputProps)), ref: function (c) {
                 return _this.startInput = c;
-            }, date: fra || startdato, onDateChange: this.onStartdateChange, onInputChange: this.onStartInputChange, isDatePickerTarget: erÅpen && inputTarget === 'fra', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
+            }, selectedDate: fra && fra.toISOString() || startdato && startdato.toISOString(), onDateChange: function (d) {
+                return _this.onStartdateChange(new Date(d));
+            }, onInputChange: this.onStartInputChange, isDatePickerTarget: erÅpen && inputTarget === 'fra', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.startKalenderKnapp = c;
-            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps), { 'aria-label': 'Til selectedDate' }), ref: function (c) {
+            }, onClick: this.toggleKalender, "er\u00C5pen": erÅpen || false, disabled: disabled }))), React.createElement("div", { className: "nav-datovelger__periode__sluttInput" }, React.createElement("div", { className: "nav-datovelger__inputContainer" }, React.createElement(Datoinput_1.default, { inputProps: __assign({}, trimInputProps(this.props.id, 'slutt', sluttInputProps), { 'aria-label': 'Til dato' }), ref: function (c) {
                 return _this.sluttInput = c;
-            }, date: til || sluttdato, onDateChange: this.onSluttdateChange, onInputChange: this.onSluttInputChange, isDatePickerTarget: erÅpen && inputTarget === 'til', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
+            }, selectedDate: til && til.toISOString() || sluttdato && sluttdato.toISOString(), onDateChange: function (d) {
+                return _this.onSluttdateChange(new Date(d));
+            }, onInputChange: this.onSluttInputChange, isDatePickerTarget: erÅpen && inputTarget === 'til', disabled: disabled }), React.createElement(KalenderKnapp_1.default, { ref: function (c) {
                 return _this.sluttKalenderKnapp = c;
             }, onClick: function () {
                 return _this.toggleKalender(startdato);
             }, "er\u00C5pen": erÅpen || false, disabled: disabled }))), erÅpen && React.createElement(KalenderPortal_1.default, { plassering: kalender && kalender.plassering }, React.createElement(Kalender_1.default, __assign({ ref: function (c) {
                 return _this.kalender = c;
-            } }, kalenderProps, { locale: locale, "m\u00E5ned": this.state.måned, min: avgrensninger && avgrensninger.minDato, maks: avgrensninger && avgrensninger.maksDato, utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
-                return _this.onVelgDato(d, true);
+            } }, kalenderProps, { locale: locale, "m\u00E5ned": this.state.måned,
+            //min={avgrensninger && avgrensninger.minDato}
+            //maks={avgrensninger && avgrensninger.maksDato}
+            utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined, onVelgDag: function (d) {
+                return _this.onVelgDato(new Date(d), true);
             }, onLukk: function () {
                 return _this.lukkKalender(true);
             }, kanVelgeUgyldigDato: kanVelgeUgyldigDato, dayPickerProps: dayPickerProps })))));
