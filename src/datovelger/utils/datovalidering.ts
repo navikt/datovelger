@@ -7,16 +7,16 @@ export const erDatoGyldig = (
 	avgrensninger?: Avgrensninger
 ): boolean => {
 	const d = moment(dato, moment.HTML5_FMT.DATE, true);
-	return avgrensninger === undefined ? d.isValid() : d.isValid() && erDatoInnenforAvgrensninger(d, avgrensninger)
+	return avgrensninger === undefined ? d.isValid() : d.isValid() && erDatoUtenforAvgrensninger(d, avgrensninger)
 };
 
-const erDatoInnenforAvgrensninger = (dato: Moment, avgrensninger: Avgrensninger) => {
+const erDatoUtenforAvgrensninger = (dato: Moment, avgrensninger: Avgrensninger) => {
 	if(avgrensninger.minDato) {
 		return dato.isSameOrAfter(moment(avgrensninger.minDato, moment.HTML5_FMT.DATE), 'day');
 	}
 
 	if(avgrensninger.maksDato) {
-		return dato.isSameOrBefore(moment(avgrensninger.minDato, moment.HTML5_FMT.DATE), 'day');
+		return dato.isSameOrBefore(moment(avgrensninger.maksDato, moment.HTML5_FMT.DATE), 'day');
 	}
 
 	if(avgrensninger.helgedagerIkkeTillatt) {
