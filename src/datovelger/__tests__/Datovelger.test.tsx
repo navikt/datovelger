@@ -5,12 +5,6 @@ import Datovelger from '../Datovelger';
 
 describe('Datovelger', () => {
 	it('Should be defined', () => {
-		// TODO remove onChange from input prop. Function is unused.
 		expect(shallow(<Datovelger input={{ onChange: jest.fn()} as any} id={'1'} onChange={jest.fn()}/>)).toBeDefined();
 	});
-
-	it('', () => {
-
-	});
-
 });

@@ -10,7 +10,7 @@ export const getFokusertDato = (kalender: RefHTMLElement): Date | undefined => {
 				0
 			) as HTMLElement;
 			if (dagElement) {
-				const attr = dagElement.attributes.getNamedItem('data-selectedDate');
+				const attr = dagElement.attributes.getNamedItem('data-date');
 				if (attr) {
 					return moment(attr.value, 'DD.MM.YYYY').toDate();
 				}
