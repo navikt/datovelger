@@ -79,7 +79,6 @@ export const getDefaultMåned = (
 	dayPickerProps: DayPickerProps | undefined
 ): Date => {
 	if (dato) {
-		moment(dato, moment.HTML5_FMT.DATE).toDate();
 		return moment(dato, moment.HTML5_FMT.DATE).toDate();
 	}
 

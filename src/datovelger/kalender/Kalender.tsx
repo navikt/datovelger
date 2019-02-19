@@ -154,7 +154,7 @@ export class Kalender extends React.Component<Props, State> {
 						localeUtils={localeUtils}
 						fromMonth={min ? moment(min, moment.HTML5_FMT.DATE, true).toDate() : undefined}
 						toMonth={maks ? moment(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined}
-						month={moment(måned).toDate()}
+						month={måned}
 						canChangeMonth={false}
 						selectedDays={dato ? moment(dato, moment.HTML5_FMT.DATE, true).toDate() : undefined}
 						onDayClick={this.onByttDag}

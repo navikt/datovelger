@@ -5,23 +5,23 @@ import KalenderKnapp from './elementer/KalenderKnapp';
 import { getUtilgjengeligeDager } from './utils';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
-import { RangeModifier, DayModifiers } from 'react-day-picker';
+import { RangeModifier, DayModifiers, Modifier } from 'react-day-picker';
 import * as moment from 'moment';
 
 export interface Props extends DatovelgerCommonProps {
-	startdato?: Date;
-	sluttdato?: Date;
+	startdato?: string;
+	sluttdato?: string;
 	startInputProps: DateInputProps;
 	sluttInputProps: DateInputProps;
-	onChange: (fra: Date, til: Date) => void;
+	onChange: (fra: string, til: string) => void;
 }
 
 export interface State {
 	måned: Date;
 	erÅpen?: boolean;
-	fra?: Date;
-	til?: Date;
-	hoverTil?: Date;
+	fra?: string;
+	til?: string;
+	hoverTil?: string;
 	inputTarget?: 'fra' | 'til';
 }
 
@@ -83,14 +83,14 @@ class Periodevelger extends React.Component<Props, State> {
 		});
 	}
 
-	onStartdateChange(fra: Date) {
+	onStartdateChange(fra: string) {
 		this.setState({
 			fra
 		});
 		const { sluttdato } = this.props;
 		const { til } = this.state;
 		if (sluttdato !== undefined || til !== undefined) {
-			this.props.onChange(fra, (sluttdato || til) as Date);
+			this.props.onChange(fra, sluttdato || til);
 		}
 	}
 
@@ -100,14 +100,14 @@ class Periodevelger extends React.Component<Props, State> {
 		}
 	}
 
-	onSluttdateChange(til: Date) {
+	onSluttdateChange(til: string) {
 		this.setState({
 			til
 		});
 		const { startdato } = this.props;
 		const { fra } = this.state;
 		if (startdato !== undefined || fra !== undefined) {
-			this.props.onChange((startdato || fra) as Date, til);
+			this.props.onChange(startdato || fra, til);
 		}
 	}
 
@@ -117,7 +117,7 @@ class Periodevelger extends React.Component<Props, State> {
 		}
 	}
 
-	onVelgDato(dato: Date, lukkKalender?: boolean) {
+	onVelgDato(dato: string, lukkKalender?: boolean) {
 		const { fra, til } = this.state;
 		if (fra && til) {
 			this.setState({
@@ -134,8 +134,8 @@ class Periodevelger extends React.Component<Props, State> {
 				inputTarget: 'til'
 			});
 		} else if (fra && !til) {
-			const f = moment.min(moment(fra), moment(dato)).toDate();
-			const t = moment.max(moment(fra), moment(dato)).toDate();
+			const f = moment.min(moment(fra), moment(dato)).format('YYYY-MM-DD');
+			const t = moment.max(moment(fra), moment(dato)).format('YYYY-MM-DD');
 			this.setState({
 				fra: f,
 				til: t
@@ -147,12 +147,12 @@ class Periodevelger extends React.Component<Props, State> {
 
 	onMouseEnter(dato: Date) {
 		if (this.state.fra && !this.state.til) {
-			this.setState({ hoverTil: dato });
+			this.setState({ hoverTil: moment.utc(dato, moment.HTML5_FMT.DATE).format('YYYY-DD-MM') });
 		}
 	}
 
 	onDayFocus(
-		dato: Date,
+		dato: string,
 		modifiers: DayModifiers,
 		evt: React.KeyboardEvent<HTMLDivElement>
 	) {
@@ -163,7 +163,7 @@ class Periodevelger extends React.Component<Props, State> {
 		}
 	}
 
-	toggleKalender(start?: Date) {
+	toggleKalender(start?: string) {
 		const { startdato, sluttdato } = this.props;
 		this.setFokusPåKalenderKnapp = true;
 		this.setState({
@@ -193,22 +193,22 @@ class Periodevelger extends React.Component<Props, State> {
 		}
 	}
 
-	getSelectedDays() {
+	getSelectedDays(): Modifier[]{
 		const { fra, til } = this.state;
 		if (fra && til) {
 			return [
-				fra,
+				moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
 				{
-					from: fra,
-					to: til
+					from: moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
+					to: moment.utc(til, moment.HTML5_FMT.DATE).toDate(),
 				} as RangeModifier
 			];
 		} else if (fra && !til && this.state.hoverTil) {
 			return [
-				fra,
+				moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
 				{
-					from: fra,
-					to: this.state.hoverTil
+					from: moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
+					to: moment.utc(this.state.hoverTil, moment.HTML5_FMT.DATE).toDate()
 				} as RangeModifier
 			];
 		}
@@ -234,8 +234,8 @@ class Periodevelger extends React.Component<Props, State> {
 		let mod;
 		if ((fra && til) || hoverTil) {
 			mod = {
-				start: fra,
-				end: til || hoverTil
+				start: moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
+				end: moment.utc(til, moment.HTML5_FMT.DATE).toDate() || moment.utc(hoverTil, moment.HTML5_FMT.DATE).toDate()
 			};
 		}
 		const dayPickerProps = {
@@ -258,8 +258,8 @@ class Periodevelger extends React.Component<Props, State> {
 									...trimInputProps(this.props.id, 'start', startInputProps)
 								}}
 								ref={(c) => (this.startInput = c)}
-								selectedDate={fra && fra.toISOString() ||startdato && startdato.toISOString()}
-								onDateChange={(d: string) => this.onStartdateChange(new Date(d))}
+								selectedDate={fra && fra ||startdato && startdato}
+								onDateChange={(d: string) => this.onStartdateChange(d)}
 								onInputChange={this.onStartInputChange}
 								isDatePickerTarget={erÅpen && inputTarget === 'fra'}
 								disabled={disabled}
@@ -280,8 +280,8 @@ class Periodevelger extends React.Component<Props, State> {
 									'aria-label': 'Til dato'
 								}}
 								ref={(c) => (this.sluttInput = c)}
-								selectedDate={til && til.toISOString() || sluttdato && sluttdato.toISOString()}
-								onDateChange={(d: string) => this.onSluttdateChange(new Date(d))}
+								selectedDate={til && til || sluttdato && sluttdato}
+								onDateChange={(d: string) => this.onSluttdateChange(d)}
 								onInputChange={this.onSluttInputChange}
 								isDatePickerTarget={erÅpen && inputTarget === 'til'}
 								disabled={disabled}
@@ -301,14 +301,14 @@ class Periodevelger extends React.Component<Props, State> {
 								{...kalenderProps}
 								locale={locale}
 								måned={this.state.måned}
-								//min={avgrensninger && avgrensninger.minDato}
-								//maks={avgrensninger && avgrensninger.maksDato}
+								min={avgrensninger && avgrensninger.minDato}
+								maks={avgrensninger && avgrensninger.maksDato}
 								utilgjengeligeDager={
 									avgrensninger
 										? getUtilgjengeligeDager(avgrensninger)
 										: undefined
 								}
-								onVelgDag={(d) => this.onVelgDato(new Date(d), true)}
+								onVelgDag={(d: string) => this.onVelgDato(d, true)}
 								onLukk={() => this.lukkKalender(true)}
 								kanVelgeUgyldigDato={kanVelgeUgyldigDato}
 								dayPickerProps={dayPickerProps}
