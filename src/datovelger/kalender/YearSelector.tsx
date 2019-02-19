@@ -73,8 +73,9 @@ class YearSelector extends React.Component<Props, {}> {
 	}
 
 	onYearChange(evt: React.ChangeEvent<HTMLElement>) {
-		const { year, month } = (evt.target as HTMLFormElement).form;
-		const newDate = new Date(year.value, month.value);
+		const year = parseInt(this.yearSelect.value, 10);
+		const month = parseInt(this.monthSelect.value, 10);
+		const newDate = new Date(year, month);
 		if (this.props.min && moment(newDate).isBefore(this.props.min)) {
 			this.props.onChange(this.props.min);
 		} else if (this.props.max && moment(newDate).isAfter(this.props.max)) {
