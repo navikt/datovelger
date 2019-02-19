@@ -120,7 +120,7 @@ function parseTsAndAppendDocInfo(contents, file) {
 }
 function buildTs() {
 	const tsResult = gulp
-		.src(src)
+		.src([src, '!src/**/__tests__/*.test.*'])
 		.pipe(fixErrorHandling())
 		.pipe(onlyNewFiles(mapToDest))
 		.pipe(logCompiling())
