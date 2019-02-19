@@ -78,8 +78,9 @@ export const getDefaultMåned = (
 	avgrensninger: Avgrensninger | undefined,
 	dayPickerProps: DayPickerProps | undefined
 ): Date => {
-	if (dato) {
-		return moment(dato, moment.HTML5_FMT.DATE).toDate();
+	const d = moment.utc(dato, moment.HTML5_FMT.DATE, true);
+	if (dato && d.isValid()) {
+		return d.toDate();
 	}
 
 	if (dayPickerProps && dayPickerProps.initialMonth) {
