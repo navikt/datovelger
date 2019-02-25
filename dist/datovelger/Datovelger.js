@@ -83,8 +83,8 @@ function (_super) {
     _this.lukkKalender = _this.lukkKalender.bind(_this);
     _this.onDatoInputOnChange = _this.onDatoInputOnChange.bind(_this);
     _this.state = {
-      måned: utils_1.getDefaultMåned(props.selectedDate, props.avgrensninger, props.dayPickerProps),
-      erDatoGyldig: datovalidering_1.erDatoGyldig(props.selectedDate),
+      måned: utils_1.getDefaultMåned(props.valgtDato, props.avgrensninger, props.dayPickerProps),
+      erDatoGyldig: datovalidering_1.erDatoGyldig(props.valgtDato),
       erÅpen: false,
       inputValue: ''
     };
@@ -93,8 +93,8 @@ function (_super) {
 
   Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
     this.setState({
-      erDatoGyldig: datovalidering_1.erDatoGyldig(nextProps.selectedDate, nextProps.avgrensninger),
-      måned: utils_1.getDefaultMåned(nextProps.selectedDate, nextProps.avgrensninger, nextProps.dayPickerProps)
+      erDatoGyldig: datovalidering_1.erDatoGyldig(nextProps.valgtDato, nextProps.avgrensninger),
+      måned: utils_1.getDefaultMåned(nextProps.valgtDato, nextProps.avgrensninger, nextProps.dayPickerProps)
     });
   };
 
@@ -167,7 +167,7 @@ function (_super) {
     var _this = this;
 
     var _a = this.props,
-        selectedDate = _a.selectedDate,
+        selectedDate = _a.valgtDato,
         input = _a.input,
         kalender = _a.kalender,
         avgrensninger = _a.avgrensninger,
@@ -177,7 +177,7 @@ function (_super) {
         visÅrVelger = _a.visÅrVelger,
         _c = _a.kanVelgeUgyldigDato,
         kanVelgeUgyldigDato = _c === void 0 ? false : _c,
-        kalenderProps = __rest(_a, ["selectedDate", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
+        kalenderProps = __rest(_a, ["valgtDato", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
 
     var _d = this.state,
         erÅpen = _d.erÅpen,

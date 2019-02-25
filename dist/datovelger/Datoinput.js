@@ -63,17 +63,17 @@ function (_super) {
     _this.onKeyDown = _this.onKeyDown.bind(_this);
     _this.triggerDateChange = _this.triggerDateChange.bind(_this);
     _this.state = {
-      value: utils_1.formatDateInputValue(props.selectedDate || '')
+      value: utils_1.formatDateInputValue(props.valgtDato || '')
     };
     return _this;
   }
 
   Datoinput.prototype.componentWillReceiveProps = function (nextProps) {
-    this.updateAfterDateChange(nextProps.selectedDate);
+    this.updateAfterDateChange(nextProps.valgtDato);
   };
 
   Datoinput.prototype.updateAfterDateChange = function (nextSelectedDate) {
-    if (this.props.selectedDate !== nextSelectedDate && datovalidering_1.erDatoGyldig(nextSelectedDate)) {
+    if (this.props.valgtDato !== nextSelectedDate && datovalidering_1.erDatoGyldig(nextSelectedDate)) {
       this.setState({
         value: utils_1.formatDateInputValue(nextSelectedDate)
       });
@@ -83,7 +83,7 @@ function (_super) {
   Datoinput.prototype.triggerDateChange = function () {
     var ISODateString = utils_1.formatInputToISODateFormatStrig(this.state.value);
 
-    if (ISODateString !== this.props.selectedDate) {
+    if (ISODateString !== this.props.valgtDato) {
       this.props.onDateChange(ISODateString);
     }
   };

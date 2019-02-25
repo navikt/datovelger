@@ -258,7 +258,7 @@ class Periodevelger extends React.Component<Props, State> {
 									...trimInputProps(this.props.id, 'start', startInputProps)
 								}}
 								ref={(c) => (this.startInput = c)}
-								selectedDate={fra && fra ||startdato && startdato}
+								valgtDato={fra && fra ||startdato && startdato}
 								onDateChange={(d: string) => this.onStartdateChange(d)}
 								onInputChange={this.onStartInputChange}
 								isDatePickerTarget={erÅpen && inputTarget === 'fra'}
@@ -280,7 +280,7 @@ class Periodevelger extends React.Component<Props, State> {
 									'aria-label': 'Til dato'
 								}}
 								ref={(c) => (this.sluttInput = c)}
-								selectedDate={til && til || sluttdato && sluttdato}
+								valgtDato={til && til || sluttdato && sluttdato}
 								onDateChange={(d: string) => this.onSluttdateChange(d)}
 								onInputChange={this.onSluttInputChange}
 								isDatePickerTarget={erÅpen && inputTarget === 'til'}

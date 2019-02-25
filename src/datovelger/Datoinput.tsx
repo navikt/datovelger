@@ -4,7 +4,7 @@ import { formatDateInputValue, formatInputToISODateFormatStrig } from './utils';
 import { erDatoGyldig } from './utils/datovalidering';
 
 export interface Props {
-	selectedDate?: string;
+	valgtDato?: string;
 	onDateChange: (date: string | undefined) => void;
 	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 	onInputChange?: (
@@ -29,16 +29,16 @@ export class Datoinput extends React.Component<Props, State> {
 		this.onKeyDown = this.onKeyDown.bind(this);
 		this.triggerDateChange = this.triggerDateChange.bind(this);
 		this.state = {
-			value: formatDateInputValue(props.selectedDate || '')
+			value: formatDateInputValue(props.valgtDato || '')
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		this.updateAfterDateChange(nextProps.selectedDate);
+		this.updateAfterDateChange(nextProps.valgtDato);
 	}
 
 	updateAfterDateChange(nextSelectedDate: string) {
-		if (this.props.selectedDate !== nextSelectedDate && erDatoGyldig(nextSelectedDate)) {
+		if (this.props.valgtDato !== nextSelectedDate && erDatoGyldig(nextSelectedDate)) {
 			this.setState({
 				value: formatDateInputValue(nextSelectedDate)
 			});
@@ -47,7 +47,7 @@ export class Datoinput extends React.Component<Props, State> {
 
 	triggerDateChange() {
 		const ISODateString = formatInputToISODateFormatStrig(this.state.value);
-		if (ISODateString !== this.props.selectedDate) {
+		if (ISODateString !== this.props.valgtDato) {
 			this.props.onDateChange(ISODateString);
 		}
 	}

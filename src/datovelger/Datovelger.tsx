@@ -45,7 +45,7 @@ export interface DatovelgerCommonProps {
 
 export interface Props extends DatovelgerCommonProps {
 	input: DateInputProps;
-	selectedDate?: string;
+	valgtDato?: string;
 	visÅrVelger?: boolean;
 	onChange: (date: string) => void;
 }
@@ -67,11 +67,11 @@ class Datovelger extends React.Component<Props, State> {
 
 		this.state = {
 			måned: getDefaultMåned(
-				props.selectedDate,
+				props.valgtDato,
 				props.avgrensninger,
 				props.dayPickerProps
 			),
-			erDatoGyldig: erDatoGyldig(props.selectedDate),
+			erDatoGyldig: erDatoGyldig(props.valgtDato),
 			erÅpen: false,
 			inputValue: ''
 		};
@@ -79,9 +79,9 @@ class Datovelger extends React.Component<Props, State> {
 
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState({
-			erDatoGyldig: erDatoGyldig(nextProps.selectedDate,nextProps.avgrensninger),
+			erDatoGyldig: erDatoGyldig(nextProps.valgtDato,nextProps.avgrensninger),
 			måned: getDefaultMåned(
-				nextProps.selectedDate,
+				nextProps.valgtDato,
 				nextProps.avgrensninger,
 				nextProps.dayPickerProps
 			)
@@ -148,7 +148,7 @@ class Datovelger extends React.Component<Props, State> {
 
 	render() {
 		const {
-			selectedDate,
+			valgtDato,
 			input,
 			kalender,
 			avgrensninger,
@@ -177,7 +177,7 @@ class Datovelger extends React.Component<Props, State> {
 						<Datoinput
 							inputProps={dateInputProps}
 							ref={(c) => (this.input = c)}
-							selectedDate={selectedDate}
+							valgtDato={valgtDato}
 							onDateChange={this.onDatoinputChange}
 							onInputChange={this.onDatoInputOnChange}
 							disabled={disabled}
@@ -195,7 +195,7 @@ class Datovelger extends React.Component<Props, State> {
 								ref={(c) => (this.kalender = c)}
 								{...kalenderProps}
 								locale={locale}
-								dato={selectedDate}
+								dato={valgtDato}
 								måned={this.state.måned}
 								min={avgrensninger && avgrensninger.minDato}
 								maks={avgrensninger && avgrensninger.maksDato}
