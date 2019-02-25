@@ -1,16 +1,16 @@
-import { Avgrensninger, Tidsperiode } from '../types';
+import { DatovelgerAvgrensninger, Tidsperiode } from '../types';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
 export const erDatoGyldig = (
 	dato: string| undefined,
-	avgrensninger?: Avgrensninger
+	avgrensninger?: DatovelgerAvgrensninger
 ): boolean => {
 	const d = moment(dato, moment.HTML5_FMT.DATE, true);
 	return avgrensninger === undefined ? d.isValid() : d.isValid() && erDatoUtenforAvgrensninger(d, avgrensninger)
 };
 
-const erDatoUtenforAvgrensninger = (dato: Moment, avgrensninger: Avgrensninger) => {
+const erDatoUtenforAvgrensninger = (dato: Moment, avgrensninger: DatovelgerAvgrensninger) => {
 	if(avgrensninger.minDato) {
 		return dato.isSameOrAfter(moment(avgrensninger.minDato, moment.HTML5_FMT.DATE), 'day');
 	}

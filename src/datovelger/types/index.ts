@@ -3,7 +3,7 @@ export interface Tidsperiode {
 	tom: string;
 }
 
-export interface Avgrensninger {
+export interface DatovelgerAvgrensninger {
 	minDato?: string;
 	maksDato?: string;
 	ugyldigeTidsperioder?: Tidsperiode[];

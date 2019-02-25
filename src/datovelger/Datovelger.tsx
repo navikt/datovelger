@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-import { Avgrensninger, KalenderPlassering } from './types';
+import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import {
 	getDefaultMåned,
 	getUtilgjengeligeDager
@@ -36,7 +36,7 @@ export interface DatovelgerCommonProps {
 		visUkenumre?: boolean;
 		plassering?: KalenderPlassering;
 	};
-	avgrensninger?: Avgrensninger;
+	avgrensninger?: DatovelgerAvgrensninger;
 	kanVelgeUgyldigDato?: boolean;
 	dayPickerProps?: DayPickerProps;
 	locale?: string;

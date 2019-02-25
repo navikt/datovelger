@@ -10,4 +10,4 @@ export default {
 
 export { Props as DatovelgerProps } from './Datovelger';
 export { Props as PeriodevelgerProps } from './Periodevelger';
-export { Tidsperiode, Avgrensninger } from './types';
+export { Tidsperiode, DatovelgerAvgrensninger } from './types';

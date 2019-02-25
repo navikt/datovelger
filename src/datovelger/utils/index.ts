@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { Avgrensninger } from '../types';
+import { DatovelgerAvgrensninger } from '../types';
 import {
 	Modifier,
 	RangeModifier,
@@ -47,7 +47,7 @@ export const erMånedTilgjengelig = (
 };
 
 export const getUtilgjengeligeDager = (
-	avgrensninger: Avgrensninger
+	avgrensninger: DatovelgerAvgrensninger
 ): Modifier[] => {
 	let ugyldigeDager: Modifier[] = [];
 	if (avgrensninger.ugyldigeTidsperioder) {
@@ -75,7 +75,7 @@ export const getUtilgjengeligeDager = (
 
 export const getDefaultMåned = (
 	dato: string | undefined,
-	avgrensninger: Avgrensninger | undefined,
+	avgrensninger: DatovelgerAvgrensninger | undefined,
 	dayPickerProps: DayPickerProps | undefined
 ): Date => {
 	const d = moment.utc(dato, moment.HTML5_FMT.DATE, true);
