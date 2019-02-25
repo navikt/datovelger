@@ -1,6 +1,6 @@
 import * as React from 'react';
 export interface Props {
-    selectedDate?: string;
+    valgtDato?: string;
     onDateChange: (date: string | undefined) => void;
     inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
     onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;

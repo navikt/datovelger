@@ -167,7 +167,7 @@ function (_super) {
     var _this = this;
 
     var _a = this.props,
-        selectedDate = _a.valgtDato,
+        valgtDato = _a.valgtDato,
         input = _a.input,
         kalender = _a.kalender,
         avgrensninger = _a.avgrensninger,
@@ -204,7 +204,7 @@ function (_super) {
       ref: function (c) {
         return _this.input = c;
       },
-      selectedDate: selectedDate,
+      valgtDato: valgtDato,
       onDateChange: this.onDatoinputChange,
       onInputChange: this.onDatoInputOnChange,
       disabled: disabled
@@ -223,7 +223,7 @@ function (_super) {
       }
     }, kalenderProps, {
       locale: locale,
-      dato: selectedDate,
+      dato: valgtDato,
       "m\u00E5ned": this.state.måned,
       min: avgrensninger && avgrensninger.minDato,
       maks: avgrensninger && avgrensninger.maksDato,

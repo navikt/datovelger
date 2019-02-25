@@ -307,7 +307,7 @@ function (_super) {
       ref: function (c) {
         return _this.startInput = c;
       },
-      selectedDate: fra && fra || startdato && startdato,
+      valgtDato: fra && fra || startdato && startdato,
       onDateChange: function (d) {
         return _this.onStartdateChange(d);
       },
@@ -332,7 +332,7 @@ function (_super) {
       ref: function (c) {
         return _this.sluttInput = c;
       },
-      selectedDate: til && til || sluttdato && sluttdato,
+      valgtDato: til && til || sluttdato && sluttdato,
       onDateChange: function (d) {
         return _this.onSluttdateChange(d);
       },

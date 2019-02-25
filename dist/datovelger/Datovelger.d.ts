@@ -33,7 +33,7 @@ export interface DatovelgerCommonProps {
 }
 export interface Props extends DatovelgerCommonProps {
     input: DateInputProps;
-    selectedDate?: string;
+    valgtDato?: string;
     visÅrVelger?: boolean;
     onChange: (date: string) => void;
 }
