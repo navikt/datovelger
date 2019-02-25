@@ -15,8 +15,6 @@
 		"url": "git+https://github.com/navikt/datovelger.git"
 	},
 	"dependencies": {
-		"@babel/core": "7.2.2",
-		"babel-preset-env": "1.7.0",
 		"classnames": "2.2.6",
 		"focus-trap": "4.0.2",
 		"focus-trap-react": "6.0.0",
@@ -41,7 +39,6 @@
 		"@types/jsdom": "12.2.2",
 		"@types/react": "16.8.2",
 		"@types/react-dom": "16.8.0",
-		"babel-core": "6.26.3",
 		"babel-plugin-transform-react-display-name": "6.25.0",
 		"chokidar": "2.1.1",
 		"classnames": "2.2.6",
