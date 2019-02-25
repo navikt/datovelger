@@ -14,7 +14,6 @@ import {
 	getSammeDatoIMåned,
 	erMånedTilgjengelig,
 	fokuserKalender,
-	isDateObject
 } from '../utils';
 import Navbar from './Navbar';
 import kalenderLocaleUtils from './localeUtils';
@@ -22,12 +21,12 @@ import { LocaleUtils } from 'react-day-picker/types/utils';
 
 export interface Props {
 	måned: Date;
-	dato?: Date | Date[];
+	dato?: string;
 	locale: string;
-	min?: Date;
-	maks?: Date;
+	min?: string;
+	maks?: string;
 	localeUtils?: LocaleUtils;
-	onVelgDag: (dato: Date) => void;
+	onVelgDag: (dato: string) => void;
 	onLukk: () => void;
 	utilgjengeligeDager?: Modifier[];
 	visUkenumre?: boolean;
@@ -75,7 +74,7 @@ export class Kalender extends React.Component<Props, State> {
 
 	onByttDag(dato: Date, modifiers: DayModifiers) {
 		if (this.props.kanVelgeUgyldigDato || !modifiers.disabled) {
-			this.props.onVelgDag(dato);
+			this.props.onVelgDag(moment.utc(dato).format('YYYY-MM-DD'));
 		}
 	}
 
@@ -127,8 +126,8 @@ export class Kalender extends React.Component<Props, State> {
 				<Navbar
 					defaultMåned={måned}
 					byttMåned={(d: Date) => this.onByttMåned(d)}
-					min={min}
-					maks={maks}
+					min={min ? moment.utc(min, moment.HTML5_FMT.DATE, true).toDate() : undefined}
+					maks={maks ? moment.utc(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined}
 					locale={locale}
 					localeUtils={localeUtils}
 					visÅrVelger={visÅrVelger}
@@ -153,11 +152,11 @@ export class Kalender extends React.Component<Props, State> {
 					<DayPicker
 						locale={locale}
 						localeUtils={localeUtils}
-						fromMonth={min}
-						toMonth={maks}
+						fromMonth={min ? moment(min, moment.HTML5_FMT.DATE, true).toDate() : undefined}
+						toMonth={maks ? moment(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined}
 						month={måned}
 						canChangeMonth={false}
-						selectedDays={isDateObject(dato) ? dato : undefined}
+						selectedDays={dato ? moment(dato, moment.HTML5_FMT.DATE, true).toDate() : undefined}
 						onDayClick={this.onByttDag}
 						onMonthChange={this.onByttMåned}
 						disabledDays={utilgjengeligeDager}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 export interface Props {
-    date?: Date;
-    onDateChange: (date: Date | undefined) => void;
+    valgtDato?: string;
+    onDateChange: (date: string | undefined) => void;
     inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
     onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
     isDatePickerTarget?: boolean;
@@ -10,16 +10,15 @@ export interface Props {
 export interface State {
     value: string;
 }
-export declare const dateRegExp: RegExp;
-export declare class Input extends React.Component<Props, State> {
+export declare class Datoinput extends React.Component<Props, State> {
     input: HTMLInputElement | null;
     constructor(props: Props);
     componentWillReceiveProps(nextProps: Props): void;
-    focus(): void;
-    onBlur(evt: React.FocusEvent<HTMLInputElement>): void;
-    onKeyDown(evt: React.KeyboardEvent<HTMLInputElement>): void;
-    onChange(evt: React.ChangeEvent<HTMLInputElement>): void;
+    updateAfterDateChange(nextSelectedDate: string): void;
     triggerDateChange(): void;
+    onKeyDown(evt: React.KeyboardEvent<HTMLInputElement>): void;
+    focus(): void;
+    onChange(evt: React.ChangeEvent<HTMLInputElement>): void;
     render(): JSX.Element;
 }
-export default Input;
+export default Datoinput;

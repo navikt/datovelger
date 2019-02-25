@@ -3,20 +3,20 @@ import { DatovelgerCommonProps, DateInputProps } from './Datovelger';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Kalender from './kalender/Kalender';
-import { RangeModifier, DayModifiers } from 'react-day-picker';
+import { DayModifiers, Modifier } from 'react-day-picker';
 export interface Props extends DatovelgerCommonProps {
-    startdato?: Date;
-    sluttdato?: Date;
+    startdato?: string;
+    sluttdato?: string;
     startInputProps: DateInputProps;
     sluttInputProps: DateInputProps;
-    onChange: (fra: Date, til: Date) => void;
+    onChange: (fra: string, til: string) => void;
 }
 export interface State {
     måned: Date;
     erÅpen?: boolean;
-    fra?: Date;
-    til?: Date;
-    hoverTil?: Date;
+    fra?: string;
+    til?: string;
+    hoverTil?: string;
     inputTarget?: 'fra' | 'til';
 }
 declare class Periodevelger extends React.Component<Props, State> {
@@ -28,17 +28,17 @@ declare class Periodevelger extends React.Component<Props, State> {
     setFokusPåKalenderKnapp: boolean | undefined;
     constructor(props: Props);
     componentWillReceiveProps(nextProps: Props): void;
-    onStartdateChange(fra: Date): void;
+    onStartdateChange(fra: string): void;
     onStartInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>): void;
-    onSluttdateChange(til: Date): void;
+    onSluttdateChange(til: string): void;
     onSluttInputChange(verdi: string, evt: React.ChangeEvent<HTMLInputElement>): void;
-    onVelgDato(dato: Date, lukkKalender?: boolean): void;
+    onVelgDato(dato: string, lukkKalender?: boolean): void;
     onMouseEnter(dato: Date): void;
-    onDayFocus(dato: Date, modifiers: DayModifiers, evt: React.KeyboardEvent<HTMLDivElement>): void;
-    toggleKalender(start?: Date): void;
+    onDayFocus(dato: string, modifiers: DayModifiers, evt: React.KeyboardEvent<HTMLDivElement>): void;
+    toggleKalender(start?: string): void;
     lukkKalender(settFokusPåKalenderknapp?: boolean): void;
     componentDidUpdate(prevProps: Props, prevState: State): void;
-    getSelectedDays(): (Date | RangeModifier)[];
+    getSelectedDays(): Modifier[];
     render(): JSX.Element;
 }
 export default Periodevelger;

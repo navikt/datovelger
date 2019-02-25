@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Avgrensninger } from '../types';
+import { DatovelgerAvgrensninger } from '../types';
 import { formatDateInputValue } from '../utils';
 import { Tekster } from '../tekster';
 
 export interface Props {
 	id: string;
-	avgrensninger: Avgrensninger;
+	avgrensninger: DatovelgerAvgrensninger;
 }
 
 const AvgrensningerInfo: React.StatelessComponent<Props> = ({

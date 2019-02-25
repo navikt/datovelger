@@ -40,68 +40,6 @@ export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
 	}
 };
 
-export const fokuserFørsteDagIUke = (
-	kalender: RefHTMLElement,
-	dato: Date,
-	evt: KeyboardEvent
-) => {
-	evt.preventDefault();
-	let dag = moment(dato)
-		.startOf('week')
-		.toDate();
-	if (moment(dag).get('month') !== moment(dato).get('month')) {
-		dag = moment(dato)
-			.startOf('month')
-			.toDate();
-	}
-	fokuserPåDato(kalender, dag);
-};
-
-export const fokuserFørsteDagIMåned = (
-	kalender: RefHTMLElement,
-	måned: Date,
-	evt: KeyboardEvent
-) => {
-	evt.preventDefault();
-	fokuserPåDato(
-		kalender,
-		moment(måned)
-			.startOf('month')
-			.toDate()
-	);
-};
-
-export const fokuserSisteDagIMåned = (
-	kalender: RefHTMLElement,
-	måned: Date,
-	evt: KeyboardEvent
-) => {
-	evt.preventDefault();
-	fokuserPåDato(
-		kalender,
-		moment(måned)
-			.endOf('month')
-			.toDate()
-	);
-};
-
-export const fokuserSisteDagIUke = (
-	kalender: RefHTMLElement,
-	dato: Date,
-	evt: KeyboardEvent
-) => {
-	evt.preventDefault();
-	let dag = moment(dato)
-		.endOf('week')
-		.toDate();
-	if (moment(dag).get('month') !== moment(dato).get('month')) {
-		dag = moment(dato)
-			.endOf('month')
-			.toDate();
-	}
-	fokuserPåDato(kalender, dag);
-};
-
 export const fokuserKalender = (kalender: RefHTMLElement) => {
 	if (kalender) {
 		const selectedDay = kalender.querySelector(

@@ -48,65 +48,60 @@ var classnames = require("classnames");
 
 var utils_1 = require("./utils");
 
-var moment = require("moment");
+var datovalidering_1 = require("./utils/datovalidering");
 
-exports.dateRegExp = /^(\d{1,2}).(\d{1,2}).(\d{4})$/;
-
-var getDateFromString = function (value) {
-  var values = value.match(exports.dateRegExp);
-
-  if (values && values.length === 4) {
-    return moment.utc(value, 'DD.MM.YYYY').toDate();
-  }
-
-  return undefined;
-};
-
-var Input =
+var Datoinput =
 /** @class */
 function (_super) {
-  __extends(Input, _super);
+  __extends(Datoinput, _super);
 
-  function Input(props) {
+  function Datoinput(props) {
     var _this = _super.call(this, props) || this;
 
     _this.focus = _this.focus.bind(_this);
     _this.onChange = _this.onChange.bind(_this);
-    _this.onBlur = _this.onBlur.bind(_this);
     _this.onKeyDown = _this.onKeyDown.bind(_this);
     _this.triggerDateChange = _this.triggerDateChange.bind(_this);
     _this.state = {
-      value: utils_1.formatDateInputValue(props.date)
+      value: utils_1.formatDateInputValue(props.valgtDato || '')
     };
     return _this;
   }
 
-  Input.prototype.componentWillReceiveProps = function (nextProps) {
-    if (nextProps.date !== this.props.date) {
+  Datoinput.prototype.componentWillReceiveProps = function (nextProps) {
+    this.updateAfterDateChange(nextProps.valgtDato);
+  };
+
+  Datoinput.prototype.updateAfterDateChange = function (nextSelectedDate) {
+    if (this.props.valgtDato !== nextSelectedDate && datovalidering_1.erDatoGyldig(nextSelectedDate)) {
       this.setState({
-        value: utils_1.formatDateInputValue(nextProps.date)
+        value: utils_1.formatDateInputValue(nextSelectedDate)
       });
     }
   };
 
-  Input.prototype.focus = function () {
-    if (this.input) {
-      this.input.focus();
+  Datoinput.prototype.triggerDateChange = function () {
+    var ISODateString = utils_1.formatInputToISODateFormatStrig(this.state.value);
+
+    if (ISODateString !== this.props.valgtDato) {
+      this.props.onDateChange(ISODateString);
     }
   };
 
-  Input.prototype.onBlur = function (evt) {
-    this.triggerDateChange();
-  };
-
-  Input.prototype.onKeyDown = function (evt) {
+  Datoinput.prototype.onKeyDown = function (evt) {
     if (evt.key === 'Enter') {
       evt.preventDefault();
       this.triggerDateChange();
     }
   };
 
-  Input.prototype.onChange = function (evt) {
+  Datoinput.prototype.focus = function () {
+    if (this.input) {
+      this.input.focus();
+    }
+  };
+
+  Datoinput.prototype.onChange = function (evt) {
     var value = evt.target.value;
 
     if (this.props.onInputChange) {
@@ -118,13 +113,7 @@ function (_super) {
     });
   };
 
-  Input.prototype.triggerDateChange = function () {
-    if (getDateFromString(this.state.value) !== this.props.date) {
-      this.props.onDateChange(getDateFromString(this.state.value));
-    }
-  };
-
-  Input.prototype.render = function () {
+  Datoinput.prototype.render = function () {
     var _this = this;
 
     var _a = this.props,
@@ -142,16 +131,16 @@ function (_super) {
       ref: function (c) {
         return _this.input = c;
       },
-      value: this.state.value,
+      value: this.state.value || '',
       maxLength: 10,
       onChange: this.onChange,
-      onBlur: this.onBlur,
+      onBlur: this.triggerDateChange,
       onKeyDown: this.onKeyDown
     }));
   };
 
-  return Input;
+  return Datoinput;
 }(React.Component);
 
-exports.Input = Input;
-exports.default = Input;
+exports.Datoinput = Datoinput;
+exports.default = Datoinput;

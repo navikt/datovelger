@@ -1,11 +1,4 @@
-import { Avgrensninger, Tidsperiode } from '../types';
-export declare type DatoValidering = 'datoErIkkeDefinert' | 'datoErUgyldig' | 'datoErFørMinDato' | 'datoErEtterMaksDato' | 'datoErIkkeUkedag' | 'datoErIUgyldigPeriode' | 'gyldig';
-export declare const erDatoGyldig: (dato: string | Date, avgrensninger: Avgrensninger) => boolean;
-export declare const validerDato: (dato: string | Date, avgrensninger: Avgrensninger) => DatoValidering;
-export declare const erDatoDefinert: (dato: Date) => boolean;
-export declare const erDatoEnDato: (dato: Date) => boolean;
-export declare const erDatoEtterMinDato: (dato: Date, minDato?: Date) => boolean;
-export declare const erDatoFørSluttdato: (dato: Date, maksDato?: Date) => boolean;
-export declare const erDatoUkedag: (dato: Date) => boolean;
-export declare const erDatoITidsperioder: (dato: Date, tidsperioder?: Tidsperiode[]) => boolean;
-export declare const erDagTilgjengelig: (dato: Date, avgrensninger?: Avgrensninger) => true | "datoErIkkeDefinert" | "datoErUgyldig" | "datoErFørMinDato" | "datoErEtterMaksDato" | "datoErIkkeUkedag" | "datoErIUgyldigPeriode" | "gyldig";
+import { DatovelgerAvgrensninger, Tidsperiode } from '../types';
+import * as moment from 'moment';
+export declare const erDatoGyldig: (dato: string, avgrensninger?: DatovelgerAvgrensninger) => boolean;
+export declare const erDatoIEnUgyldigTidsperiode: (dato: moment.Moment, ugyldigeTidsperioder: Tidsperiode[]) => boolean;

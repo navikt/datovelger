@@ -89,7 +89,7 @@ function (_super) {
 
   Kalender.prototype.onByttDag = function (dato, modifiers) {
     if (this.props.kanVelgeUgyldigDato || !modifiers.disabled) {
-      this.props.onVelgDag(dato);
+      this.props.onVelgDag(moment.utc(dato).format('YYYY-MM-DD'));
     }
   };
 
@@ -141,8 +141,8 @@ function (_super) {
           "byttM\u00E5ned": function (d) {
             return _this.onByttMåned(d);
           },
-          min: min,
-          maks: maks,
+          min: min ? moment.utc(min, moment.HTML5_FMT.DATE, true).toDate() : undefined,
+          maks: maks ? moment.utc(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined,
           locale: locale,
           localeUtils: localeUtils,
           "vis\u00C5rVelger": visÅrVelger
@@ -167,11 +167,11 @@ function (_super) {
     }, React.createElement(react_day_picker_1.default, __assign({
       locale: locale,
       localeUtils: localeUtils,
-      fromMonth: min,
-      toMonth: maks,
+      fromMonth: min ? moment(min, moment.HTML5_FMT.DATE, true).toDate() : undefined,
+      toMonth: maks ? moment(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined,
       month: måned,
       canChangeMonth: false,
-      selectedDays: utils_1.isDateObject(dato) ? dato : undefined,
+      selectedDays: dato ? moment(dato, moment.HTML5_FMT.DATE, true).toDate() : undefined,
       onDayClick: this.onByttDag,
       onMonthChange: this.onByttMåned,
       disabledDays: utilgjengeligeDager

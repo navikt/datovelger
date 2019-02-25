@@ -3,12 +3,12 @@ import { DayPickerProps, Modifier, DayModifiers } from 'react-day-picker';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 export interface Props {
     måned: Date;
-    dato?: Date | Date[];
+    dato?: string;
     locale: string;
-    min?: Date;
-    maks?: Date;
+    min?: string;
+    maks?: string;
     localeUtils?: LocaleUtils;
-    onVelgDag: (dato: Date) => void;
+    onVelgDag: (dato: string) => void;
     onLukk: () => void;
     utilgjengeligeDager?: Modifier[];
     visUkenumre?: boolean;

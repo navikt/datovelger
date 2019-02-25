@@ -1,6 +1,5 @@
 import * as moment from 'moment';
-import { Moment } from 'moment';
-import { Avgrensninger } from '../types';
+import { DatovelgerAvgrensninger } from '../types';
 import {
 	Modifier,
 	RangeModifier,
@@ -12,28 +11,17 @@ import {
 
 export * from './kalenderFokusUtils';
 
-export const isDateObject = (date: any) =>
-	date && typeof date === 'object' && date.getDate;
-
-export const normaliserDato = (d: Date): Moment => {
-	return moment(d.toISOString().substr(0, 10)).utc(true);
+export const formatDateInputValue = (dato: string): string => {
+		const d = moment(dato, moment.HTML5_FMT.DATE,true);
+		return d.isValid()  ? d.format('DD.MM.YYYY') : dato;
 };
 
-export const formatDateInputValue = (date?: Date) => {
-	if (isDateObject(date)) {
-		return moment(date).format('DD.MM.YYYY');
-	} else if (typeof date === 'string') {
-		return date;
-	}
-	return '';
+export const formatInputToISODateFormatStrig = (input: string): string | 'Invalid Date' => {
+	const d = moment.utc(input, 'DD.MM.YYYY', true);
+	return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
 };
 
-export const formaterDayAriaLabel = (dato: Date, locale: string) => {
-	return moment(dato).format('DD.MM.YYYY, dddd');
-};
-
-export const dagDatoNøkkel = (dato: Date) =>
-	`${moment(dato).format('DD.MM.YYYY')}`;
+export const dagDatoNøkkel = (dato: Date) => moment(dato).format('DD.MM.YYYY');
 
 export const getMånedDiff = (måned1: Date, måned2: Date) =>
 	moment(måned1)
@@ -42,7 +30,7 @@ export const getMånedDiff = (måned1: Date, måned2: Date) =>
 
 export const erMånedTilgjengelig = (
 	måned: Date,
-	avgrensninger?: { min?: Date; maks?: Date }
+	avgrensninger?: { min?: string; maks?: string }
 ): boolean => {
 	if (!avgrensninger) {
 		return true;
@@ -59,52 +47,51 @@ export const erMånedTilgjengelig = (
 };
 
 export const getUtilgjengeligeDager = (
-	avgrensninger: Avgrensninger
+	avgrensninger: DatovelgerAvgrensninger
 ): Modifier[] => {
 	let ugyldigeDager: Modifier[] = [];
 	if (avgrensninger.ugyldigeTidsperioder) {
 		ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
 			(t): RangeModifier => {
 				return {
-					from: t.fom,
-					to: t.tom
+					from: moment(t.fom, moment.HTML5_FMT.DATE).toDate(),
+					to: moment(t.tom, moment.HTML5_FMT.DATE).toDate()
 				};
 			}
 		);
 	}
-	const minDato =
-		avgrensninger.minDato && normaliserDato(avgrensninger.minDato);
-	const maksDato =
-		avgrensninger.maksDato && normaliserDato(avgrensninger.maksDato);
+	const minDato = avgrensninger.minDato;
+	const maksDato = avgrensninger.maksDato;
 	const helgedager = {
 		daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : []
 	};
 	return [
 		...ugyldigeDager,
-		...(maksDato ? [{ after: maksDato.toDate() } as AfterModifier] : []),
-		...(minDato ? [{ before: minDato.toDate() } as BeforeModifier] : []),
+		...(maksDato ? [{ after: moment(maksDato, moment.HTML5_FMT.DATE).toDate() } as AfterModifier] : []),
+		...(minDato ? [{ before: moment(minDato, moment.HTML5_FMT.DATE).toDate() } as BeforeModifier] : []),
 		...[helgedager as DaysOfWeekModifier]
 	];
 };
 
 export const getDefaultMåned = (
-	dato: Date | undefined,
-	avgrensninger: Avgrensninger | undefined,
+	dato: string | undefined,
+	avgrensninger: DatovelgerAvgrensninger | undefined,
 	dayPickerProps: DayPickerProps | undefined
 ): Date => {
-	if (dato && isDateObject(dato)) {
-		return dato;
+	const d = moment.utc(dato, moment.HTML5_FMT.DATE, true);
+	if (dato && d.isValid()) {
+		return d.toDate();
 	}
-	const idag = normaliserDato(new Date()).toDate();
+
 	if (dayPickerProps && dayPickerProps.initialMonth) {
 		return dayPickerProps.initialMonth;
 	}
-	if (avgrensninger) {
-		if (avgrensninger.minDato) {
+
+	const idag = moment().toDate();
+	if (avgrensninger && avgrensninger.minDato) {
 			return moment(avgrensninger.minDato).isAfter(idag)
-				? avgrensninger.minDato
+				? moment(avgrensninger.minDato, moment.HTML5_FMT.DATE).toDate()
 				: idag;
-		}
 	}
 	return idag;
 };

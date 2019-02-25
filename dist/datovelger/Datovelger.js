@@ -77,15 +77,14 @@ function (_super) {
   function Datovelger(props) {
     var _this = _super.call(this, props) || this;
 
-    _this.onVelgDag = _this.onVelgDag.bind(_this);
-    _this.onDatoDateChange = _this.onDatoDateChange.bind(_this);
+    _this.onKalenderChange = _this.onKalenderChange.bind(_this);
+    _this.onDatoinputChange = _this.onDatoinputChange.bind(_this);
     _this.toggleKalender = _this.toggleKalender.bind(_this);
     _this.lukkKalender = _this.lukkKalender.bind(_this);
-    _this.onDateInputChange = _this.onDateInputChange.bind(_this);
-    _this.callPropsOnChange = _this.callPropsOnChange.bind(_this);
+    _this.onDatoInputOnChange = _this.onDatoInputOnChange.bind(_this);
     _this.state = {
-      måned: utils_1.getDefaultMåned(props.dato, props.avgrensninger, props.dayPickerProps),
-      datovalidering: props.dato ? datovalidering_1.validerDato(props.dato, props.avgrensninger || {}) : 'datoErIkkeDefinert',
+      måned: utils_1.getDefaultMåned(props.valgtDato, props.avgrensninger, props.dayPickerProps),
+      erDatoGyldig: datovalidering_1.erDatoGyldig(props.valgtDato),
       erÅpen: false,
       inputValue: ''
     };
@@ -94,46 +93,45 @@ function (_super) {
 
   Datovelger.prototype.componentWillReceiveProps = function (nextProps) {
     this.setState({
-      datovalidering: datovalidering_1.validerDato(nextProps.dato, nextProps.avgrensninger || {}),
-      måned: utils_1.getDefaultMåned(nextProps.dato, nextProps.avgrensninger, nextProps.dayPickerProps)
+      erDatoGyldig: datovalidering_1.erDatoGyldig(nextProps.valgtDato, nextProps.avgrensninger),
+      måned: utils_1.getDefaultMåned(nextProps.valgtDato, nextProps.avgrensninger, nextProps.dayPickerProps)
     });
   };
 
-  Datovelger.prototype.callPropsOnChange = function (dato) {
-    this.props.onChange(utils_1.isDateObject(dato) ? utils_1.normaliserDato(dato).toDate() : undefined);
-  };
+  Datovelger.prototype.onKalenderChange = function (dato, lukkKalender) {
+    var _this = this;
 
-  Datovelger.prototype.onVelgDag = function (dato, lukkKalender) {
-    var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
     this.setState({
       erÅpen: false,
-      datovalidering: datovalidering
-    });
-    this.callPropsOnChange(dato);
+      erDatoGyldig: datovalidering_1.erDatoGyldig(dato, this.props.avgrensninger)
+    }, function () {
+      _this.props.onChange(dato);
 
-    if (lukkKalender) {
-      this.lukkKalender(true);
-    }
+      if (lukkKalender) {
+        _this.lukkKalender(true);
+      }
+    });
   };
 
-  Datovelger.prototype.onDatoDateChange = function (dato) {
-    var datovalidering = datovalidering_1.validerDato(dato, this.props.avgrensninger || {});
+  Datovelger.prototype.onDatoinputChange = function (dato) {
+    var _this = this;
+
     this.setState({
       erÅpen: false,
-      datovalidering: datovalidering
+      erDatoGyldig: datovalidering_1.erDatoGyldig(dato, this.props.avgrensninger)
+    }, function () {
+      _this.props.onChange(dato);
     });
-    this.callPropsOnChange(dato);
   };
 
-  Datovelger.prototype.onDateInputChange = function (value, event) {
+  Datovelger.prototype.onDatoInputOnChange = function (value, event) {
     var _a = this.props,
         avgrensninger = _a.avgrensninger,
         input = _a.input;
     var dato = event.target.value;
-    var datovalidering = datovalidering_1.validerDato(dato, avgrensninger || {});
     this.setState({
       erÅpen: false,
-      datovalidering: datovalidering,
+      erDatoGyldig: datovalidering_1.erDatoGyldig(dato, avgrensninger),
       inputValue: dato
     });
 
@@ -169,7 +167,7 @@ function (_super) {
     var _this = this;
 
     var _a = this.props,
-        dato = _a.dato,
+        valgtDato = _a.valgtDato,
         input = _a.input,
         kalender = _a.kalender,
         avgrensninger = _a.avgrensninger,
@@ -179,12 +177,11 @@ function (_super) {
         visÅrVelger = _a.visÅrVelger,
         _c = _a.kanVelgeUgyldigDato,
         kanVelgeUgyldigDato = _c === void 0 ? false : _c,
-        kalenderProps = __rest(_a, ["dato", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
+        kalenderProps = __rest(_a, ["valgtDato", "input", "kalender", "avgrensninger", "locale", "disabled", "vis\u00C5rVelger", "kanVelgeUgyldigDato"]);
 
     var _d = this.state,
         erÅpen = _d.erÅpen,
-        datovalidering = _d.datovalidering;
-    var invalidDate = datovalidering !== 'gyldig' && this.state.inputValue !== '';
+        erDatoGyldig = _d.erDatoGyldig;
 
     var onChange = input.onChange,
         ariaDescribedby = input.ariaDescribedby,
@@ -193,7 +190,7 @@ function (_super) {
 
     var dateInputProps = __assign({
       name: input && input.name ? input.name : this.props.id + "__input",
-      'aria-invalid': invalidDate,
+      'aria-invalid': erDatoGyldig,
       'aria-label': ariaLabel,
       'aria-describedby': ariaDescribedby
     }, restOfInputProps);
@@ -207,9 +204,9 @@ function (_super) {
       ref: function (c) {
         return _this.input = c;
       },
-      date: dato,
-      onDateChange: this.onDatoDateChange,
-      onInputChange: this.onDateInputChange,
+      valgtDato: valgtDato,
+      onDateChange: this.onDatoinputChange,
+      onInputChange: this.onDatoInputOnChange,
       disabled: disabled
     }), React.createElement(KalenderKnapp_1.default, {
       disabled: disabled,
@@ -226,13 +223,13 @@ function (_super) {
       }
     }, kalenderProps, {
       locale: locale,
-      dato: dato,
+      dato: valgtDato,
       "m\u00E5ned": this.state.måned,
       min: avgrensninger && avgrensninger.minDato,
       maks: avgrensninger && avgrensninger.maksDato,
       utilgjengeligeDager: avgrensninger ? utils_1.getUtilgjengeligeDager(avgrensninger) : undefined,
       onVelgDag: function (d) {
-        return _this.onVelgDag(d, true);
+        return _this.onKalenderChange(d, true);
       },
       onLukk: function () {
         return _this.lukkKalender(true);

@@ -21,7 +21,7 @@ export interface NavbarKnappProps {
 	måned: Date;
 	retning: 'forrige' | 'neste';
 	disabled: boolean;
-	onClick: (evt: React.MouseEvent<HTMLButtonElement>, måned: Date) => void;
+	onClick: (evt: any, måned: Date) => void;
 }
 
 const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({

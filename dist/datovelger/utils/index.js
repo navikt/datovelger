@@ -12,30 +12,18 @@ var moment = require("moment");
 
 __export(require("./kalenderFokusUtils"));
 
-exports.isDateObject = function (date) {
-  return date && typeof date === 'object' && date.getDate;
+exports.formatDateInputValue = function (dato) {
+  var d = moment(dato, moment.HTML5_FMT.DATE, true);
+  return d.isValid() ? d.format('DD.MM.YYYY') : dato;
 };
 
-exports.normaliserDato = function (d) {
-  return moment(d.toISOString().substr(0, 10)).utc(true);
-};
-
-exports.formatDateInputValue = function (date) {
-  if (exports.isDateObject(date)) {
-    return moment(date).format('DD.MM.YYYY');
-  } else if (typeof date === 'string') {
-    return date;
-  }
-
-  return '';
-};
-
-exports.formaterDayAriaLabel = function (dato, locale) {
-  return moment(dato).format('DD.MM.YYYY, dddd');
+exports.formatInputToISODateFormatStrig = function (input) {
+  var d = moment.utc(input, 'DD.MM.YYYY', true);
+  return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
 };
 
 exports.dagDatoNøkkel = function (dato) {
-  return "" + moment(dato).format('DD.MM.YYYY');
+  return moment(dato).format('DD.MM.YYYY');
 };
 
 exports.getMånedDiff = function (måned1, måned2) {
@@ -61,39 +49,39 @@ exports.getUtilgjengeligeDager = function (avgrensninger) {
   if (avgrensninger.ugyldigeTidsperioder) {
     ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(function (t) {
       return {
-        from: t.fom,
-        to: t.tom
+        from: moment(t.fom, moment.HTML5_FMT.DATE).toDate(),
+        to: moment(t.tom, moment.HTML5_FMT.DATE).toDate()
       };
     });
   }
 
-  var minDato = avgrensninger.minDato && exports.normaliserDato(avgrensninger.minDato);
-  var maksDato = avgrensninger.maksDato && exports.normaliserDato(avgrensninger.maksDato);
+  var minDato = avgrensninger.minDato;
+  var maksDato = avgrensninger.maksDato;
   var helgedager = {
     daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : []
   };
   return ugyldigeDager.concat(maksDato ? [{
-    after: maksDato.toDate()
+    after: moment(maksDato, moment.HTML5_FMT.DATE).toDate()
   }] : [], minDato ? [{
-    before: minDato.toDate()
+    before: moment(minDato, moment.HTML5_FMT.DATE).toDate()
   }] : [], [helgedager]);
 };
 
 exports.getDefaultMåned = function (dato, avgrensninger, dayPickerProps) {
-  if (dato && exports.isDateObject(dato)) {
-    return dato;
-  }
+  var d = moment.utc(dato, moment.HTML5_FMT.DATE, true);
 
-  var idag = exports.normaliserDato(new Date()).toDate();
+  if (dato && d.isValid()) {
+    return d.toDate();
+  }
 
   if (dayPickerProps && dayPickerProps.initialMonth) {
     return dayPickerProps.initialMonth;
   }
 
-  if (avgrensninger) {
-    if (avgrensninger.minDato) {
-      return moment(avgrensninger.minDato).isAfter(idag) ? avgrensninger.minDato : idag;
-    }
+  var idag = moment().toDate();
+
+  if (avgrensninger && avgrensninger.minDato) {
+    return moment(avgrensninger.minDato).isAfter(idag) ? moment(avgrensninger.minDato, moment.HTML5_FMT.DATE).toDate() : idag;
   }
 
   return idag;

@@ -40,38 +40,6 @@ exports.fokuserPåDato = function (kalender, dato) {
   }
 };
 
-exports.fokuserFørsteDagIUke = function (kalender, dato, evt) {
-  evt.preventDefault();
-  var dag = moment(dato).startOf('week').toDate();
-
-  if (moment(dag).get('month') !== moment(dato).get('month')) {
-    dag = moment(dato).startOf('month').toDate();
-  }
-
-  exports.fokuserPåDato(kalender, dag);
-};
-
-exports.fokuserFørsteDagIMåned = function (kalender, måned, evt) {
-  evt.preventDefault();
-  exports.fokuserPåDato(kalender, moment(måned).startOf('month').toDate());
-};
-
-exports.fokuserSisteDagIMåned = function (kalender, måned, evt) {
-  evt.preventDefault();
-  exports.fokuserPåDato(kalender, moment(måned).endOf('month').toDate());
-};
-
-exports.fokuserSisteDagIUke = function (kalender, dato, evt) {
-  evt.preventDefault();
-  var dag = moment(dato).endOf('week').toDate();
-
-  if (moment(dag).get('month') !== moment(dato).get('month')) {
-    dag = moment(dato).endOf('month').toDate();
-  }
-
-  exports.fokuserPåDato(kalender, dag);
-};
-
 exports.fokuserKalender = function (kalender) {
   if (kalender) {
     var selectedDay = kalender.querySelector('.DayPicker-Day--selected');

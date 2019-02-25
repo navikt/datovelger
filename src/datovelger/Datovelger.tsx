@@ -1,13 +1,11 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-import { Avgrensninger, KalenderPlassering } from './types';
+import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import {
 	getDefaultMåned,
-	getUtilgjengeligeDager,
-	normaliserDato,
-	isDateObject
+	getUtilgjengeligeDager
 } from './utils';
-import { validerDato, DatoValidering } from './utils/datovalidering';
+import { erDatoGyldig } from './utils/datovalidering';
 import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import DomEventContainer from './common/DomEventContainer';
@@ -17,7 +15,7 @@ import KalenderPortal from './elementer/KalenderPortal';
 
 export interface State {
 	måned: Date;
-	datovalidering: DatoValidering;
+	erDatoGyldig: boolean;
 	erÅpen?: boolean;
 	inputValue: string;
 }
@@ -33,36 +31,23 @@ export interface DateInputProps {
 }
 
 export interface DatovelgerCommonProps {
-	/** Component ID */
 	id: string;
-	/** Kalenderprops */
 	kalender?: {
-		/** Om ukenumre skal vises - default false */
 		visUkenumre?: boolean;
-		/** Hvor kalender skal vises. Default under */
 		plassering?: KalenderPlassering;
 	};
-	/** Begrensninger på hvilke datoer bruker kan velge */
-	avgrensninger?: Avgrensninger;
-	/** Default false. Tillater bruker å velge ugyldig dato. */
+	avgrensninger?: DatovelgerAvgrensninger;
 	kanVelgeUgyldigDato?: boolean;
-	/** dayPickerProps */
 	dayPickerProps?: DayPickerProps;
-	/** Språk */
 	locale?: string;
-	/** Datovelger er låst */
 	disabled?: boolean;
 }
 
 export interface Props extends DatovelgerCommonProps {
-	/** Props for tekstinput feltet */
 	input: DateInputProps;
-	/** Valgt dato */
-	dato?: Date;
-	/** Velg år */
+	valgtDato?: string;
 	visÅrVelger?: boolean;
-	/** Kalles når en dato velges */
-	onChange: (date: Date, validering?: DatoValidering) => void;
+	onChange: (date: string) => void;
 }
 
 class Datovelger extends React.Component<Props, State> {
@@ -74,22 +59,19 @@ class Datovelger extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 
-		this.onVelgDag = this.onVelgDag.bind(this);
-		this.onDatoDateChange = this.onDatoDateChange.bind(this);
+		this.onKalenderChange = this.onKalenderChange.bind(this);
+		this.onDatoinputChange = this.onDatoinputChange.bind(this);
 		this.toggleKalender = this.toggleKalender.bind(this);
 		this.lukkKalender = this.lukkKalender.bind(this);
-		this.onDateInputChange = this.onDateInputChange.bind(this);
-		this.callPropsOnChange = this.callPropsOnChange.bind(this);
+		this.onDatoInputOnChange = this.onDatoInputOnChange.bind(this);
 
 		this.state = {
 			måned: getDefaultMåned(
-				props.dato,
+				props.valgtDato,
 				props.avgrensninger,
 				props.dayPickerProps
 			),
-			datovalidering: props.dato
-				? validerDato(props.dato, props.avgrensninger || {})
-				: 'datoErIkkeDefinert',
+			erDatoGyldig: erDatoGyldig(props.valgtDato),
 			erÅpen: false,
 			inputValue: ''
 		};
@@ -97,52 +79,42 @@ class Datovelger extends React.Component<Props, State> {
 
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState({
-			datovalidering: validerDato(
-				nextProps.dato,
-				nextProps.avgrensninger || {}
-			),
+			erDatoGyldig: erDatoGyldig(nextProps.valgtDato,nextProps.avgrensninger),
 			måned: getDefaultMåned(
-				nextProps.dato,
+				nextProps.valgtDato,
 				nextProps.avgrensninger,
 				nextProps.dayPickerProps
 			)
 		});
 	}
 
-	callPropsOnChange(dato: Date) {
-		this.props.onChange(
-			isDateObject(dato) ? normaliserDato(dato).toDate() : undefined
-		);
-	}
-
-	onVelgDag(dato: Date, lukkKalender?: boolean) {
-		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
+	onKalenderChange(dato: string, lukkKalender?: boolean) {
 		this.setState({
 			erÅpen: false,
-			datovalidering
+			erDatoGyldig: erDatoGyldig(dato, this.props.avgrensninger)
+		}, () => {
+			this.props.onChange(dato);
+			if (lukkKalender) {
+				this.lukkKalender(true);
+			}
 		});
-		this.callPropsOnChange(dato);
-		if (lukkKalender) {
-			this.lukkKalender(true);
-		}
 	}
 
-	onDatoDateChange(dato: Date) {
-		const datovalidering = validerDato(dato, this.props.avgrensninger || {});
+	onDatoinputChange(dato: string) {
 		this.setState({
 			erÅpen: false,
-			datovalidering
+			erDatoGyldig: erDatoGyldig(dato, this.props.avgrensninger)
+		}, () => {
+			this.props.onChange(dato);
 		});
-		this.callPropsOnChange(dato);
 	}
 
-	onDateInputChange(value: string, event: React.ChangeEvent<HTMLInputElement>) {
+	onDatoInputOnChange(value: string, event: React.ChangeEvent<HTMLInputElement>) {
 		const { avgrensninger, input } = this.props;
 		const dato = event.target.value;
-		const datovalidering = validerDato(dato, avgrensninger || {});
 		this.setState({
 			erÅpen: false,
-			datovalidering,
+			erDatoGyldig: erDatoGyldig(dato, avgrensninger),
 			inputValue: dato
 		});
 		if (input && input.onChange) {
@@ -176,7 +148,7 @@ class Datovelger extends React.Component<Props, State> {
 
 	render() {
 		const {
-			dato,
+			valgtDato,
 			input,
 			kalender,
 			avgrensninger,
@@ -187,15 +159,12 @@ class Datovelger extends React.Component<Props, State> {
 			...kalenderProps
 		} = this.props;
 
-		const { erÅpen, datovalidering } = this.state;
-
-		const invalidDate =
-			datovalidering !== 'gyldig' && this.state.inputValue !== '';
+		const { erÅpen, erDatoGyldig } = this.state;
 
 		const { onChange, ariaDescribedby, ariaLabel, ...restOfInputProps } = input;
 		const dateInputProps = {
 			name: input && input.name ? input.name : `${this.props.id}__input`,
-			'aria-invalid': invalidDate,
+			'aria-invalid': erDatoGyldig,
 			'aria-label': ariaLabel,
 			'aria-describedby': ariaDescribedby,
 			...restOfInputProps
@@ -208,9 +177,9 @@ class Datovelger extends React.Component<Props, State> {
 						<Datoinput
 							inputProps={dateInputProps}
 							ref={(c) => (this.input = c)}
-							date={dato}
-							onDateChange={this.onDatoDateChange}
-							onInputChange={this.onDateInputChange}
+							valgtDato={valgtDato}
+							onDateChange={this.onDatoinputChange}
+							onInputChange={this.onDatoInputOnChange}
 							disabled={disabled}
 						/>
 						<KalenderKnapp
@@ -226,7 +195,7 @@ class Datovelger extends React.Component<Props, State> {
 								ref={(c) => (this.kalender = c)}
 								{...kalenderProps}
 								locale={locale}
-								dato={dato}
+								dato={valgtDato}
 								måned={this.state.måned}
 								min={avgrensninger && avgrensninger.minDato}
 								maks={avgrensninger && avgrensninger.maksDato}
@@ -235,7 +204,7 @@ class Datovelger extends React.Component<Props, State> {
 										? getUtilgjengeligeDager(avgrensninger)
 										: undefined
 								}
-								onVelgDag={(d) => this.onVelgDag(d, true)}
+								onVelgDag={(d: string) => this.onKalenderChange(d, true)}
 								onLukk={() => this.lukkKalender(true)}
 								kanVelgeUgyldigDato={kanVelgeUgyldigDato}
 								dayPickerProps={this.props.dayPickerProps}

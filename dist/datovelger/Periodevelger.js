@@ -104,7 +104,7 @@ function (_super) {
     _this.getSelectedDays = _this.getSelectedDays.bind(_this);
     _this.onDayFocus = _this.onDayFocus.bind(_this);
     _this.state = {
-      måned: utils_1.getDefaultMåned(props.startdato || undefined, props.avgrensninger, props.dayPickerProps),
+      måned: new Date(),
       erÅpen: false,
       fra: props.startdato,
       til: props.sluttdato
@@ -177,8 +177,8 @@ function (_super) {
         inputTarget: 'til'
       });
     } else if (fra && !til) {
-      var f = moment.min(moment(fra), moment(dato)).toDate();
-      var t = moment.max(moment(fra), moment(dato)).toDate();
+      var f = moment.min(moment(fra), moment(dato)).format('YYYY-MM-DD');
+      var t = moment.max(moment(fra), moment(dato)).format('YYYY-MM-DD');
       this.setState({
         fra: f,
         til: t
@@ -191,7 +191,7 @@ function (_super) {
   Periodevelger.prototype.onMouseEnter = function (dato) {
     if (this.state.fra && !this.state.til) {
       this.setState({
-        hoverTil: dato
+        hoverTil: moment.utc(dato, moment.HTML5_FMT.DATE).format('YYYY-DD-MM')
       });
     }
   };
@@ -239,14 +239,14 @@ function (_super) {
         til = _a.til;
 
     if (fra && til) {
-      return [fra, {
-        from: fra,
-        to: til
+      return [moment.utc(fra, moment.HTML5_FMT.DATE).toDate(), {
+        from: moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
+        to: moment.utc(til, moment.HTML5_FMT.DATE).toDate()
       }];
     } else if (fra && !til && this.state.hoverTil) {
-      return [fra, {
-        from: fra,
-        to: this.state.hoverTil
+      return [moment.utc(fra, moment.HTML5_FMT.DATE).toDate(), {
+        from: moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
+        to: moment.utc(this.state.hoverTil, moment.HTML5_FMT.DATE).toDate()
       }];
     }
 
@@ -280,8 +280,8 @@ function (_super) {
 
     if (fra && til || hoverTil) {
       mod = {
-        start: fra,
-        end: til || hoverTil
+        start: moment.utc(fra, moment.HTML5_FMT.DATE).toDate(),
+        end: moment.utc(til, moment.HTML5_FMT.DATE).toDate() || moment.utc(hoverTil, moment.HTML5_FMT.DATE).toDate()
       };
     }
 
@@ -307,8 +307,10 @@ function (_super) {
       ref: function (c) {
         return _this.startInput = c;
       },
-      date: fra || startdato,
-      onDateChange: this.onStartdateChange,
+      valgtDato: fra && fra || startdato && startdato,
+      onDateChange: function (d) {
+        return _this.onStartdateChange(d);
+      },
       onInputChange: this.onStartInputChange,
       isDatePickerTarget: erÅpen && inputTarget === 'fra',
       disabled: disabled
@@ -330,8 +332,10 @@ function (_super) {
       ref: function (c) {
         return _this.sluttInput = c;
       },
-      date: til || sluttdato,
-      onDateChange: this.onSluttdateChange,
+      valgtDato: til && til || sluttdato && sluttdato,
+      onDateChange: function (d) {
+        return _this.onSluttdateChange(d);
+      },
       onInputChange: this.onSluttInputChange,
       isDatePickerTarget: erÅpen && inputTarget === 'til',
       disabled: disabled
