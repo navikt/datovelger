@@ -1,4 +1,4 @@
-import { Avgrensninger } from '../types';
+import { DatovelgerAvgrensninger } from '../types';
 import { Modifier, DayPickerProps } from 'react-day-picker';
 export * from './kalenderFokusUtils';
 export declare const formatDateInputValue: (dato: string) => string;
@@ -9,5 +9,5 @@ export declare const erMånedTilgjengelig: (måned: Date, avgrensninger?: {
     min?: string;
     maks?: string;
 }) => boolean;
-export declare const getUtilgjengeligeDager: (avgrensninger: Avgrensninger) => Modifier[];
-export declare const getDefaultMåned: (dato: string, avgrensninger: Avgrensninger, dayPickerProps: DayPickerProps) => Date;
+export declare const getUtilgjengeligeDager: (avgrensninger: DatovelgerAvgrensninger) => Modifier[];
+export declare const getDefaultMåned: (dato: string, avgrensninger: DatovelgerAvgrensninger, dayPickerProps: DayPickerProps) => Date;

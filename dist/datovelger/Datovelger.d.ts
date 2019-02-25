@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avgrensninger, KalenderPlassering } from './types';
+import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import { DayPickerProps } from 'react-day-picker';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import Datoinput from './Datoinput';
@@ -25,7 +25,7 @@ export interface DatovelgerCommonProps {
         visUkenumre?: boolean;
         plassering?: KalenderPlassering;
     };
-    avgrensninger?: Avgrensninger;
+    avgrensninger?: DatovelgerAvgrensninger;
     kanVelgeUgyldigDato?: boolean;
     dayPickerProps?: DayPickerProps;
     locale?: string;
