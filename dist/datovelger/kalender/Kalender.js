@@ -64,7 +64,6 @@ function (_super) {
   function Kalender(props) {
     var _this = _super.call(this, props) || this;
 
-    _this.navigerMåneder = _this.navigerMåneder.bind(_this);
     _this.settFokus = _this.settFokus.bind(_this);
     _this.onByttDag = _this.onByttDag.bind(_this);
     _this.onByttMåned = _this.onByttMåned.bind(_this);
@@ -78,6 +77,9 @@ function (_super) {
     if (prevState.måned !== this.state.måned && this.kalender && this.nesteFokusertDato) {
       utils_1.fokuserPåDato(this.kalender, this.nesteFokusertDato);
       this.nesteFokusertDato = undefined;
+    } else if (prevState.måned !== this.state.måned && this.kalender && this.månedFokusElement) {
+      utils_1.fokuserPåMåned(this.kalender, this.månedFokusElement);
+      this.månedFokusElement = undefined;
     }
   };
 
@@ -93,24 +95,13 @@ function (_super) {
     }
   };
 
-  Kalender.prototype.onByttMåned = function (måned) {
+  Kalender.prototype.onByttMåned = function (måned, månedFokusElement) {
     var fokusertDato = utils_1.getFokusertDato(this.kalender);
     this.nesteFokusertDato = fokusertDato ? utils_1.getSammeDatoIMåned(fokusertDato, this.state.måned, måned) : undefined;
+    this.månedFokusElement = månedFokusElement;
     this.setState({
       måned: måned
     });
-  };
-
-  Kalender.prototype.navigerMåneder = function (evt, antall) {
-    evt.preventDefault();
-    var mnd = moment(this.state.måned).add(antall, 'month').toDate();
-
-    if (utils_1.erMånedTilgjengelig(mnd, {
-      min: this.props.min,
-      maks: this.props.maks
-    })) {
-      this.onByttMåned(mnd);
-    }
   };
 
   Kalender.prototype.render = function () {
@@ -138,8 +129,8 @@ function (_super) {
       captionElement: function (props) {
         return React.createElement(Navbar_1.default, {
           "defaultM\u00E5ned": måned,
-          "byttM\u00E5ned": function (d) {
-            return _this.onByttMåned(d);
+          "byttM\u00E5ned": function (d, elementId) {
+            return _this.onByttMåned(d, elementId);
           },
           min: min ? moment.utc(min, moment.HTML5_FMT.DATE, true).toDate() : undefined,
           maks: maks ? moment.utc(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined,

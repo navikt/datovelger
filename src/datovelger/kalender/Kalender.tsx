@@ -12,8 +12,8 @@ import {
 	fokuserPåDato,
 	getFokusertDato,
 	getSammeDatoIMåned,
-	erMånedTilgjengelig,
 	fokuserKalender,
+	fokuserPåMåned
 } from '../utils';
 import Navbar from './Navbar';
 import kalenderLocaleUtils from './localeUtils';
@@ -39,14 +39,16 @@ export interface State {
 	måned: Date;
 }
 
+export type MånedFokusElement = 'neste' | 'forrige' | 'aar' | 'mnd';
+
 export class Kalender extends React.Component<Props, State> {
 	kalender: HTMLDivElement | null;
 	nesteFokusertDato: Date | undefined;
 	setFokusPåInput: boolean | undefined;
+	månedFokusElement?: MånedFokusElement;
 
 	constructor(props: Props) {
 		super(props);
-		this.navigerMåneder = this.navigerMåneder.bind(this);
 		this.settFokus = this.settFokus.bind(this);
 		this.onByttDag = this.onByttDag.bind(this);
 		this.onByttMåned = this.onByttMåned.bind(this);
@@ -63,6 +65,13 @@ export class Kalender extends React.Component<Props, State> {
 		) {
 			fokuserPåDato(this.kalender, this.nesteFokusertDato);
 			this.nesteFokusertDato = undefined;
+		} else if (
+			prevState.måned !== this.state.måned &&
+			this.kalender &&
+			this.månedFokusElement
+		) {
+			fokuserPåMåned(this.kalender, this.månedFokusElement);
+			this.månedFokusElement = undefined;
 		}
 	}
 
@@ -78,26 +87,15 @@ export class Kalender extends React.Component<Props, State> {
 		}
 	}
 
-	onByttMåned(måned: Date) {
+	onByttMåned(måned: Date, månedFokusElement?: MånedFokusElement) {
 		const fokusertDato = getFokusertDato(this.kalender);
 		this.nesteFokusertDato = fokusertDato
 			? getSammeDatoIMåned(fokusertDato, this.state.måned, måned)
 			: undefined;
+		this.månedFokusElement = månedFokusElement;
 		this.setState({
 			måned
 		});
-	}
-
-	navigerMåneder(evt: React.KeyboardEvent<any>, antall: number) {
-		evt.preventDefault();
-		const mnd = moment(this.state.måned)
-			.add(antall, 'month')
-			.toDate();
-		if (
-			erMånedTilgjengelig(mnd, { min: this.props.min, maks: this.props.maks })
-		) {
-			this.onByttMåned(mnd);
-		}
 	}
 
 	render() {
@@ -125,9 +123,17 @@ export class Kalender extends React.Component<Props, State> {
 			captionElement: (props: CaptionElementProps) => (
 				<Navbar
 					defaultMåned={måned}
-					byttMåned={(d: Date) => this.onByttMåned(d)}
-					min={min ? moment.utc(min, moment.HTML5_FMT.DATE, true).toDate() : undefined}
-					maks={maks ? moment.utc(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined}
+					byttMåned={(d: Date, elementId) => this.onByttMåned(d, elementId)}
+					min={
+						min
+							? moment.utc(min, moment.HTML5_FMT.DATE, true).toDate()
+							: undefined
+					}
+					maks={
+						maks
+							? moment.utc(maks, moment.HTML5_FMT.DATE, true).toDate()
+							: undefined
+					}
 					locale={locale}
 					localeUtils={localeUtils}
 					visÅrVelger={visÅrVelger}
@@ -152,11 +158,23 @@ export class Kalender extends React.Component<Props, State> {
 					<DayPicker
 						locale={locale}
 						localeUtils={localeUtils}
-						fromMonth={min ? moment(min, moment.HTML5_FMT.DATE, true).toDate() : undefined}
-						toMonth={maks ? moment(maks, moment.HTML5_FMT.DATE, true).toDate() : undefined}
+						fromMonth={
+							min
+								? moment(min, moment.HTML5_FMT.DATE, true).toDate()
+								: undefined
+						}
+						toMonth={
+							maks
+								? moment(maks, moment.HTML5_FMT.DATE, true).toDate()
+								: undefined
+						}
 						month={måned}
 						canChangeMonth={false}
-						selectedDays={dato ? moment(dato, moment.HTML5_FMT.DATE, true).toDate() : undefined}
+						selectedDays={
+							dato
+								? moment(dato, moment.HTML5_FMT.DATE, true).toDate()
+								: undefined
+						}
 						onDayClick={this.onByttDag}
 						onMonthChange={this.onByttMåned}
 						disabledDays={utilgjengeligeDager}

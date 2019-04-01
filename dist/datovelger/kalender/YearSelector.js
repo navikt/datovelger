@@ -83,7 +83,7 @@ function (_super) {
   };
 
   YearSelector.prototype.onChange = function (evt) {
-    this.props.onChange(new Date(this.getYear(), this.getMonth()));
+    this.props.onChange(new Date(this.getYear(), this.getMonth()), 'mnd');
   };
 
   YearSelector.prototype.onYearChange = function (evt) {
@@ -92,11 +92,11 @@ function (_super) {
     var newDate = new Date(year, month);
 
     if (this.props.min && moment(newDate).isBefore(this.props.min)) {
-      this.props.onChange(this.props.min);
+      this.props.onChange(this.props.min, 'aar');
     } else if (this.props.max && moment(newDate).isAfter(this.props.max)) {
-      this.props.onChange(this.props.max);
+      this.props.onChange(this.props.max, 'aar');
     } else {
-      this.props.onChange(newDate);
+      this.props.onChange(newDate, 'aar');
     }
   };
 

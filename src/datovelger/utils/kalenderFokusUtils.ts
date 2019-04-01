@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import { getMånedDiff, dagDatoNøkkel } from '.';
+import { MånedFokusElement } from '../kalender/Kalender';
 
 type RefHTMLElement = HTMLElement | null;
 
@@ -36,6 +37,35 @@ export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
 		) as HTMLElement;
 		if (el) {
 			(el.parentNode as HTMLElement).focus();
+		}
+	}
+};
+
+const getMånedFokusDomElement = (
+	kalender: RefHTMLElement,
+	fokusElement: MånedFokusElement
+): HTMLElement | undefined => {
+	switch (fokusElement) {
+		case 'forrige':
+		case 'neste':
+			return kalender.querySelector(
+				`.nav-datovelger__navbar__knapp--${fokusElement}`
+			);
+		case 'aar':
+			return kalender.querySelector(`select[name=year]`);
+		case 'mnd':
+			return kalender.querySelector(`select[name=month]`);
+	}
+};
+
+export const fokuserPåMåned = (
+	kalender: RefHTMLElement,
+	fokusElement: MånedFokusElement
+) => {
+	if (kalender) {
+		const el = getMånedFokusDomElement(kalender, fokusElement);
+		if (el) {
+			el.focus();
 		}
 	}
 };

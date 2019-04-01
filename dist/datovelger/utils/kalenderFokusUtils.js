@@ -40,6 +40,30 @@ exports.fokuserPåDato = function (kalender, dato) {
   }
 };
 
+var getMånedFokusDomElement = function (kalender, fokusElement) {
+  switch (fokusElement) {
+    case 'forrige':
+    case 'neste':
+      return kalender.querySelector(".nav-datovelger__navbar__knapp--" + fokusElement);
+
+    case 'aar':
+      return kalender.querySelector("select[name=year]");
+
+    case 'mnd':
+      return kalender.querySelector("select[name=month]");
+  }
+};
+
+exports.fokuserPåMåned = function (kalender, fokusElement) {
+  if (kalender) {
+    var el = getMånedFokusDomElement(kalender, fokusElement);
+
+    if (el) {
+      el.focus();
+    }
+  }
+};
+
 exports.fokuserKalender = function (kalender) {
   if (kalender) {
     var selectedDay = kalender.querySelector('.DayPicker-Day--selected');

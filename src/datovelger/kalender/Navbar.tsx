@@ -5,10 +5,11 @@ import Chevron from '../elementer/ChevronSvg';
 import { Tekster } from '../tekster';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 import YearSelector from './YearSelector';
+import { MånedFokusElement } from './Kalender';
 
 export interface Props {
 	defaultMåned: Date;
-	byttMåned: (month: Date) => void;
+	byttMåned: (month: Date, fokusElement: MånedFokusElement) => void;
 	byttÅr?: (month: Date) => void;
 	min?: Date;
 	maks?: Date;
@@ -21,38 +22,37 @@ export interface NavbarKnappProps {
 	måned: Date;
 	retning: 'forrige' | 'neste';
 	disabled: boolean;
-	onClick: (evt: any, måned: Date) => void;
+	onClick: (evt: any, måned: Date, fokusElement: MånedFokusElement) => void;
 }
 
-const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
-	måned,
-	retning,
-	disabled,
-	onClick
-}) => {
-	const label =
-		retning === 'forrige'
-			? Tekster.navbar_forrigeManed_label
-			: Tekster.navbar_forrigeManed_label;
+class NavbarKnapp extends React.Component<NavbarKnappProps> {
+	render() {
+		const { måned, retning, disabled, onClick } = this.props;
+		const label =
+			retning === 'forrige'
+				? Tekster.navbar_forrigeManed_label
+				: Tekster.navbar_nesteManed_label;
 
-	return (
-		<button
-			className={classnames(
-				'nav-datovelger__navbar__knapp',
-				`nav-datovelger__navbar__knapp--${retning}`,
-				{
-					'nav-datovelger__navbar__knapp--disabled': disabled
-				}
-			)}
-			type="button"
-			onClick={(e) => (disabled ? null : onClick(e, måned))}
-			aria-label={label}
-			aria-disabled={disabled}
-			role="button">
-			<Chevron retning={retning === 'forrige' ? 'venstre' : 'høyre'} />
-		</button>
-	);
-};
+		return (
+			<button
+				id={`kalender-navbarknapp-${retning}`}
+				className={classnames(
+					'nav-datovelger__navbar__knapp',
+					`nav-datovelger__navbar__knapp--${retning}`,
+					{
+						'nav-datovelger__navbar__knapp--disabled': disabled
+					}
+				)}
+				type="button"
+				onClick={(e) => (disabled ? null : onClick(e, måned, retning))}
+				aria-label={label}
+				aria-disabled={disabled}
+				role="button">
+				<Chevron retning={retning === 'forrige' ? 'venstre' : 'høyre'} />
+			</button>
+		);
+	}
+}
 
 const lagCaption = (props: Props) =>
 	props.localeUtils.formatMonthTitle(props.defaultMåned, props.locale);
@@ -84,10 +84,14 @@ class Navbar extends React.Component<Props> {
 			? moment(maks).isBefore(nesteMåned.startOf('month'))
 			: false;
 
-		const onClick = (evt: React.MouseEvent<HTMLButtonElement>, mnd: Date) => {
+		const onClick = (
+			evt: React.MouseEvent<HTMLButtonElement>,
+			mnd: Date,
+			fokusElement: MånedFokusElement
+		) => {
 			evt.preventDefault();
 			evt.stopPropagation();
-			byttMåned(mnd);
+			byttMåned(mnd, fokusElement);
 		};
 
 		return (
@@ -103,7 +107,7 @@ class Navbar extends React.Component<Props> {
 							min={min}
 							locale={locale}
 							localeUtils={localeUtils}
-							onChange={(mnd: Date) => byttMåned(mnd)}
+							onChange={(mnd, fokusElement) => byttMåned(mnd, fokusElement)}
 						/>
 					</div>
 				)}
@@ -116,13 +120,13 @@ class Navbar extends React.Component<Props> {
 						måned={forrigeMåned.toDate()}
 						retning="forrige"
 						disabled={forrigeErDisabled}
-						onClick={onClick}
+						onClick={(evt, mnd) => onClick(evt, mnd, 'forrige')}
 					/>
 					<NavbarKnapp
 						måned={nesteMåned.toDate()}
 						retning="neste"
 						disabled={nesteErDisabled}
-						onClick={onClick}
+						onClick={(evt, mnd) => onClick(evt, mnd, 'neste')}
 					/>
 				</div>
 			</div>

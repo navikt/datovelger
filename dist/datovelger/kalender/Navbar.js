@@ -40,27 +40,41 @@ var tekster_1 = require("../tekster");
 
 var YearSelector_1 = require("./YearSelector");
 
-var NavbarKnapp = function (_a) {
-  var måned = _a.måned,
-      retning = _a.retning,
-      disabled = _a.disabled,
-      onClick = _a.onClick;
-  var label = retning === 'forrige' ? tekster_1.Tekster.navbar_forrigeManed_label : tekster_1.Tekster.navbar_forrigeManed_label;
-  return React.createElement("button", {
-    className: classnames('nav-datovelger__navbar__knapp', "nav-datovelger__navbar__knapp--" + retning, {
-      'nav-datovelger__navbar__knapp--disabled': disabled
-    }),
-    type: "button",
-    onClick: function (e) {
-      return disabled ? null : onClick(e, måned);
-    },
-    "aria-label": label,
-    "aria-disabled": disabled,
-    role: "button"
-  }, React.createElement(ChevronSvg_1.default, {
-    retning: retning === 'forrige' ? 'venstre' : 'høyre'
-  }));
-};
+var NavbarKnapp =
+/** @class */
+function (_super) {
+  __extends(NavbarKnapp, _super);
+
+  function NavbarKnapp() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  NavbarKnapp.prototype.render = function () {
+    var _a = this.props,
+        måned = _a.måned,
+        retning = _a.retning,
+        disabled = _a.disabled,
+        onClick = _a.onClick;
+    var label = retning === 'forrige' ? tekster_1.Tekster.navbar_forrigeManed_label : tekster_1.Tekster.navbar_nesteManed_label;
+    return React.createElement("button", {
+      id: "kalender-navbarknapp-" + retning,
+      className: classnames('nav-datovelger__navbar__knapp', "nav-datovelger__navbar__knapp--" + retning, {
+        'nav-datovelger__navbar__knapp--disabled': disabled
+      }),
+      type: "button",
+      onClick: function (e) {
+        return disabled ? null : onClick(e, måned, retning);
+      },
+      "aria-label": label,
+      "aria-disabled": disabled,
+      role: "button"
+    }, React.createElement(ChevronSvg_1.default, {
+      retning: retning === 'forrige' ? 'venstre' : 'høyre'
+    }));
+  };
+
+  return NavbarKnapp;
+}(React.Component);
 
 var lagCaption = function (props) {
   return props.localeUtils.formatMonthTitle(props.defaultMåned, props.locale);
@@ -93,10 +107,10 @@ function (_super) {
     var forrigeErDisabled = min ? moment(min).isAfter(forrigeMåned.endOf('month')) : false;
     var nesteErDisabled = maks ? moment(maks).isBefore(nesteMåned.startOf('month')) : false;
 
-    var onClick = function (evt, mnd) {
+    var onClick = function (evt, mnd, fokusElement) {
       evt.preventDefault();
       evt.stopPropagation();
-      byttMåned(mnd);
+      byttMåned(mnd, fokusElement);
     };
 
     return React.createElement("div", {
@@ -112,8 +126,8 @@ function (_super) {
       min: min,
       locale: locale,
       localeUtils: localeUtils,
-      onChange: function (mnd) {
-        return byttMåned(mnd);
+      onChange: function (mnd, fokusElement) {
+        return byttMåned(mnd, fokusElement);
       }
     })), React.createElement("div", {
       className: "nav-datovelger__navbar " + (visÅrVelger ? 'nav-datovelger__navbar--withYearSelector' : ''),
@@ -122,12 +136,16 @@ function (_super) {
       "m\u00E5ned": forrigeMåned.toDate(),
       retning: "forrige",
       disabled: forrigeErDisabled,
-      onClick: onClick
+      onClick: function (evt, mnd) {
+        return onClick(evt, mnd, 'forrige');
+      }
     }), React.createElement(NavbarKnapp, {
       "m\u00E5ned": nesteMåned.toDate(),
       retning: "neste",
       disabled: nesteErDisabled,
-      onClick: onClick
+      onClick: function (evt, mnd) {
+        return onClick(evt, mnd, 'neste');
+      }
     })));
   };
 
