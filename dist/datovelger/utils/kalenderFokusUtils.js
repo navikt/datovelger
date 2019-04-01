@@ -40,6 +40,17 @@ exports.fokuserPåDato = function (kalender, dato) {
   }
 };
 
+exports.fokuserPåMåned = function (kalender, prevMåned, måned) {
+  if (kalender) {
+    var buttonSelector = prevMåned > måned ? '--forrige' : '--neste';
+    var button = kalender.querySelector(".nav-datovelger__navbar__knapp" + buttonSelector);
+
+    if (button) {
+      button.focus();
+    }
+  }
+};
+
 exports.fokuserKalender = function (kalender) {
   if (kalender) {
     var selectedDay = kalender.querySelector('.DayPicker-Day--selected');

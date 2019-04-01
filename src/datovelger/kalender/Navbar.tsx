@@ -33,7 +33,7 @@ const NavbarKnapp: React.StatelessComponent<NavbarKnappProps> = ({
 	const label =
 		retning === 'forrige'
 			? Tekster.navbar_forrigeManed_label
-			: Tekster.navbar_forrigeManed_label;
+			: Tekster.navbar_nesteManed_label;
 
 	return (
 		<button

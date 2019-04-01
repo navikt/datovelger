@@ -40,6 +40,17 @@ export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
 	}
 };
 
+
+export const fokuserPåMåned = (kalender: RefHTMLElement, prevMåned:Date, måned: Date) =>{
+	if (kalender) {
+		const buttonSelector =  prevMåned > måned ? '--forrige' : '--neste';
+		const button = kalender.querySelector(`.nav-datovelger__navbar__knapp${buttonSelector}`) as HTMLButtonElement;
+		if (button) {
+			button.focus();
+		}
+	}
+};
+
 export const fokuserKalender = (kalender: RefHTMLElement) => {
 	if (kalender) {
 		const selectedDay = kalender.querySelector(

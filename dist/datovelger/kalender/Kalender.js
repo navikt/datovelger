@@ -78,6 +78,8 @@ function (_super) {
     if (prevState.måned !== this.state.måned && this.kalender && this.nesteFokusertDato) {
       utils_1.fokuserPåDato(this.kalender, this.nesteFokusertDato);
       this.nesteFokusertDato = undefined;
+    } else if (prevState.måned !== this.state.måned && this.kalender) {
+      utils_1.fokuserPåMåned(this.kalender, prevState.måned, this.state.måned);
     }
   };
 

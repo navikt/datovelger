@@ -45,7 +45,7 @@ var NavbarKnapp = function (_a) {
       retning = _a.retning,
       disabled = _a.disabled,
       onClick = _a.onClick;
-  var label = retning === 'forrige' ? tekster_1.Tekster.navbar_forrigeManed_label : tekster_1.Tekster.navbar_forrigeManed_label;
+  var label = retning === 'forrige' ? tekster_1.Tekster.navbar_forrigeManed_label : tekster_1.Tekster.navbar_nesteManed_label;
   return React.createElement("button", {
     className: classnames('nav-datovelger__navbar__knapp', "nav-datovelger__navbar__knapp--" + retning, {
       'nav-datovelger__navbar__knapp--disabled': disabled

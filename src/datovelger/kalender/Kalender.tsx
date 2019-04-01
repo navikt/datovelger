@@ -14,6 +14,7 @@ import {
 	getSammeDatoIMåned,
 	erMånedTilgjengelig,
 	fokuserKalender,
+    fokuserPåMåned,
 } from '../utils';
 import Navbar from './Navbar';
 import kalenderLocaleUtils from './localeUtils';
@@ -63,6 +64,8 @@ export class Kalender extends React.Component<Props, State> {
 		) {
 			fokuserPåDato(this.kalender, this.nesteFokusertDato);
 			this.nesteFokusertDato = undefined;
+		} else if (prevState.måned !== this.state.måned && this.kalender) {
+			fokuserPåMåned(this.kalender, prevState.måned, this.state.måned);
 		}
 	}
 
