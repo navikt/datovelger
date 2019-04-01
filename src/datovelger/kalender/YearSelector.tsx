@@ -2,6 +2,7 @@ import * as React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 import { guid } from 'nav-frontend-js-utils';
 import * as moment from 'moment';
+import { MånedFokusElement } from './Kalender';
 
 export interface Props {
 	defaultMonth: Date;
@@ -9,7 +10,7 @@ export interface Props {
 	max?: Date;
 	localeUtils: LocaleUtils;
 	locale: string;
-	onChange: (mnd: Date) => void;
+	onChange: (mnd: Date, fokusElement: MånedFokusElement) => void;
 }
 
 interface MonthOption {
@@ -69,7 +70,7 @@ class YearSelector extends React.Component<Props, {}> {
 	}
 
 	onChange(evt: React.ChangeEvent<HTMLElement>) {
-		this.props.onChange(new Date(this.getYear(), this.getMonth()));
+		this.props.onChange(new Date(this.getYear(), this.getMonth()), 'mnd');
 	}
 
 	onYearChange(evt: React.ChangeEvent<HTMLElement>) {
@@ -77,11 +78,11 @@ class YearSelector extends React.Component<Props, {}> {
 		const month = parseInt(this.monthSelect.value, 10);
 		const newDate = new Date(year, month);
 		if (this.props.min && moment(newDate).isBefore(this.props.min)) {
-			this.props.onChange(this.props.min);
+			this.props.onChange(this.props.min, 'aar');
 		} else if (this.props.max && moment(newDate).isAfter(this.props.max)) {
-			this.props.onChange(this.props.max);
+			this.props.onChange(this.props.max, 'aar');
 		} else {
-			this.props.onChange(newDate);
+			this.props.onChange(newDate, 'aar');
 		}
 	}
 
