@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
+import { MånedFokusElement } from './Kalender';
 export interface Props {
     defaultMonth: Date;
     min?: Date;
     max?: Date;
     localeUtils: LocaleUtils;
     locale: string;
-    onChange: (mnd: Date) => void;
+    onChange: (mnd: Date, fokusElement: MånedFokusElement) => void;
 }
 declare class YearSelector extends React.Component<Props, {}> {
     yearSelect: HTMLSelectElement | null;

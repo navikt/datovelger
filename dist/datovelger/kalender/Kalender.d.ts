@@ -19,16 +19,17 @@ export interface Props {
 export interface State {
     måned: Date;
 }
+export declare type MånedFokusElement = 'neste' | 'forrige' | 'aar' | 'mnd';
 export declare class Kalender extends React.Component<Props, State> {
     kalender: HTMLDivElement | null;
     nesteFokusertDato: Date | undefined;
     setFokusPåInput: boolean | undefined;
+    månedFokusElement?: MånedFokusElement;
     constructor(props: Props);
     componentDidUpdate(prevProps: Props, prevState: State): void;
     settFokus(): void;
     onByttDag(dato: Date, modifiers: DayModifiers): void;
-    onByttMåned(måned: Date): void;
-    navigerMåneder(evt: React.KeyboardEvent<any>, antall: number): void;
+    onByttMåned(måned: Date, månedFokusElement?: MånedFokusElement): void;
     render(): JSX.Element;
 }
 export default Kalender;
