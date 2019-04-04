@@ -38,9 +38,16 @@ export class Datoinput extends React.Component<Props, State> {
 	}
 
 	updateAfterDateChange(nextSelectedDate: string) {
-		if (this.props.valgtDato !== nextSelectedDate && erDatoGyldig(nextSelectedDate)) {
+		if (
+			this.props.valgtDato !== nextSelectedDate &&
+			erDatoGyldig(nextSelectedDate)
+		) {
 			this.setState({
 				value: formatDateInputValue(nextSelectedDate)
+			});
+		} else if (nextSelectedDate === '') {
+			this.setState({
+				value: ''
 			});
 		}
 	}
