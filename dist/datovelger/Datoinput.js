@@ -77,6 +77,10 @@ function (_super) {
       this.setState({
         value: utils_1.formatDateInputValue(nextSelectedDate)
       });
+    } else if (nextSelectedDate === '') {
+      this.setState({
+        value: ''
+      });
     }
   };
 
