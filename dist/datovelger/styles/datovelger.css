@@ -650,6 +650,11 @@ body .blokk-xl {
   color: #FFF;
   box-shadow: none;
   transform: none;
+  cursor: not-allowed;
+}
+.knappdisabled-mixin:disabled:after,
+.knappdisabled-mixin--disabled:after {
+  display: none;
 }
 /* DayPicker styles */
 .DayPicker {
@@ -863,7 +868,7 @@ body .blokk-xl {
 }
 .nav-datovelger__kalenderknapp:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
 }
 .nav-datovelger__kalenderknapp > svg {
   width: 16px;
@@ -895,7 +900,7 @@ body .blokk-xl {
 }
 .nav-datovelger__input:focus {
   outline: 0;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
 }
 .nav-datovelger__input:hover {
   border-color: #0067C5;
@@ -910,7 +915,7 @@ body .blokk-xl {
 }
 .nav-datovelger__input--datePickerTarget {
   outline: none;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
   border-radius: 3px;
 }
 .nav-datovelger__navbar {
@@ -948,7 +953,7 @@ body .blokk-xl {
 }
 .nav-datovelger__navbar__knapp:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
 }
 .nav-datovelger__navbar__knapp[disabled] {
   cursor: default;
@@ -961,7 +966,7 @@ body .blokk-xl {
 .nav-datovelger__navbar__knapp:not([disabled]):focus,
 .nav-datovelger__navbar__knapp:not([disabled]):active {
   outline: none;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
   border-radius: 3px;
 }
 .nav-datovelger__navbar__knapp--forrige {
@@ -1017,7 +1022,7 @@ body .blokk-xl {
 .nav-datovelger .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):active,
 .nav-datovelger .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):focus {
   outline: none;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
   border-radius: 3px;
   z-index: 2;
   position: relative;
@@ -1028,7 +1033,7 @@ body .blokk-xl {
 .nav-datovelger .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day.DayPicker-Day--disabled:focus,
 .nav-datovelger .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day .DayPicker-Day--outside:focus {
   outline: none;
-  box-shadow: 0 0 0 1px #FFBD66;
+  box-shadow: 0 0 0 1px #254b6d;
   border-radius: 2px;
   z-index: 2;
   position: relative;
@@ -1039,7 +1044,7 @@ body .blokk-xl {
 }
 .nav-datovelger .DayPicker-wrapper:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #FFBD66;
+  box-shadow: 0 0 0 3px #254b6d;
   border-radius: 3px;
 }
 .nav-datovelger .DayPicker-Day {
@@ -1095,7 +1100,7 @@ body .blokk-xl {
   left: -0.5rem;
   bottom: 2px;
   right: 0.55rem;
-  border: 1px solid #FFBD66;
+  border: 1px solid #254b6d;
   border-radius: 2px;
 }
 .nav-datovelger .DayPicker-WeekNumber:before {
