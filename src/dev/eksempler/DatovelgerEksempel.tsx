@@ -40,7 +40,9 @@ const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
                 />
             </Box>
             <Box margin="l">Valgt dato: {dato}</Box>
-            <Knapp onClick={() => setDato(getDateStringFromValue(new Date()))}>Sett dagens dato</Knapp>
+            <Box margin="l">
+                <Knapp onClick={() => setDato(getDateStringFromValue(new Date()))}>Sett dagens dato</Knapp>
+            </Box>
         </div>
     );
 };

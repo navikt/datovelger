@@ -98,8 +98,8 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
                 value={this.state.value || ''}
                 maxLength={10}
                 onChange={this.onChange}
-                // onBlur={this.triggerDateChange}
-                // onKeyDown={this.onKeyDown}
+                onBlur={this.triggerDateChange}
+                onKeyDown={this.onKeyDown}
             />
         );
     }
