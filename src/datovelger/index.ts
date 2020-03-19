@@ -1,2 +1,5 @@
-export { default as Datovelger } from './Datovelger';
+import Datovelger from './Datovelger';
+
 export * from './types';
+
+export default Datovelger;
