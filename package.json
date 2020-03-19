@@ -2,8 +2,8 @@
     "name": "nav-datovelger",
     "version": "5.0.7",
     "description": "Enkel datovelger",
-    "main": "lib/datovelger/index.js",
-    "types": "lib/datovelger/index.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
         "dev": "craco start",
         "test": "jest --maxWorkers=2 --config ./jest/jest.config.js",
