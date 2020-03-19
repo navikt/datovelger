@@ -8,10 +8,10 @@ interface Props {}
 
 const Intro: React.FunctionComponent<Props> = (props) => (
     <>
-        <PageIntro title="@navikt/sif-common-formik">
-            <h2>nav-datovelger</h2>
+        <PageIntro title="nav-datovelger">
+            <h2>Enkel datovelger basert på react-day-picker</h2>
         </PageIntro>
-        <Ingress style={{ marginBottom: '.5rem' }}>Enkel datovelger</Ingress>
+        <Ingress style={{ marginBottom: '.5rem' }}>Eksempel:</Ingress>
         <Box>
             <DatovelgerEksempel />
         </Box>
