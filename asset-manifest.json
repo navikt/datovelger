@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/navikt/datovelger/static/css/main.078deaa7.chunk.css",
+    "main.js": "/navikt/datovelger/static/js/main.ffb2f53b.chunk.js",
+    "main.js.map": "/navikt/datovelger/static/js/main.ffb2f53b.chunk.js.map",
+    "runtime-main.js": "/navikt/datovelger/static/js/runtime-main.e631941d.js",
+    "runtime-main.js.map": "/navikt/datovelger/static/js/runtime-main.e631941d.js.map",
+    "static/css/2.cd44871e.chunk.css": "/navikt/datovelger/static/css/2.cd44871e.chunk.css",
+    "static/js/2.beeb9cf9.chunk.js": "/navikt/datovelger/static/js/2.beeb9cf9.chunk.js",
+    "static/js/2.beeb9cf9.chunk.js.map": "/navikt/datovelger/static/js/2.beeb9cf9.chunk.js.map",
+    "index.html": "/navikt/datovelger/index.html",
+    "precache-manifest.e47285c9678aa60747f0f4896e89b921.js": "/navikt/datovelger/precache-manifest.e47285c9678aa60747f0f4896e89b921.js",
+    "service-worker.js": "/navikt/datovelger/service-worker.js",
+    "static/css/2.cd44871e.chunk.css.map": "/navikt/datovelger/static/css/2.cd44871e.chunk.css.map",
+    "static/css/main.078deaa7.chunk.css.map": "/navikt/datovelger/static/css/main.078deaa7.chunk.css.map",
+    "static/js/2.beeb9cf9.chunk.js.LICENSE.txt": "/navikt/datovelger/static/js/2.beeb9cf9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e631941d.js",
+    "static/css/2.cd44871e.chunk.css",
+    "static/js/2.beeb9cf9.chunk.js",
+    "static/css/main.078deaa7.chunk.css",
+    "static/js/main.ffb2f53b.chunk.js"
+  ]
+}
