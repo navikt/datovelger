@@ -32,6 +32,7 @@ class NavbarKnapp extends React.Component<NavbarKnappProps> {
 
         return (
             <button
+                type="button"
                 id={`kalender-navbarknapp-${retning}`}
                 className={classnames('nav-datovelger__navbar__knapp', `nav-datovelger__navbar__knapp--${retning}`, {
                     'nav-datovelger__navbar__knapp--disabled': disabled
