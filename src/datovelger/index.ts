@@ -1,3 +1,3 @@
-export { default as Datovelger } from './Datovelger';
+import Datovelger from './Datovelger';
 
 export default Datovelger;
