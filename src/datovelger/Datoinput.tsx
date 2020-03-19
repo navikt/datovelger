@@ -1,107 +1,100 @@
-import * as React from 'react';
-import * as classnames from 'classnames';
+import React from 'react';
+import classnames from 'classnames';
 import { formatDateInputValue, formatInputToISODateFormatStrig } from './utils';
 import { erDatoGyldig } from './utils/datovalidering';
 
-export interface Props {
-	valgtDato?: string;
-	onDateChange: (date: string | undefined) => void;
-	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-	onInputChange?: (
-		value: string,
-		evt: React.ChangeEvent<HTMLInputElement>
-	) => void;
-	isDatePickerTarget?: boolean;
-	disabled?: boolean;
+export interface DatoInputProps {
+    valgtDato?: string;
+    onDateChange: (date: string | undefined) => void;
+    inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+    onInputChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
+    isDatePickerTarget?: boolean;
+    disabled?: boolean;
 }
 
-export interface State {
-	value: string;
+interface State {
+    value: string;
 }
 
-export class Datoinput extends React.Component<Props, State> {
-	input: HTMLInputElement | null;
+export class Datoinput extends React.Component<DatoInputProps, State> {
+    input: HTMLInputElement | null = null;
 
-	constructor(props: Props) {
-		super(props);
-		this.focus = this.focus.bind(this);
-		this.onChange = this.onChange.bind(this);
-		this.onKeyDown = this.onKeyDown.bind(this);
-		this.triggerDateChange = this.triggerDateChange.bind(this);
-		this.state = {
-			value: formatDateInputValue(props.valgtDato || '')
-		};
-	}
+    constructor(props: DatoInputProps) {
+        super(props);
+        this.focus = this.focus.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.triggerDateChange = this.triggerDateChange.bind(this);
+        this.state = {
+            value: formatDateInputValue(props.valgtDato || '')
+        };
+    }
 
-	componentWillReceiveProps(nextProps: Props) {
-		this.updateAfterDateChange(nextProps.valgtDato);
-	}
+    componentWillReceiveProps(nextProps: DatoInputProps) {
+        this.updateAfterDateChange(nextProps.valgtDato || '');
+    }
 
-	updateAfterDateChange(nextSelectedDate: string) {
-		if (
-			this.props.valgtDato !== nextSelectedDate &&
-			erDatoGyldig(nextSelectedDate)
-		) {
-			this.setState({
-				value: formatDateInputValue(nextSelectedDate)
-			});
-		} else if (nextSelectedDate === '') {
-			this.setState({
-				value: ''
-			});
-		}
-	}
+    updateAfterDateChange(nextSelectedDate: string) {
+        if (this.props.valgtDato !== nextSelectedDate && erDatoGyldig(nextSelectedDate)) {
+            this.setState({
+                value: formatDateInputValue(nextSelectedDate)
+            });
+        } else if (nextSelectedDate === '') {
+            this.setState({
+                value: ''
+            });
+        }
+    }
 
-	triggerDateChange() {
-		const ISODateString = formatInputToISODateFormatStrig(this.state.value);
-		if (ISODateString !== this.props.valgtDato) {
-			this.props.onDateChange(ISODateString);
-		}
-	}
+    triggerDateChange() {
+        const ISODateString = formatInputToISODateFormatStrig(this.state.value);
+        if (ISODateString !== this.props.valgtDato) {
+            this.props.onDateChange(ISODateString);
+        }
+    }
 
-	onKeyDown(evt: React.KeyboardEvent<HTMLInputElement>) {
-		if (evt.key === 'Enter') {
-			evt.preventDefault();
-			this.triggerDateChange();
-		}
-	}
+    onKeyDown(evt: React.KeyboardEvent<HTMLInputElement>) {
+        if (evt.key === 'Enter') {
+            evt.preventDefault();
+            this.triggerDateChange();
+        }
+    }
 
-	focus() {
-		if (this.input) {
-			this.input.focus();
-		}
-	}
+    focus() {
+        if (this.input) {
+            this.input.focus();
+        }
+    }
 
-	onChange(evt: React.ChangeEvent<HTMLInputElement>) {
-		const value = evt.target.value;
-		if (this.props.onInputChange) {
-			this.props.onInputChange(value, evt);
-		}
-		this.setState({ value });
-	}
+    onChange(evt: React.ChangeEvent<HTMLInputElement>) {
+        const value = evt.target.value;
+        if (this.props.onInputChange) {
+            this.props.onInputChange(value, evt);
+        }
+        this.setState({ value });
+    }
 
-	render() {
-		const { inputProps, disabled } = this.props;
-		return (
-			<input
-				{...inputProps}
-				className={classnames('nav-datovelger__input', {
-					'nav-datovelger__input--datePickerTarget': this.props
-						.isDatePickerTarget
-				})}
-				disabled={disabled}
-				autoComplete="off"
-				autoCorrect="off"
-				pattern="\d{2}.\d{2}.\d{4}"
-				type="text"
-				ref={(c) => (this.input = c)}
-				value={this.state.value || ''}
-				maxLength={10}
-				onChange={this.onChange}
-				onBlur={this.triggerDateChange}
-				onKeyDown={this.onKeyDown}
-			/>
-		);
-	}
+    render() {
+        const { inputProps, disabled } = this.props;
+        return (
+            <input
+                {...inputProps}
+                className={classnames('nav-datovelger__input', {
+                    'nav-datovelger__input--datePickerTarget': this.props.isDatePickerTarget
+                })}
+                disabled={disabled}
+                autoComplete="off"
+                autoCorrect="off"
+                pattern="\d{2}.\d{2}.\d{4}"
+                type="text"
+                ref={(c) => (this.input = c)}
+                value={this.state.value || ''}
+                maxLength={10}
+                onChange={this.onChange}
+                onBlur={this.triggerDateChange}
+                onKeyDown={this.onKeyDown}
+            />
+        );
+    }
 }
 export default Datoinput;

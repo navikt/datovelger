@@ -1,80 +1,120 @@
 {
-	"name": "nav-datovelger",
-	"version": "4.3.0",
-	"description": "Enkel datovelger",
-	"main": "dist/datovelger/index.js",
-	"types": "dist/datovelger/index.d.ts",
-	"license": "MIT",
-	"files": [
-		"/src",
-		"/dist"
-	],
-	"author": "NAV developer",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/navikt/datovelger.git"
-	},
-	"dependencies": {
-		"focus-trap": "4.0.2",
-		"focus-trap-react": "6.0.0",
-		"lodash.isequal": "4.5.0",
-		"lodash.throttle": "4.1.1"
-	},
-	"devDependencies": {
-		"@types/classnames": "2.2.7",
-		"@types/enzyme": "3.1.17",
-		"@types/enzyme-adapter-react-16": "1.0.4",
-		"@types/jest": "24.0.6",
-		"@types/jsdom": "12.2.2",
-		"@types/react": "16.8.2",
-		"@types/react-dom": "16.8.0",
-		"babel-plugin-transform-react-display-name": "6.25.0",
-		"chokidar": "2.1.1",
-		"classnames": "2.2.6",
-		"enzyme": "3.8.0",
-		"enzyme-adapter-react-16": "1.9.1",
-		"gulp": "4.0.0",
-		"gulp-babel": "8.0.0",
-		"gulp-batch": "1.0.5",
-		"gulp-cli": "2.0.1",
-		"gulp-insert": "0.5.0",
-		"gulp-less": "4.0.1",
-		"gulp-newer": "1.4.0",
-		"gulp-plumber": "1.2.1",
-		"gulp-typescript": "5.0.0",
-		"gulp-util": "3.0.8",
-		"gulp-watch": "5.0.1",
-		"jest": "24.1.0",
-		"jsdom": "13.2.0",
-		"merge2": "1.2.3",
-		"moment": "2.24.0",
-		"node-less-chokidar": "0.4.1",
-		"npm-run-all": "4.1.5",
-		"prop-types": "15.7.1",
-		"react": "16.8.1",
-		"react-day-picker": "7.2.4",
-		"react-dom": "16.8.1",
-		"ts-jest": "24.0.0",
-		"typescript": "3.3.3"
-	},
-	"peerDependencies": {
-		"classnames": "^2.2.5",
-		"moment": "^2.24.0",
-		"nav-frontend-core": "^4.0.9",
-		"nav-frontend-js-utils": "^1.0.7",
-		"nav-frontend-typografi": "^2.0.8",
-		"nav-frontend-knapper-style": "^0.3.26",
-		"nav-frontend-paneler-style": "^0.3.15",
-		"nav-frontend-skjema-style": "^1.0.40",
-		"nav-frontend-typografi-style": "^1.0.13",
-		"react": "^16.8.1",
-		"react-day-picker": "^7.2.4",
-		"react-dom": "^16.8.1"
-	},
-	"scripts": {
-		"build:css": "gulp buildLess",
-		"build:ts": "gulp buildTs",
-		"build": "npm-run-all build:css build:ts",
-		"jest": "jest --config ./jest/jest.config.js"
-	}
+    "name": "nav-datovelger",
+    "version": "4.3.0",
+    "description": "Enkel datovelger",
+    "main": "lib/datovelger/index.js",
+    "types": "lib/datovelger/index.d.ts",
+    "scripts": {
+        "dev": "craco start",
+        "test": "jest --maxWorkers=2 --config ./jest/jest.config.js",
+        "eject": "react-scripts eject",
+        "build-lib": "npm-run-all clean-lib compile-lib-script copy-files-to-lib",
+        "clean-lib": "rimraf ./lib",
+        "compile-lib-script": "tsc -p tsconfig-build-lib.json",
+        "copy-files-to-lib": "copyfiles -u 2 \"src/datovelger/**/*.less\" lib",
+        "build-dev-app": "craco build",
+        "predeploy": "npm run build-dev-app",
+        "deploy": "gh-pages -d build"
+    },
+    "dependencies": {
+        "focus-trap-react": "^6.0.0"
+    },
+    "devDependencies": {
+        "@craco/craco": "^5.6.3",
+        "@navikt/fnrvalidator": "^1.1.0",
+        "@testing-library/jest-dom": "^5.1.0",
+        "@testing-library/react": "^9.5.0",
+        "@testing-library/user-event": "^8.1.0",
+        "@types/jest": "^25.1.4",
+        "@types/node": "^13.9.0",
+        "@types/react": "^16.9.19",
+        "@types/react-dom": "^16.9.5",
+        "classnames": "^2.2.6",
+        "copyfiles": "^2.2.0",
+        "core-js": "^3.6.4",
+        "craco-less": "^1.15.0",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.2",
+        "gh-pages": "^2.2.0",
+        "history": "^4.10.1",
+        "intl": "^1.2.5",
+        "jest-css-modules": "^2.1.0",
+        "less-plugin-npm-import": "^2.1.0",
+        "lodash.throttle": "^4.1.1",
+        "moment": "^2.24.0",
+        "nav-frontend-core": "^4.0.12",
+        "nav-frontend-ikoner-assets": "^1.0.4",
+        "nav-frontend-js-utils": "^1.0.8",
+        "nav-frontend-knapper": "^1.0.40",
+        "nav-frontend-knapper-style": "^0.3.35",
+        "nav-frontend-lenker": "^1.0.34",
+        "nav-frontend-lenker-style": "^0.2.25",
+        "nav-frontend-lukknapp": "^1.0.25",
+        "nav-frontend-lukknapp-style": "^0.2.22",
+        "nav-frontend-paneler-style": "^0.3.18",
+        "nav-frontend-skjema": "^2.0.12",
+        "nav-frontend-skjema-style": "^2.0.4",
+        "nav-frontend-typografi": "^2.0.18",
+        "nav-frontend-typografi-style": "^1.0.19",
+        "npm-run-all": "^4.1.5",
+        "react": "^16.12.0",
+        "react-collapse": "^5.0.1",
+        "react-day-picker": "^7.4.0",
+        "react-dom": "^16.12.0",
+        "react-intl": "^3.12.1",
+        "react-modal": "^3.11.1",
+        "react-router-dom": "^5.1.2",
+        "react-scripts": "3.4.0",
+        "rimraf": "^3.0.2",
+        "ts-jest": "^25.2.0",
+        "tslint": "^6.0.0",
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-react": "^4.2.0",
+        "typescript": "^3.8.3"
+    },
+    "peerDependencies": {
+        "classnames": "^2.2.6",
+        "moment": "^2.24.0",
+        "nav-frontend-core": "^4.0.11",
+        "nav-frontend-js-utils": "^1.0.8",
+        "nav-frontend-skjema": "^2.0.11",
+        "nav-frontend-typografi": "^2.0.17",
+        "react": "^16.12.0",
+        "react-day-picker": "^7.4.0"
+    },
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "files": [
+        "package.json",
+        "/lib"
+    ],
+    "directories": {
+        "lib": "lib"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/navikt/datovelger.git"
+    },
+    "author": "navikt",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/navikt/datovelger/issues"
+    },
+    "homepage": "https://github.com/navikt/datovelger"
 }

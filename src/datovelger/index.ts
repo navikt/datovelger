@@ -1,13 +1,13 @@
-import Periodevelger from './Periodevelger';
-import Datovelger from './Datovelger';
-import Datoinput from './Datoinput';
+import { default as Datoinput } from './Datoinput';
+import { default as Datovelger } from './Datovelger';
+import { default as Periodevelger } from './Periodevelger';
+
+export * from './Datovelger';
+export * from './Datoinput';
+export * from './Periodevelger';
 
 export default {
-	Periodevelger,
-	Datoinput,
-	Datovelger
+    Periodevelger,
+    Datoinput,
+    Datovelger
 };
-
-export { Props as DatovelgerProps } from './Datovelger';
-export { Props as PeriodevelgerProps } from './Periodevelger';
-export { Tidsperiode, DatovelgerAvgrensninger } from './types';
