@@ -32,6 +32,7 @@ const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
                     id="datovelger"
                     kalender={{ visUkenumre: true }}
                     visÅrVelger={true}
+                    locale={'fr'}
                     input={{ name: 'dato', id: 'ahl' }}
                     avgrensninger={{
                         helgedagerIkkeTillatt: false,
@@ -43,6 +44,9 @@ const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
             <Box margin="l">
                 <Knapp onClick={() => setDato(getDateStringFromValue(new Date()))}>Sett dagens dato</Knapp>
             </Box>
+            {moment()
+                .locale('fr')
+                .toLocaleString()}
         </div>
     );
 };

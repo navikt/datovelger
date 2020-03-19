@@ -6,15 +6,14 @@ import { DatovelgerAvgrensninger } from '../types';
 
 export * from './kalenderFokusUtils';
 
+const INPUT_FORMAT = 'DD.MM.YYYY';
+
 export const formatDateInputValue = (dato: string): string => {
     const d = moment(dato, moment.HTML5_FMT.DATE, true);
-    return d.isValid() ? d.format('DD.MM.YYYY') : dato;
+    return d.isValid() ? d.format(INPUT_FORMAT) : dato;
 };
 
-const apiDateFormat = 'YYYY-MM-DD';
-
-export const dateToISOFormattedDateString = (date?: Date) =>
-    date ? moment.utc(date).format(apiDateFormat) : undefined;
+export const dateToISOFormattedDateString = (date?: Date) => (date ? moment.utc(date).format(INPUT_FORMAT) : undefined);
 
 export const getDateStringFromValue = (value: Date | string): string | undefined => {
     let date;
@@ -29,11 +28,11 @@ export const getDateStringFromValue = (value: Date | string): string | undefined
 };
 
 export const formatInputToISODateFormatStrig = (input: string): string | 'Invalid Date' => {
-    const d = moment.utc(input, 'DD.MM.YYYY', true);
+    const d = moment.utc(input, INPUT_FORMAT, true);
     return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
 };
 
-export const dagDatoNøkkel = (dato: Date) => moment(dato).format('DD.MM.YYYY');
+export const dagDatoNøkkel = (dato: Date) => moment(dato).format(INPUT_FORMAT);
 
 export const getMånedDiff = (måned1: Date, måned2: Date) =>
     moment(måned1)

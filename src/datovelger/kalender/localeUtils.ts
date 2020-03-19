@@ -1,5 +1,6 @@
 import { LocaleUtils } from 'react-day-picker/types/utils';
 import moment from 'moment';
+import { dateToISOFormattedDateString } from '../utils/index';
 
 function formatDay(day: Date, locale: string = 'en') {
     return moment(day)
@@ -57,7 +58,7 @@ const kalenderLocaleUtils: LocaleUtils = {
     formatWeekdayShort,
     getMonths,
     getFirstDayOfWeek,
-    formatDate: (date) => 'TODO',
+    formatDate: (date) => dateToISOFormattedDateString(date)!,
     parseDate: (d) => moment(d).toDate()
 };
 
