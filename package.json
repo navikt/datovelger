@@ -1,6 +1,6 @@
 {
     "name": "nav-datovelger",
-    "version": "5.0.7",
+    "version": "5.0.8",
     "description": "Enkel datovelger",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
