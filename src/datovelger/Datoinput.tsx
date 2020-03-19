@@ -26,12 +26,14 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
         this.onKeyDown = this.onKeyDown.bind(this);
         this.triggerDateChange = this.triggerDateChange.bind(this);
         this.state = {
-            value: formatDateInputValue(props.valgtDato || '')
+            value: props.valgtDato ? formatDateInputValue(props.valgtDato) : ''
         };
     }
 
     componentWillReceiveProps(nextProps: DatoInputProps) {
-        this.updateAfterDateChange(nextProps.valgtDato || '');
+        if (nextProps.valgtDato) {
+            this.updateAfterDateChange(nextProps.valgtDato);
+        }
     }
 
     updateAfterDateChange(nextSelectedDate: string) {
@@ -47,6 +49,10 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
     }
 
     triggerDateChange() {
+        if (this.state.value === '') {
+            this.props.onDateChange(undefined);
+            return;
+        }
         const ISODateString = formatInputToISODateFormatStrig(this.state.value);
         if (ISODateString !== this.props.valgtDato) {
             this.props.onDateChange(ISODateString);
@@ -87,12 +93,13 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
                 autoCorrect="off"
                 pattern="\d{2}.\d{2}.\d{4}"
                 type="text"
+                inputMode="numeric"
                 ref={(c) => (this.input = c)}
                 value={this.state.value || ''}
                 maxLength={10}
                 onChange={this.onChange}
-                onBlur={this.triggerDateChange}
-                onKeyDown={this.onKeyDown}
+                // onBlur={this.triggerDateChange}
+                // onKeyDown={this.onKeyDown}
             />
         );
     }

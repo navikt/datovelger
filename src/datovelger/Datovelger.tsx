@@ -66,7 +66,7 @@ class Datovelger extends React.Component<DatovelgerProps, State> {
             måned: getDefaultMåned(props.valgtDato, props.avgrensninger, props.dayPickerProps),
             erDatoGyldig: erDatoGyldig(props.valgtDato),
             erÅpen: false,
-            inputValue: ''
+            inputValue: ' '
         };
     }
 
@@ -167,7 +167,7 @@ class Datovelger extends React.Component<DatovelgerProps, State> {
                         <Datoinput
                             inputProps={dateInputProps}
                             ref={(c) => (this.input = c)}
-                            valgtDato={valgtDato}
+                            valgtDato={valgtDato || ''}
                             onDateChange={this.onDatoinputChange}
                             onInputChange={this.onDatoInputOnChange}
                             disabled={disabled}

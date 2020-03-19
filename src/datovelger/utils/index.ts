@@ -11,6 +11,23 @@ export const formatDateInputValue = (dato: string): string => {
     return d.isValid() ? d.format('DD.MM.YYYY') : dato;
 };
 
+const apiDateFormat = 'YYYY-MM-DD';
+
+export const dateToISOFormattedDateString = (date?: Date) =>
+    date ? moment.utc(date).format(apiDateFormat) : undefined;
+
+export const getDateStringFromValue = (value: Date | string): string | undefined => {
+    let date;
+    if (value && typeof value === 'string') {
+        if (moment(value, moment.ISO_8601, true).isValid()) {
+            date = moment(value).toDate();
+        }
+    } else if (typeof value === 'object') {
+        date = value;
+    }
+    return date ? dateToISOFormattedDateString(date) : undefined;
+};
+
 export const formatInputToISODateFormatStrig = (input: string): string | 'Invalid Date' => {
     const d = moment.utc(input, 'DD.MM.YYYY', true);
     return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
