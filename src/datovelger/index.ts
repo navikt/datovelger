@@ -1,7 +1,1 @@
-import { default as Datovelger } from './Datovelger';
-
-export * from './Datovelger';
-
-export default {
-    Datovelger
-};
+export { default as Datovelger } from './Datovelger';

@@ -9,6 +9,7 @@ import Kalender from './kalender/Kalender';
 import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { erDatoGyldig } from './utils/datovalidering';
+import './styles/datovelger.less';
 
 interface State {
     måned: Date;

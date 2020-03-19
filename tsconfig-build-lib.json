@@ -22,5 +22,5 @@
         "baseUrl": "./src/datovelger"
     },
     "include": ["src/datovelger"],
-    "exclude": ["node_modules", "src/dev"]
+    "exclude": ["node_modules", "src/dev", "src/datovelger/__tests__"]
 }
