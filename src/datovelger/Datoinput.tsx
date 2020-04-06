@@ -26,12 +26,12 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
         this.onKeyDown = this.onKeyDown.bind(this);
         this.triggerDateChange = this.triggerDateChange.bind(this);
         this.state = {
-            value: props.valgtDato ? formatDateInputValue(props.valgtDato) : ''
+            value: props.valgtDato ? formatDateInputValue(props.valgtDato) : '',
         };
     }
 
     componentWillReceiveProps(nextProps: DatoInputProps) {
-        if (nextProps.valgtDato) {
+        if (nextProps.valgtDato !== undefined) {
             this.updateAfterDateChange(nextProps.valgtDato);
         }
     }
@@ -39,11 +39,11 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
     updateAfterDateChange(nextSelectedDate: string) {
         if (this.props.valgtDato !== nextSelectedDate && erDatoGyldig(nextSelectedDate)) {
             this.setState({
-                value: formatDateInputValue(nextSelectedDate)
+                value: formatDateInputValue(nextSelectedDate),
             });
         } else if (nextSelectedDate === '') {
             this.setState({
-                value: ''
+                value: '',
             });
         }
     }
@@ -86,7 +86,7 @@ export class Datoinput extends React.Component<DatoInputProps, State> {
             <input
                 {...inputProps}
                 className={classnames('nav-datovelger__input', {
-                    'nav-datovelger__input--datePickerTarget': this.props.isDatePickerTarget
+                    'nav-datovelger__input--datePickerTarget': this.props.isDatePickerTarget,
                 })}
                 disabled={disabled}
                 autoComplete="off"
