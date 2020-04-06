@@ -11,16 +11,8 @@ interface Props {}
 const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
     const [dato, setDato] = useState<string | undefined>('');
     const takenRange: Tidsperiode = {
-        fom: dateToISOFormattedDateString(
-            moment()
-                .subtract(1, 'week')
-                .toDate()
-        )!,
-        tom: dateToISOFormattedDateString(
-            moment()
-                .subtract(1, 'day')
-                .toDate()
-        )!
+        fom: dateToISOFormattedDateString(moment().subtract(1, 'week').toDate())!,
+        tom: dateToISOFormattedDateString(moment().subtract(1, 'day').toDate())!,
     };
 
     return (
@@ -36,17 +28,18 @@ const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
                     input={{ name: 'dato', id: 'ahl' }}
                     avgrensninger={{
                         helgedagerIkkeTillatt: false,
-                        ugyldigeTidsperioder: [takenRange]
+                        ugyldigeTidsperioder: [takenRange],
                     }}
                 />
             </Box>
             <Box margin="l">Valgt dato: {dato}</Box>
             <Box margin="l">
-                <Knapp onClick={() => setDato(getDateStringFromValue(new Date()))}>Sett dagens dato</Knapp>
+                <Knapp onClick={() => setDato(moment(new Date()).format(moment.HTML5_FMT.DATE))}>
+                    Sett dagens dato
+                </Knapp>
+                <Knapp onClick={() => setDato(undefined)}>Fjern dato</Knapp>{' '}
             </Box>
-            {moment()
-                .locale('fr')
-                .toLocaleString()}
+            {moment().locale('fr').toLocaleString()}
         </div>
     );
 };
