@@ -1,0 +1,44 @@
+
+name: Main
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+      - "LICENCE"
+      - "CODEOWNERS"
+    branches:
+
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+      - "LICENCE"
+      - "CODEOWNERS"
+    branches:
+
+jobs:
+    build:
+      name: Build and run jest
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [12.16.1] # => lts/erbium
+
+      steps:
+        - uses: actions/checkout@v1
+
+        - name: Use Node.js ${{matrix.node-version}}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{matrix.node-version}}
+
+        - name: npm install
+          run: |
+            npm install
+
+        - name: run Jest tests
+          run: |
+            npm run test
+
