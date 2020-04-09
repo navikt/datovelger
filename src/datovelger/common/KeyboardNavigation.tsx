@@ -16,72 +16,73 @@ export interface Props {
     onAltPageUp?: KeyboarActionEvent;
     onHome?: KeyboarActionEvent;
     onEnd?: KeyboarActionEvent;
+    children: React.ReactNode;
 }
 
 const enterAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'enter',
     key: 'Enter',
-    onAction
+    onAction,
 });
 const escapeAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'escape',
     key: 'Escape',
-    onAction
+    onAction,
 });
 const arrowUpAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'arrowUp',
     key: 'ArrowUp',
-    onAction
+    onAction,
 });
 const arrowDownAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'arrowUp',
     key: 'ArrowUp',
-    onAction
+    onAction,
 });
 const arrowLeftAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'arrowLeft',
     key: 'ArrowLeft',
-    onAction
+    onAction,
 });
 const arrowRightAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'arrowRight',
     key: 'ArrowRight',
-    onAction
+    onAction,
 });
 const pageUpAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'pageUp',
     key: 'PageUp',
-    onAction
+    onAction,
 });
 const pageDownAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'pageDown',
     key: 'PageDown',
-    onAction
+    onAction,
 });
 const altPageUpAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'altPageUp',
     key: 'PageUp',
     altKey: true,
-    onAction
+    onAction,
 });
 const altPageDownAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'altPageDown',
     key: 'PageDown',
     altKey: true,
-    onAction
+    onAction,
 });
 const homeAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'home',
     key: 'Home',
-    onAction
+    onAction,
 });
 const endAction = (onAction: KeyboarActionEvent): KeyboardAction => ({
     name: 'end',
     key: 'End',
-    onAction
+    onAction,
 });
 
-const KeyboardNavigation: React.StatelessComponent<Props> = (props) => (
+const KeyboardNavigation: React.StatelessComponent<Props> = (props: Props) => (
     <KeyboardActions
         actions={[
             ...(props.onEnter ? [enterAction(props.onEnter)] : []),
@@ -95,7 +96,7 @@ const KeyboardNavigation: React.StatelessComponent<Props> = (props) => (
             ...(props.onAltPageUp ? [altPageUpAction(props.onAltPageUp)] : []),
             ...(props.onAltPageDown ? [altPageDownAction(props.onAltPageDown)] : []),
             ...(props.onHome ? [homeAction(props.onHome)] : []),
-            ...(props.onEnd ? [endAction(props.onEnd)] : [])
+            ...(props.onEnd ? [endAction(props.onEnd)] : []),
         ]}>
         {props.children}
     </KeyboardActions>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { LocaleUtils } from 'react-day-picker/types/utils';
+import { LocaleUtils, } from 'react-day-picker/types/utils';
 import classnames from 'classnames';
 import moment from 'moment';
 import Chevron from '../elementer/ChevronSvg';
-import { Tekster } from '../tekster';
-import { MånedFokusElement } from './Kalender';
+import { Tekster, } from '../tekster';
+import { MånedFokusElement, } from './Kalender';
 import YearSelector from './YearSelector';
 
 export interface Props {
@@ -28,14 +28,14 @@ export interface NavbarKnappProps {
 class NavbarKnapp extends React.Component<NavbarKnappProps> {
     render() {
         const { måned, retning, disabled, onClick } = this.props;
-        const label = retning === 'forrige' ? Tekster.navbar_forrigeManed_label : Tekster.navbar_nesteManed_label;
+        const label = retning === 'forrige' ? Tekster.navbarForrigeMånedLabel : Tekster.navbarNesteMånedLabel;
 
         return (
             <button
                 type="button"
                 id={`kalender-navbarknapp-${retning}`}
                 className={classnames('nav-datovelger__navbar__knapp', `nav-datovelger__navbar__knapp--${retning}`, {
-                    'nav-datovelger__navbar__knapp--disabled': disabled
+                    'nav-datovelger__navbar__knapp--disabled': disabled,
                 })}
                 onClick={(e) => (disabled ? null : onClick(e, måned, retning))}
                 aria-label={label}

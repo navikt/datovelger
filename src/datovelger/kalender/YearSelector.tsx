@@ -25,7 +25,7 @@ const getAvailableMonths = (monthNames: string[], defaultMonth: Date, min?: Date
     while (m <= to) {
         options.push({
             value: m,
-            label: monthNames[m]
+            label: monthNames[m],
         });
         m++;
     }
@@ -58,11 +58,11 @@ class YearSelector extends React.Component<Props, {}> {
         return (this.props.min || this.props.max || new Date()).getMonth();
     }
 
-    onChange(evt: React.ChangeEvent<HTMLElement>) {
+    onChange() {
         this.props.onChange(new Date(this.getYear(), this.getMonth()), 'mnd');
     }
 
-    onYearChange(evt: React.ChangeEvent<HTMLElement>) {
+    onYearChange() {
         const year = parseInt(this.yearSelect?.value || '', 10);
         const month = parseInt(this.monthSelect?.value || '', 10);
         const newDate = new Date(year, month);
@@ -79,11 +79,9 @@ class YearSelector extends React.Component<Props, {}> {
         const {
             defaultMonth,
             min = new Date(1900, 0, 1),
-            max = moment()
-                .add(4, 'years')
-                .toDate(),
+            max = moment().add(4, 'years').toDate(),
             localeUtils,
-            locale
+            locale,
         } = this.props;
         const monthNames = localeUtils.getMonths(locale);
         const monthOptions = getAvailableMonths(monthNames, defaultMonth, min, max);

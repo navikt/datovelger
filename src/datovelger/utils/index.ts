@@ -1,54 +1,21 @@
 import {
-    AfterModifier, BeforeModifier, DayPickerProps, DaysOfWeekModifier, Modifier, RangeModifier
+    AfterModifier,
+    BeforeModifier,
+    DayPickerProps,
+    DaysOfWeekModifier,
+    Modifier,
+    RangeModifier,
 } from 'react-day-picker';
 import moment from 'moment';
 import { DatovelgerAvgrensninger } from '../types';
+import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT } from './dateFormatUtils';
 
 export * from './kalenderFokusUtils';
 
-const INPUT_FORMAT = 'DD.MM.YYYY';
-
-export const formatDateInputValue = (dato: string): string => {
-    const d = moment(dato, moment.HTML5_FMT.DATE, true);
-    return d.isValid() ? d.format(INPUT_FORMAT) : dato;
-};
-
-export const dateToISOFormattedDateString = (date?: Date) => (date ? moment.utc(date).format(INPUT_FORMAT) : undefined);
-
-export const getDateStringFromValue = (value: Date | string): string | undefined => {
-    let date;
-    if (value && typeof value === 'string') {
-        if (moment(value, moment.ISO_8601, true).isValid()) {
-            date = moment(value).toDate();
-        }
-    } else if (typeof value === 'object') {
-        date = value;
-    }
-    return date ? dateToISOFormattedDateString(date) : undefined;
-};
-
-export const formatInputToISODateFormatStrig = (input: string): string | 'Invalid Date' => {
-    const d = moment.utc(input, INPUT_FORMAT, true);
-    return d.isValid() ? d.format(moment.HTML5_FMT.DATE) : d.toString();
-};
-
-export const dagDatoNøkkel = (dato: Date) => moment(dato).format(INPUT_FORMAT);
+export const dagDatoNøkkel = (dato: Date) => moment(dato).format(INPUT_DATE_STRING_FORMAT);
 
 export const getMånedDiff = (måned1: Date, måned2: Date) =>
-    moment(måned1)
-        .startOf('month')
-        .diff(moment(måned2).startOf('month'), 'months');
-
-export const erMånedTilgjengelig = (måned: Date, avgrensninger?: { min?: string; maks?: string }): boolean => {
-    if (!avgrensninger) {
-        return true;
-    }
-    const mnd = moment(måned);
-    const { min, maks } = avgrensninger;
-    const erEtterMin = min ? mnd.endOf('month').isAfter(moment(min).startOf('month')) : true;
-    const erFørMaks = maks ? mnd.startOf('month').isBefore(moment(maks).endOf('month')) : true;
-    return erEtterMin && erFørMaks;
-};
+    moment(måned1).startOf('month').diff(moment(måned2).startOf('month'), 'months');
 
 export const getUtilgjengeligeDager = (avgrensninger: DatovelgerAvgrensninger): Modifier[] => {
     let ugyldigeDager: Modifier[] = [];
@@ -56,8 +23,8 @@ export const getUtilgjengeligeDager = (avgrensninger: DatovelgerAvgrensninger): 
         ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
             (t): RangeModifier => {
                 return {
-                    from: moment(t.fom, moment.HTML5_FMT.DATE).toDate(),
-                    to: moment(t.tom, moment.HTML5_FMT.DATE).toDate()
+                    from: moment(t.fom, ISO_DATE_STRING_FORMAT).toDate(),
+                    to: moment(t.tom, ISO_DATE_STRING_FORMAT).toDate(),
                 };
             }
         );
@@ -65,13 +32,13 @@ export const getUtilgjengeligeDager = (avgrensninger: DatovelgerAvgrensninger): 
     const minDato = avgrensninger.minDato;
     const maksDato = avgrensninger.maksDato;
     const helgedager = {
-        daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : []
+        daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : [],
     };
     return [
         ...ugyldigeDager,
-        ...(maksDato ? [{ after: moment(maksDato, moment.HTML5_FMT.DATE).toDate() } as AfterModifier] : []),
-        ...(minDato ? [{ before: moment(minDato, moment.HTML5_FMT.DATE).toDate() } as BeforeModifier] : []),
-        ...[helgedager as DaysOfWeekModifier]
+        ...(maksDato ? [{ after: moment(maksDato, ISO_DATE_STRING_FORMAT).toDate() } as AfterModifier] : []),
+        ...(minDato ? [{ before: moment(minDato, ISO_DATE_STRING_FORMAT).toDate() } as BeforeModifier] : []),
+        ...[helgedager as DaysOfWeekModifier],
     ];
 };
 
@@ -80,7 +47,7 @@ export const getDefaultMåned = (
     avgrensninger: DatovelgerAvgrensninger | undefined,
     dayPickerProps: DayPickerProps | undefined
 ): Date => {
-    const d = moment.utc(dato, moment.HTML5_FMT.DATE, true);
+    const d = moment.utc(dato, ISO_DATE_STRING_FORMAT, true);
     if (dato && d.isValid()) {
         return d.toDate();
     }
@@ -92,7 +59,7 @@ export const getDefaultMåned = (
     const idag = moment().toDate();
     if (avgrensninger && avgrensninger.minDato) {
         return moment(avgrensninger.minDato).isAfter(idag)
-            ? moment(avgrensninger.minDato, moment.HTML5_FMT.DATE).toDate()
+            ? moment(avgrensninger.minDato, ISO_DATE_STRING_FORMAT).toDate()
             : idag;
     }
     return idag;

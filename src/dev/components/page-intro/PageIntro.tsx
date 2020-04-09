@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ingress, Undertittel } from 'nav-frontend-typografi';
+import { Ingress, Undertittel, } from 'nav-frontend-typografi';
 import Box from '../box/Box';
 
 interface Props {
