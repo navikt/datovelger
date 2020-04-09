@@ -1,6 +1,6 @@
 {
     "name": "nav-datovelger",
-    "version": "5.1.0",
+    "version": "6.0.0-beta.1",
     "description": "Enkel datovelger",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -14,7 +14,8 @@
         "copy-files-to-lib": "copyfiles -u 2 \"src/datovelger/**/*.less\" lib",
         "build-dev-app": "craco build",
         "predeploy": "npm run build-dev-app",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build",
+        "semantic-release": "semantic-release"
     },
     "dependencies": {
         "focus-trap-react": "^6.0.0"
@@ -38,6 +39,7 @@
         "gh-pages": "^2.2.0",
         "history": "^4.10.1",
         "intl": "^1.2.5",
+        "jest": "^25.3.0",
         "jest-css-modules": "^2.1.0",
         "less-plugin-npm-import": "^2.1.0",
         "lodash.throttle": "^4.1.1",
@@ -70,7 +72,8 @@
         "tslint": "^6.0.0",
         "tslint-config-prettier": "^1.18.0",
         "tslint-react": "^4.2.0",
-        "typescript": "^3.8.3"
+        "typescript": "^3.8.3",
+        "semantic-release": "^17.0.4"
     },
     "peerDependencies": {
         "classnames": "^2.2.6",
@@ -109,12 +112,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/navikt/datovelger.git"
+        "url": "https://github.com/navikt/datovelger.git"
     },
     "author": "navikt",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/navikt/datovelger/issues"
     },
-    "homepage": "https://navikt.github.io/datovelger"
+    "homepage": "https://navikt.github.io/datovelger",
+    "publishConfig": {
+        "access": "restricted"
+    }
 }
