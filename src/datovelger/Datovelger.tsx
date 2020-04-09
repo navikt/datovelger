@@ -1,7 +1,6 @@
 import React, { Ref, useEffect, useRef, useState } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import DomEventContainer from './common/DomEventContainer';
-import bemUtils from '../dev/utils/bemUtils';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import KalenderPortal from './elementer/KalenderPortal';
@@ -37,8 +36,6 @@ export interface DatovelgerProps extends DatovelgerCommonProps {
     visÅrVelger?: boolean;
     onChange: (date?: ISODateString) => void;
 }
-
-const bem = bemUtils('nav-datovelger');
 
 const Datovelger = ({
     id,
@@ -99,8 +96,8 @@ const Datovelger = ({
 
     return (
         <DomEventContainer>
-            <div className={bem.block}>
-                <div className={bem.element('inputContainer')}>
+            <div className="nav-datovelger">
+                <div className="nav-datovelger__inputContainer">
                     <Datoinput
                         inputProps={dateInputProps}
                         ref={dateInput}
