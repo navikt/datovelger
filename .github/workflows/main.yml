@@ -2,7 +2,21 @@
 name: Main
 
 on:
-  [push, pull_request]
+  push:
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+      - "LICENCE"
+      - "CODEOWNERS"
+    branches:
+
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+      - "LICENCE"
+      - "CODEOWNERS"
+    branches:
 
   jobs:
     build:
