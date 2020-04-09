@@ -1,30 +1,21 @@
-import React from 'react';
+import React, { Ref, useEffect, useRef, useState } from 'react';
 import { DayPickerProps } from 'react-day-picker';
-import classnames from 'classnames';
 import DomEventContainer from './common/DomEventContainer';
+import bemUtils from '../dev/utils/bemUtils';
 import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
-import { DatovelgerAvgrensninger, KalenderPlassering } from './types';
+import { DatovelgerAvgrensninger, ISODateString, KalenderPlassering } from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { erDatoGyldig } from './utils/datovalidering';
-
-interface State {
-    måned: Date;
-    erDatoGyldig: boolean;
-    erÅpen?: boolean;
-    inputValue: string;
-}
 
 export interface DateInputProps {
     id: string;
     name: string;
     ariaLabel?: string;
     placeholder?: string;
-    required?: boolean;
     ariaDescribedby?: string;
-    onChange?: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface DatovelgerCommonProps {
@@ -42,166 +33,109 @@ export interface DatovelgerCommonProps {
 
 export interface DatovelgerProps extends DatovelgerCommonProps {
     input: DateInputProps;
-    valgtDato?: string;
+    valgtDato?: ISODateString;
     visÅrVelger?: boolean;
-    onChange: (date?: string) => void;
+    onChange: (date?: ISODateString) => void;
 }
 
-class Datovelger extends React.Component<DatovelgerProps, State> {
-    input: Datoinput | null = null;
-    setFokusPåKalenderKnapp: boolean | undefined;
-    kalender: Kalender | null = null;
-    kalenderKnapp: KalenderKnapp | null = null;
+const bem = bemUtils('nav-datovelger');
 
-    constructor(props: DatovelgerProps) {
-        super(props);
+const Datovelger = ({
+    id,
+    avgrensninger,
+    valgtDato,
+    dayPickerProps,
+    input,
+    kalender,
+    locale = 'nb',
+    disabled,
+    visÅrVelger,
+    kanVelgeUgyldigDato,
+    onChange,
+    ...kalenderProps
+}: DatovelgerProps) => {
+    const [dateIsValid, setDateIsValid] = useState<boolean>(erDatoGyldig(valgtDato));
+    const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
+    const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
 
-        this.onKalenderChange = this.onKalenderChange.bind(this);
-        this.onDatoinputChange = this.onDatoinputChange.bind(this);
-        this.toggleKalender = this.toggleKalender.bind(this);
-        this.lukkKalender = this.lukkKalender.bind(this);
-        this.onDatoInputOnChange = this.onDatoInputOnChange.bind(this);
+    const dateInput = useRef(null);
+    const calendarButton: Ref<KalenderKnapp> = useRef(null);
+    const calendar = useRef(null);
 
-        this.state = {
-            måned: getDefaultMåned(props.valgtDato, props.avgrensninger, props.dayPickerProps),
-            erDatoGyldig: erDatoGyldig(props.valgtDato),
-            erÅpen: false,
-            inputValue: ' '
-        };
-    }
+    useEffect(() => {
+        setDateIsValid(erDatoGyldig(valgtDato, avgrensninger));
+        setActiveMonth(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
+    }, [valgtDato, avgrensninger, dayPickerProps]);
 
-    componentWillReceiveProps(nextProps: DatovelgerProps) {
-        this.setState({
-            erDatoGyldig: erDatoGyldig(nextProps.valgtDato, nextProps.avgrensninger),
-            måned: getDefaultMåned(nextProps.valgtDato, nextProps.avgrensninger, nextProps.dayPickerProps)
-        });
-    }
+    const { ariaDescribedby, ariaLabel, ...restOfInputProps } = input;
 
-    onKalenderChange(dato: string, lukkKalender?: boolean) {
-        this.setState(
-            {
-                erÅpen: false,
-                erDatoGyldig: erDatoGyldig(dato, this.props.avgrensninger)
-            },
-            () => {
-                this.props.onChange(dato);
-                if (lukkKalender) {
-                    this.lukkKalender(true);
-                }
-            }
-        );
-    }
+    const dateInputProps = {
+        name: input && input.name ? input.name : `${id}__input`,
+        'aria-invalid': dateIsValid,
+        'aria-label': ariaLabel,
+        'aria-describedby': ariaDescribedby,
+        ...restOfInputProps,
+    };
 
-    onDatoinputChange(dato?: string) {
-        this.setState(
-            {
-                erÅpen: false,
-                erDatoGyldig: erDatoGyldig(dato, this.props.avgrensninger)
-            },
-            () => {
-                this.props.onChange(dato);
-            }
-        );
-    }
+    const toggleCalendarVisibility = () => {
+        setCalendarIsVisible(!calendarIsVisible);
+        calendarButton.current?.focus();
+    };
 
-    onDatoInputOnChange(value: string, event: React.ChangeEvent<HTMLInputElement>) {
-        const { avgrensninger, input } = this.props;
-        const dato = event.target.value;
-        this.setState({
-            erÅpen: false,
-            erDatoGyldig: erDatoGyldig(dato, avgrensninger),
-            inputValue: dato
-        });
-        if (input && input.onChange) {
-            input.onChange(value, event);
+    const setDateFromInput = (date?: ISODateString) => {
+        setCalendarIsVisible(false);
+        setDateIsValid(erDatoGyldig(date, avgrensninger));
+        onChange(date);
+    };
+
+    const setDateFromCalendar = (dateString: ISODateString, closeCalender?: boolean) => {
+        setDateIsValid(erDatoGyldig(dateString, avgrensninger));
+        setCalendarIsVisible(false);
+        onChange(dateString);
+        if (closeCalender) {
+            setCalendarIsVisible(false);
         }
-    }
+    };
 
-    toggleKalender() {
-        this.setFokusPåKalenderKnapp = true;
-        this.setState({ erÅpen: !this.state.erÅpen });
-    }
-
-    lukkKalender(settFokusPåKalenderknapp?: boolean) {
-        this.setState({ erÅpen: false });
-        this.setFokusPåKalenderKnapp = settFokusPåKalenderknapp;
-    }
-
-    componentDidUpdate(prevProps: DatovelgerProps, prevState: State) {
-        if (!prevState.erÅpen && this.state.erÅpen && this.kalender) {
-            this.kalender.settFokus();
-        } else if (prevState.erÅpen && !this.state.erÅpen && this.setFokusPåKalenderKnapp && this.kalenderKnapp) {
-            this.setFokusPåKalenderKnapp = false;
-            this.kalenderKnapp.focus();
-        }
-    }
-
-    render() {
-        const {
-            valgtDato,
-            input,
-            kalender,
-            avgrensninger,
-            locale = 'nb',
-            disabled,
-            visÅrVelger,
-            kanVelgeUgyldigDato = false,
-            ...kalenderProps
-        } = this.props;
-
-        const { erÅpen, erDatoGyldig: stateErDatoGyldig } = this.state;
-
-        const { onChange, ariaDescribedby, ariaLabel, ...restOfInputProps } = input;
-        const dateInputProps = {
-            name: input && input.name ? input.name : `${this.props.id}__input`,
-            'aria-invalid': stateErDatoGyldig,
-            'aria-label': ariaLabel,
-            'aria-describedby': ariaDescribedby,
-            ...restOfInputProps
-        };
-
-        return (
-            <DomEventContainer>
-                <div className={classnames('nav-datovelger')}>
-                    <div className="nav-datovelger__inputContainer">
-                        <Datoinput
-                            inputProps={dateInputProps}
-                            ref={(c) => (this.input = c)}
-                            valgtDato={valgtDato || ''}
-                            onDateChange={this.onDatoinputChange}
-                            onInputChange={this.onDatoInputOnChange}
-                            disabled={disabled}
-                        />
-                        <KalenderKnapp
-                            disabled={disabled}
-                            ref={(c) => (this.kalenderKnapp = c)}
-                            onClick={this.toggleKalender}
-                            erÅpen={erÅpen || false}
-                        />
-                    </div>
-                    {erÅpen && (
-                        <KalenderPortal plassering={kalender && kalender.plassering}>
-                            <Kalender
-                                ref={(c) => (this.kalender = c)}
-                                {...kalenderProps}
-                                locale={locale}
-                                dato={valgtDato}
-                                måned={this.state.måned}
-                                min={avgrensninger && avgrensninger.minDato}
-                                maks={avgrensninger && avgrensninger.maksDato}
-                                utilgjengeligeDager={avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined}
-                                onVelgDag={(d: string) => this.onKalenderChange(d, true)}
-                                onLukk={() => this.lukkKalender(true)}
-                                kanVelgeUgyldigDato={kanVelgeUgyldigDato}
-                                dayPickerProps={this.props.dayPickerProps}
-                                visÅrVelger={visÅrVelger}
-                            />
-                        </KalenderPortal>
-                    )}
+    return (
+        <DomEventContainer>
+            <div className={bem.block}>
+                <div className={bem.element('inputContainer')}>
+                    <Datoinput
+                        inputProps={dateInputProps}
+                        ref={dateInput}
+                        valgtDato={valgtDato || ''}
+                        onDateChange={setDateFromInput}
+                        disabled={disabled}
+                    />
+                    <KalenderKnapp
+                        disabled={disabled}
+                        ref={calendarButton}
+                        onClick={toggleCalendarVisibility}
+                        erÅpen={calendarIsVisible}
+                    />
                 </div>
-            </DomEventContainer>
-        );
-    }
-}
-
+                {calendarIsVisible && (
+                    <KalenderPortal plassering={kalender && kalender.plassering}>
+                        <Kalender
+                            ref={calendar}
+                            {...kalenderProps}
+                            locale={locale}
+                            dato={valgtDato}
+                            måned={activeMonth}
+                            min={avgrensninger && avgrensninger.minDato}
+                            maks={avgrensninger && avgrensninger.maksDato}
+                            utilgjengeligeDager={avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined}
+                            onVelgDag={(d: string) => setDateFromCalendar(d, true)}
+                            onLukk={() => setCalendarIsVisible(false)}
+                            kanVelgeUgyldigDato={kanVelgeUgyldigDato}
+                            dayPickerProps={dayPickerProps}
+                            visÅrVelger={visÅrVelger}
+                        />
+                    </KalenderPortal>
+                )}
+            </div>
+        </DomEventContainer>
+    );
+};
 export default Datovelger;

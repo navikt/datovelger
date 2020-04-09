@@ -21,9 +21,7 @@ export const getFokusertDato = (kalender: RefHTMLElement): Date | undefined => {
 };
 
 export const getSammeDatoIMåned = (dato: Date, måned: Date, nesteMåned: Date): Date =>
-    moment(dato)
-        .add(getMånedDiff(nesteMåned, måned), 'months')
-        .toDate();
+    moment(dato).add(getMånedDiff(nesteMåned, måned), 'months').toDate();
 
 export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
     if (kalender) {

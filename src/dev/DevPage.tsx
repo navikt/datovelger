@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { BrowserRouter, } from 'react-router-dom';
+import { Systemtittel, } from 'nav-frontend-typografi';
 import NAVLogo from './components/svg/NAVLogo';
 import DevContent from './DevContent';
 import './styles/dev.less';

@@ -1,0 +1,44 @@
+import { InputDateString, ISODateString, INVALID_DATE } from '../types';
+import moment from 'moment';
+
+export const INVALID_DATE_VALUE = 'Invalid date';
+export const INPUT_DATE_STRING_FORMAT: InputDateString = 'DD.MM.YYYY';
+export const ISO_DATE_STRING_FORMAT: ISODateString = moment.HTML5_FMT.DATE;
+
+const stringToUTCDate = (dateString: string | undefined, format: string): Date | undefined => {
+    if (dateString !== undefined && dateString.trim().length === 10) {
+        const d = moment.utc(dateString, format, true);
+        return d.isValid() ? d.toDate() : undefined;
+    }
+    return undefined;
+};
+
+export const dateToInputDateString = (date?: Date): InputDateString | INVALID_DATE =>
+    date ? moment.utc(date).format(INPUT_DATE_STRING_FORMAT) : INVALID_DATE_VALUE;
+
+export const dateToISODateString = (date: Date): ISODateString | INVALID_DATE => {
+    const d = moment.utc(date);
+    return d.isValid() ? d.format(ISO_DATE_STRING_FORMAT) : d.toString();
+};
+
+export const getUTCDateFromISODateString = (isoDateString: ISODateString): Date | INVALID_DATE => {
+    const utcDateString = stringToUTCDate(isoDateString, ISO_DATE_STRING_FORMAT);
+    return utcDateString || INVALID_DATE_VALUE;
+};
+
+export const getUTCDateFromInputDateString = (inputDateString: InputDateString): Date | INVALID_DATE => {
+    const isoDateString = stringToUTCDate(inputDateString, INPUT_DATE_STRING_FORMAT);
+    return isoDateString || INVALID_DATE_VALUE;
+};
+
+export const ISODateStringToInputDateString = (isoDateString: ISODateString): InputDateString | INVALID_DATE => {
+    const date = stringToUTCDate(isoDateString, ISO_DATE_STRING_FORMAT);
+    const stringValue = date ? dateToInputDateString(date) : INVALID_DATE_VALUE;
+    return stringValue === INVALID_DATE_VALUE ? INVALID_DATE_VALUE : stringValue;
+};
+
+export const InputDateStringToISODateString = (inputDateString: InputDateString): string | INVALID_DATE => {
+    const date = stringToUTCDate(inputDateString, INPUT_DATE_STRING_FORMAT);
+    const stringValue = date ? dateToISODateString(date) : INVALID_DATE_VALUE;
+    return stringValue === INVALID_DATE_VALUE ? INVALID_DATE_VALUE : stringValue;
+};

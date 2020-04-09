@@ -1,13 +1,9 @@
 import FocusTrap from 'focus-trap-react';
 import React from 'react';
-import DayPicker, {
-    CaptionElementProps, DayModifiers, DayPickerProps, Modifier, NavbarElementProps
-} from 'react-day-picker';
+import DayPicker, { DayModifiers, DayPickerProps, Modifier } from 'react-day-picker';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 import moment from 'moment';
-import {
-    fokuserKalender, fokuserPåDato, fokuserPåMåned, getFokusertDato, getSammeDatoIMåned
-} from '../utils';
+import { fokuserKalender, fokuserPåDato, fokuserPåMåned, getFokusertDato, getSammeDatoIMåned } from '../utils';
 import kalenderLocaleUtils from './localeUtils';
 import Navbar from './Navbar';
 
@@ -45,7 +41,7 @@ export class Kalender extends React.Component<Props, State> {
         this.onByttDag = this.onByttDag.bind(this);
         this.onByttMåned = this.onByttMåned.bind(this);
         this.state = {
-            måned: props.måned
+            måned: props.måned,
         };
     }
 
@@ -76,7 +72,7 @@ export class Kalender extends React.Component<Props, State> {
         this.nesteFokusertDato = fokusertDato ? getSammeDatoIMåned(fokusertDato, this.state.måned, måned) : undefined;
         this.månedFokusElement = månedFokusElement;
         this.setState({
-            måned
+            måned,
         });
     }
 
@@ -86,14 +82,14 @@ export class Kalender extends React.Component<Props, State> {
 
         const localeUtils = {
             ...kalenderLocaleUtils,
-            ...this.props.localeUtils
+            ...this.props.localeUtils,
         };
 
         const innstillinger: DayPickerProps = {
             locale,
             localeUtils,
-            navbarElement: (props: NavbarElementProps) => <span />,
-            captionElement: (props: CaptionElementProps) => (
+            navbarElement: () => <span />,
+            captionElement: () => (
                 <Navbar
                     defaultMåned={måned}
                     byttMåned={(d: Date, elementId) => this.onByttMåned(d, elementId)}
@@ -105,7 +101,7 @@ export class Kalender extends React.Component<Props, State> {
                 />
             ),
             firstDayOfWeek: 1,
-            showWeekNumbers: visUkenumre
+            showWeekNumbers: visUkenumre,
         };
 
         return (
@@ -118,7 +114,7 @@ export class Kalender extends React.Component<Props, State> {
                     active={true}
                     focusTrapOptions={{
                         clickOutsideDeactivates: true,
-                        onDeactivate: this.props.onLukk
+                        onDeactivate: this.props.onLukk,
                     }}>
                     <DayPicker
                         locale={locale}

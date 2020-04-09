@@ -1,6 +1,6 @@
 {
     "name": "nav-datovelger",
-    "version": "5.1.1",
+    "version": "6.0.0-beta.0",
     "description": "Enkel datovelger",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -14,7 +14,8 @@
         "copy-files-to-lib": "copyfiles -u 2 \"src/datovelger/**/*.less\" lib",
         "build-dev-app": "craco build",
         "predeploy": "npm run build-dev-app",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build",
+        "commit": "git-cz"
     },
     "dependencies": {
         "focus-trap-react": "^6.0.0"
@@ -29,12 +30,19 @@
         "@types/node": "^13.9.0",
         "@types/react": "^16.9.19",
         "@types/react-dom": "^16.9.5",
+        "@typescript-eslint/eslint-plugin": "^2.26.0",
+        "@typescript-eslint/parser": "^2.26.0",
         "classnames": "^2.2.6",
         "copyfiles": "^2.2.0",
         "core-js": "^3.6.4",
         "craco-less": "^1.15.0",
+        "cz-conventional-changelog": "^3.1.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.2",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.10.1",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-react": "^7.19.0",
         "gh-pages": "^2.2.0",
         "history": "^4.10.1",
         "intl": "^1.2.5",
@@ -57,6 +65,7 @@
         "nav-frontend-typografi": "^2.0.18",
         "nav-frontend-typografi-style": "^1.0.19",
         "npm-run-all": "^4.1.5",
+        "prettier": "^2.0.4",
         "react": "^16.12.0",
         "react-collapse": "^5.0.1",
         "react-day-picker": "^7.4.0",
@@ -67,9 +76,6 @@
         "react-scripts": "3.4.0",
         "rimraf": "^3.0.2",
         "ts-jest": "^25.2.0",
-        "tslint": "^6.0.0",
-        "tslint-config-prettier": "^1.18.0",
-        "tslint-react": "^4.2.0",
         "typescript": "^3.8.3"
     },
     "peerDependencies": {
@@ -116,5 +122,10 @@
     "bugs": {
         "url": "https://github.com/navikt/datovelger/issues"
     },
-    "homepage": "https://navikt.github.io/datovelger"
+    "homepage": "https://navikt.github.io/datovelger",
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
 }

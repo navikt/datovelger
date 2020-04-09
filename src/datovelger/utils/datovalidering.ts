@@ -1,9 +1,12 @@
 import moment, { Moment } from 'moment';
 import { DatovelgerAvgrensninger, Tidsperiode } from '../types';
 
-export const erDatoGyldig = (dato: string | undefined, avgrensninger?: DatovelgerAvgrensninger): boolean => {
-    const d = moment(dato, moment.HTML5_FMT.DATE, true);
-    return avgrensninger === undefined ? d.isValid() : d.isValid() && erDatoUtenforAvgrensninger(d, avgrensninger);
+export const erDatoIEnUgyldigTidsperiode = (dato: Moment, ugyldigeTidsperioder: Tidsperiode[]): boolean => {
+    return ugyldigeTidsperioder.some((t: Tidsperiode) => {
+        const fom = moment(t.fom, moment.HTML5_FMT.DATE);
+        const tom = moment(t.tom, moment.HTML5_FMT.DATE);
+        return dato.isBetween(fom, tom, 'day', '[]');
+    });
 };
 
 const erDatoUtenforAvgrensninger = (dato: Moment, avgrensninger: DatovelgerAvgrensninger) => {
@@ -25,10 +28,7 @@ const erDatoUtenforAvgrensninger = (dato: Moment, avgrensninger: DatovelgerAvgre
     return true;
 };
 
-export const erDatoIEnUgyldigTidsperiode = (dato: Moment, ugyldigeTidsperioder: Tidsperiode[]): boolean => {
-    return ugyldigeTidsperioder.some((t: Tidsperiode) => {
-        const fom = moment(t.fom, moment.HTML5_FMT.DATE);
-        const tom = moment(t.tom, moment.HTML5_FMT.DATE);
-        return dato.isBetween(fom, tom, 'day', '[]');
-    });
+export const erDatoGyldig = (dato: string | undefined, avgrensninger?: DatovelgerAvgrensninger): boolean => {
+    const d = moment(dato, moment.HTML5_FMT.DATE, true);
+    return avgrensninger === undefined ? d.isValid() : d.isValid() && erDatoUtenforAvgrensninger(d, avgrensninger);
 };

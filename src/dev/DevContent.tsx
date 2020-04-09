@@ -1,7 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, } from 'react-router-dom';
 import LeftMenu from './components/left-menu/LeftMenu';
-import { getRouteConfig } from './config/routeConfig';
+import { getRouteConfig, } from './config/routeConfig';
 import Intro from './Intro';
 
 interface Props {}
