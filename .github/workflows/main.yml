@@ -41,23 +41,20 @@ jobs:
             node-version: ${{matrix.node-version}}
         - name: npm install
           run: npm install
-
-    test:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
         - name: run Jest tests
           run: npm run test
 
-        - name: Release
-          env:
-            CI: true
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
-          run: npx semantic-release
+    build-lib:
+        name: Build package
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+          - name: build-lib-files
+            run: npm run build-lib
 
     release:
-        needs: test
+        name: Release module
+        needs: build-lib
         runs-on: ubuntu-latest
         steps:
           - name: Release
