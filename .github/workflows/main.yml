@@ -18,7 +18,7 @@ on:
       - "CODEOWNERS"
     branches:
 
-  jobs:
+jobs:
     build:
       name: Build and run jest
       runs-on: ubuntu-latest
