@@ -33,7 +33,7 @@ jobs:
           uses: actions/setup-node@v1
           with:
             node-version: ${{matrix.node-version}}
-
+s
         - name: npm install
           run: |
             npm install
@@ -41,4 +41,11 @@ jobs:
         - name: run Jest tests
           run: |
             npm run test
+
+        - name: Release
+          env:
+            CI: true
+            GITHUB_TOKEN: ${{ secrets,GITHUB_TOKEN }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
+          run: npx semantic-release
 
