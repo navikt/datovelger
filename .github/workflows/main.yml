@@ -34,9 +34,8 @@ jobs:
           with:
             path: node_modules
             key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.OS }}-npm-cache-
-          - name: Use Node.js ${{matrix.node-version}}
+            restore-keys: ${{ runner.OS }}-npm-cache-
+        - name: Use Node.js ${{matrix.node-version}}
           uses: actions/setup-node@v1
           with:
             node-version: ${{matrix.node-version}}
