@@ -1,6 +1,6 @@
 {
     "name": "nav-datovelger",
-    "version": "6.0.0-beta.0",
+    "version": "6.0.0-beta.1",
     "description": "Enkel datovelger",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -15,7 +15,8 @@
         "build-dev-app": "craco build",
         "predeploy": "npm run build-dev-app",
         "deploy": "gh-pages -d build",
-        "commit": "git-cz"
+        "commit": "git-cz",
+        "semantic-release": "semantic-release"
     },
     "dependencies": {
         "focus-trap-react": "^6.0.0"
@@ -76,9 +77,11 @@
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.4.0",
         "rimraf": "^3.0.2",
-        "semantic-release": "^17.0.4",
         "ts-jest": "^25.2.0",
-        "typescript": "^3.8.3"
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-react": "^4.2.0",
+        "typescript": "^3.8.3",
+        "semantic-release": "^17.0.4"
     },
     "peerDependencies": {
         "classnames": "^2.2.6",
@@ -117,7 +120,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/navikt/datovelger.git"
+        "url": "https://github.com/navikt/datovelger.git"
     },
     "author": "navikt",
     "license": "MIT",
@@ -129,5 +132,8 @@
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
         }
+    },
+    "publishConfig": {
+        "access": "restricted"
     }
 }

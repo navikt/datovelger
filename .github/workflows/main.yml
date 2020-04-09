@@ -27,18 +27,41 @@ jobs:
           node-version: [12.16.1] # => lts/erbium
 
       steps:
-        - uses: actions/checkout@v1
-
+        - name: Checkout code
+          uses: actions/checkout@v1
+        - name: Cache NPM dependencies
+          uses: actions/cache@v1
+          with:
+            path: node_modules
+            key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: ${{ runner.OS }}-npm-cache-
         - name: Use Node.js ${{matrix.node-version}}
           uses: actions/setup-node@v1
           with:
             node-version: ${{matrix.node-version}}
-
-        - name: npm install
-          run: |
-            npm install
-
         - name: run Jest tests
           run: |
+            npm ci
             npm run test
+
+    build-lib:
+        name: Build package
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+          - name: build-lib-files
+            run: |
+              npm run build-lib
+
+    release:
+        name: Release module
+        needs: build-lib
+        runs-on: ubuntu-latest
+        steps:
+          - name: Release
+            env:
+              CI: true
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
+            run: npx semantic-release
 
