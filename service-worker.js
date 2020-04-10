@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/datovelger/precache-manifest.dbf5125de8d30ca6a73c7dc105ff60fc.js"
+  "/datovelger/precache-manifest.88a2c7e6d2cca736b08f7ce435f31dde.js"
 );
 
 self.addEventListener('message', (event) => {
