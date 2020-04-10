@@ -8,26 +8,26 @@ import {
 } from 'react-day-picker';
 import moment from 'moment';
 import { DatovelgerAvgrensninger } from '../types';
-import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT } from './dateFormatUtils';
-
-export * from './kalenderFokusUtils';
+import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT, ISODateStringToUTCDate } from './dateFormatUtils';
 
 export const dagDatoNøkkel = (dato: Date) => moment(dato).format(INPUT_DATE_STRING_FORMAT);
-
-export const getMånedDiff = (måned1: Date, måned2: Date) =>
-    moment(måned1).startOf('month').diff(moment(måned2).startOf('month'), 'months');
 
 export const getUtilgjengeligeDager = (avgrensninger: DatovelgerAvgrensninger): Modifier[] => {
     let ugyldigeDager: Modifier[] = [];
     if (avgrensninger.ugyldigeTidsperioder) {
-        ugyldigeDager = avgrensninger.ugyldigeTidsperioder.map(
-            (t): RangeModifier => {
-                return {
-                    from: moment(t.fom, ISO_DATE_STRING_FORMAT).toDate(),
-                    to: moment(t.tom, ISO_DATE_STRING_FORMAT).toDate(),
-                };
-            }
-        );
+        ugyldigeDager = avgrensninger.ugyldigeTidsperioder
+            .map((t): RangeModifier | undefined => {
+                const from = ISODateStringToUTCDate(t.fom);
+                const to = ISODateStringToUTCDate(t.tom);
+                if (from && to) {
+                    return {
+                        from,
+                        to,
+                    };
+                }
+                return undefined;
+            })
+            .filter((t) => t !== undefined);
     }
     const minDato = avgrensninger.minDato;
     const maksDato = avgrensninger.maksDato;

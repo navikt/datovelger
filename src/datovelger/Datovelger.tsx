@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
@@ -7,22 +7,20 @@ import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
 import { DatovelgerAvgrensninger, ISODateString, KalenderPlassering } from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
-import { erDatoGyldig } from './utils/datovalidering';
 
-export interface DatovelgerCommonProps {
+export interface DatovelgerProps {
     id: string;
+    valgtDato?: ISODateString;
+    avgrensninger?: DatovelgerAvgrensninger;
+    datoErGyldig?: boolean;
+    onChange: (date?: ISODateString) => void;
     kalender?: {
         visUkenumre?: boolean;
         plassering?: KalenderPlassering;
     };
-    avgrensninger?: DatovelgerAvgrensninger;
     kanVelgeUgyldigDato?: boolean;
-    dayPickerProps?: DayPickerProps;
     locale?: string;
     disabled?: boolean;
-}
-
-export interface DatovelgerProps extends DatovelgerCommonProps {
     input: {
         id: string;
         name: string;
@@ -30,9 +28,8 @@ export interface DatovelgerProps extends DatovelgerCommonProps {
         placeholder?: string;
         ariaDescribedby?: string;
     };
-    valgtDato?: ISODateString;
     visÅrVelger?: boolean;
-    onChange: (date?: ISODateString) => void;
+    dayPickerProps?: DayPickerProps;
 }
 
 const Datovelger = ({
@@ -45,11 +42,11 @@ const Datovelger = ({
     locale = 'nb',
     disabled,
     visÅrVelger,
+    datoErGyldig,
     kanVelgeUgyldigDato,
     onChange,
     ...kalenderProps
 }: DatovelgerProps) => {
-    const [dateIsValid, setDateIsValid] = useState<boolean>(erDatoGyldig(valgtDato));
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
 
@@ -57,13 +54,12 @@ const Datovelger = ({
     const calendar = useRef(null);
 
     useEffect(() => {
-        setDateIsValid(erDatoGyldig(valgtDato, avgrensninger));
         setActiveMonth(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
     }, [valgtDato, avgrensninger, dayPickerProps]);
 
     const dateInputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
         name: input.name || `${id}__input`,
-        'aria-invalid': dateIsValid,
+        'aria-invalid': datoErGyldig,
         'aria-label': input.ariaLabel,
         'aria-describedby': input.ariaDescribedby,
         placeholder: input.placeholder,
@@ -71,7 +67,6 @@ const Datovelger = ({
 
     const setDate = (dateString: ISODateString | undefined, closeCalender?: boolean) => {
         setCalendarIsVisible(false);
-        setDateIsValid(erDatoGyldig(dateString, avgrensninger));
         onChange(dateString);
         if (closeCalender) {
             setCalendarIsVisible(false);

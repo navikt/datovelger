@@ -1,5 +1,5 @@
-import { InputDateString, ISODateString, INVALID_DATE } from '../types';
 import moment from 'moment';
+import { InputDateString, INVALID_DATE, ISODateString } from '../types';
 
 export const INVALID_DATE_VALUE = 'Invalid date';
 export const INPUT_DATE_STRING_FORMAT: InputDateString = 'DD.MM.YYYY';

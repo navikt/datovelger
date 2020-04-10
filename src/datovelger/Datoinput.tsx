@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
+import { InputDateString, ISODateString } from './types';
 import {
-    ISODateStringToInputDateString,
     InputDateStringToISODateString,
     INVALID_DATE_VALUE,
+    ISODateStringToInputDateString,
 } from './utils/dateFormatUtils';
-import { InputDateString, ISODateString } from './types';
 
 export interface DatoInputProps {
     valgtDato?: ISODateString;
