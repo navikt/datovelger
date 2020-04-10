@@ -1,4 +1,4 @@
-import React, { Ref, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, InputHTMLAttributes } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import DomEventContainer from './common/DomEventContainer';
 import Datoinput from './Datoinput';
@@ -8,14 +8,6 @@ import Kalender from './kalender/Kalender';
 import { DatovelgerAvgrensninger, ISODateString, KalenderPlassering } from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { erDatoGyldig } from './utils/datovalidering';
-
-export interface DateInputProps {
-    id: string;
-    name: string;
-    ariaLabel?: string;
-    placeholder?: string;
-    ariaDescribedby?: string;
-}
 
 export interface DatovelgerCommonProps {
     id: string;
@@ -31,7 +23,13 @@ export interface DatovelgerCommonProps {
 }
 
 export interface DatovelgerProps extends DatovelgerCommonProps {
-    input: DateInputProps;
+    input: {
+        id: string;
+        name: string;
+        ariaLabel?: string;
+        placeholder?: string;
+        ariaDescribedby?: string;
+    };
     valgtDato?: ISODateString;
     visÅrVelger?: boolean;
     onChange: (date?: ISODateString) => void;
@@ -56,7 +54,6 @@ const Datovelger = ({
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
 
     const dateInput = useRef(null);
-    const calendarButton: Ref<KalenderKnapp> = useRef(null);
     const calendar = useRef(null);
 
     useEffect(() => {
@@ -64,30 +61,17 @@ const Datovelger = ({
         setActiveMonth(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
     }, [valgtDato, avgrensninger, dayPickerProps]);
 
-    const { ariaDescribedby, ariaLabel, ...restOfInputProps } = input;
-
-    const dateInputProps = {
-        name: input && input.name ? input.name : `${id}__input`,
+    const dateInputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
+        name: input.name || `${id}__input`,
         'aria-invalid': dateIsValid,
-        'aria-label': ariaLabel,
-        'aria-describedby': ariaDescribedby,
-        ...restOfInputProps,
+        'aria-label': input.ariaLabel,
+        'aria-describedby': input.ariaDescribedby,
+        placeholder: input.placeholder,
     };
 
-    const toggleCalendarVisibility = () => {
-        setCalendarIsVisible(!calendarIsVisible);
-        calendarButton.current?.focus();
-    };
-
-    const setDateFromInput = (date?: ISODateString) => {
+    const setDate = (dateString: ISODateString | undefined, closeCalender?: boolean) => {
         setCalendarIsVisible(false);
-        setDateIsValid(erDatoGyldig(date, avgrensninger));
-        onChange(date);
-    };
-
-    const setDateFromCalendar = (dateString: ISODateString, closeCalender?: boolean) => {
         setDateIsValid(erDatoGyldig(dateString, avgrensninger));
-        setCalendarIsVisible(false);
         onChange(dateString);
         if (closeCalender) {
             setCalendarIsVisible(false);
@@ -102,13 +86,12 @@ const Datovelger = ({
                         inputProps={dateInputProps}
                         ref={dateInput}
                         valgtDato={valgtDato || ''}
-                        onDateChange={setDateFromInput}
+                        onDateChange={setDate}
                         disabled={disabled}
                     />
                     <KalenderKnapp
                         disabled={disabled}
-                        ref={calendarButton}
-                        onClick={toggleCalendarVisibility}
+                        onClick={() => setCalendarIsVisible(!calendarIsVisible)}
                         erÅpen={calendarIsVisible}
                     />
                 </div>
@@ -123,7 +106,7 @@ const Datovelger = ({
                             min={avgrensninger && avgrensninger.minDato}
                             maks={avgrensninger && avgrensninger.maksDato}
                             utilgjengeligeDager={avgrensninger ? getUtilgjengeligeDager(avgrensninger) : undefined}
-                            onVelgDag={(d: string) => setDateFromCalendar(d, true)}
+                            onVelgDag={(d: string) => setDate(d, true)}
                             onLukk={() => setCalendarIsVisible(false)}
                             kanVelgeUgyldigDato={kanVelgeUgyldigDato}
                             dayPickerProps={dayPickerProps}

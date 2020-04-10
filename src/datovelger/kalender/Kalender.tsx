@@ -26,7 +26,7 @@ export interface Props {
 
 export type NavFocusElement = 'neste' | 'forrige' | 'aar' | 'mnd';
 
-const Kalender = React.forwardRef(function Calendar(props: Props, ref?: React.Ref<HTMLDivElement>) {
+const Kalender = React.forwardRef(function Calendar(props: Props, ref: React.Ref<HTMLDivElement>) {
     const [displayMonth, setDisplayMonth] = useState<Date>(props.måned);
 
     const {
