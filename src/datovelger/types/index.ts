@@ -19,4 +19,4 @@ export interface DatovelgerAvgrensninger {
     helgedagerIkkeTillatt?: boolean;
 }
 
-export type KalenderPlassering = 'under' | 'fullskjerm' | '';
+export type KalenderPlassering = 'under' | 'fullskjerm' | '' | 'responsive';

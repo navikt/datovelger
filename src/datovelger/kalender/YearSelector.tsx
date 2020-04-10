@@ -2,7 +2,7 @@ import React from 'react';
 import { LocaleUtils } from 'react-day-picker/types/utils';
 import moment from 'moment';
 import { guid } from 'nav-frontend-js-utils';
-import { MånedFokusElement } from './Kalender';
+import { NavFocusElement } from './Kalender';
 
 export interface Props {
     defaultMonth: Date;
@@ -10,7 +10,7 @@ export interface Props {
     max?: Date;
     localeUtils: LocaleUtils;
     locale: string;
-    onChange: (mnd: Date, fokusElement: MånedFokusElement) => void;
+    onChange: (mnd: Date, fokusElement: NavFocusElement) => void;
 }
 
 interface MonthOption {

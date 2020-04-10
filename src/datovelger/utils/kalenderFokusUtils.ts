@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { MånedFokusElement } from '../kalender/Kalender';
+import { NavFocusElement } from '../kalender/Kalender';
 import { dagDatoNøkkel, getMånedDiff } from './';
 
 type RefHTMLElement = HTMLElement | null;
@@ -32,10 +32,7 @@ export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
     }
 };
 
-const getMånedFokusDomElement = (
-    kalender: RefHTMLElement,
-    fokusElement: MånedFokusElement
-): HTMLElement | undefined => {
+const getMånedFokusDomElement = (kalender: RefHTMLElement, fokusElement: NavFocusElement): HTMLElement | undefined => {
     let el: any;
     if (kalender) {
         switch (fokusElement) {
@@ -57,7 +54,7 @@ const getMånedFokusDomElement = (
     return undefined;
 };
 
-export const fokuserPåMåned = (kalender: RefHTMLElement, fokusElement: MånedFokusElement) => {
+export const fokuserPåMåned = (kalender: RefHTMLElement, fokusElement: NavFocusElement) => {
     if (kalender) {
         const el = getMånedFokusDomElement(kalender, fokusElement);
         if (el) {

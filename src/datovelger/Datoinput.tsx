@@ -22,7 +22,7 @@ const Datoinput = React.forwardRef(function Datoinput(
         onDateChange,
         onInputChange,
     }: DatoInputProps,
-    ref?: any
+    ref: React.Ref<HTMLInputElement>
 ) {
     const getInputValueToRender = (inputDateString: InputDateString): string => {
         return inputDateString === INVALID_DATE_VALUE ? '' : inputDateString;

@@ -21,14 +21,12 @@ export const dateToISODateString = (date: Date): ISODateString | INVALID_DATE =>
     return d.isValid() ? d.format(ISO_DATE_STRING_FORMAT) : d.toString();
 };
 
-export const getUTCDateFromISODateString = (isoDateString: ISODateString): Date | INVALID_DATE => {
-    const utcDateString = stringToUTCDate(isoDateString, ISO_DATE_STRING_FORMAT);
-    return utcDateString || INVALID_DATE_VALUE;
+export const ISODateStringToUTCDate = (isoDateString?: ISODateString): Date | undefined => {
+    return stringToUTCDate(isoDateString, ISO_DATE_STRING_FORMAT);
 };
 
-export const getUTCDateFromInputDateString = (inputDateString: InputDateString): Date | INVALID_DATE => {
-    const isoDateString = stringToUTCDate(inputDateString, INPUT_DATE_STRING_FORMAT);
-    return isoDateString || INVALID_DATE_VALUE;
+export const InputDateStringToUTCDate = (inputDateString?: InputDateString): Date | undefined => {
+    return stringToUTCDate(inputDateString, INPUT_DATE_STRING_FORMAT);
 };
 
 export const ISODateStringToInputDateString = (isoDateString: ISODateString): InputDateString | INVALID_DATE => {

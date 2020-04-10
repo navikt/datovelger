@@ -2,8 +2,8 @@ import {
     ISODateStringToInputDateString,
     InputDateStringToISODateString,
     INVALID_DATE_VALUE,
-    getUTCDateFromInputDateString,
-    getUTCDateFromISODateString,
+    InputDateStringToUTCDate,
+    ISODateStringToUTCDate,
 } from '../dateFormatUtils';
 
 describe('datoFormatUtils', () => {
@@ -32,25 +32,25 @@ describe('datoFormatUtils', () => {
             expect(InputDateStringToISODateString('1-2.42')).toEqual(INVALID_DATE_VALUE);
         });
     });
-    describe('getUTCDateFromInputDateString', () => {
+    describe('ISODateStringToUTCDate', () => {
         it('it get utc dates from inpuDateStrings', () => {
-            const date1 = getUTCDateFromInputDateString('01.01.2000') as Date;
+            const date1 = InputDateStringToUTCDate('01.01.2000') as Date;
             expect(date1.getDate()).toBe(1);
             expect(date1.getMonth()).toBe(0);
             expect(date1.getFullYear()).toBe(2000);
-            const date2 = getUTCDateFromInputDateString('31.12.2999') as Date;
+            const date2 = InputDateStringToUTCDate('31.12.2999') as Date;
             expect(date2.getDate()).toBe(31);
             expect(date2.getMonth()).toBe(11);
             expect(date2.getFullYear()).toBe(2999);
         });
     });
-    describe('getUTCDateFromInputDateString', () => {
-        it('it get utc dates from inpuDateStrings', () => {
-            const date1 = getUTCDateFromISODateString('2000-01-01') as Date;
+    describe('ISODateStringToUTCDate', () => {
+        it('it get utc dates from ISODateStrings', () => {
+            const date1 = ISODateStringToUTCDate('2000-01-01') as Date;
             expect(date1.getDate()).toBe(1);
             expect(date1.getMonth()).toBe(0);
             expect(date1.getFullYear()).toBe(2000);
-            const date2 = getUTCDateFromISODateString('2999-12-31') as Date;
+            const date2 = ISODateStringToUTCDate('2999-12-31') as Date;
             expect(date2.getDate()).toBe(31);
             expect(date2.getMonth()).toBe(11);
             expect(date2.getFullYear()).toBe(2999);
