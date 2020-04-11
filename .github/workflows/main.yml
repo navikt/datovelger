@@ -10,13 +10,6 @@ on:
       - "CODEOWNERS"
     branches:
 
-  pull_request:
-    paths-ignore:
-      - "**.md"
-      - ".gitignore"
-      - "LICENCE"
-      - "CODEOWNERS"
-    branches: [master]
 
 jobs:
     build:
