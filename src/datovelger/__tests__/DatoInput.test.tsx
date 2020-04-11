@@ -8,16 +8,17 @@ describe('DatoInput', () => {
     });
 
     it('Should be blank initially', () => {
-        const component = shallow(<Datoinput valgtDato={undefined} onDateChange={jest.fn()} />);
-        component.find('input').simulate('blur');
-        expect(component.find('input').prop('value')).toEqual('');
+        const wrapper = shallow(<Datoinput valgtDato={undefined} onDateChange={jest.fn()} />);
+        expect(wrapper.find('input').length).toEqual(1);
+        wrapper.find('input').simulate('blur', { target: { value: '' } });
+        expect(wrapper.find('input').prop('value')).toEqual('');
     });
 
     it('onDateChange should return ISO formatted valgtDato string', () => {
         const onDateChangeMock = jest.fn();
         const component = shallow(<Datoinput onDateChange={onDateChangeMock} />);
         component.find('input').simulate('change', { target: { value: '01.01.2019' } });
-        component.find('input').simulate('blur');
+        component.find('input').simulate('blur', { target: { value: '01.01.2019' } });
         expect(onDateChangeMock).toHaveBeenCalledWith('2019-01-01');
     });
 
@@ -40,7 +41,7 @@ describe('DatoInput', () => {
         const onDateChangeMock = jest.fn();
         const component = shallow(<Datoinput valgtDato={'40-30-2019'} onDateChange={onDateChangeMock} />);
         component.find('input').simulate('change', { target: { value: '30.02.2019' } });
-        component.find('input').simulate('blur');
+        component.find('input').simulate('blur', { target: { value: '30.02.2019' } });
         expect(onDateChangeMock).toHaveBeenCalledWith('Invalid date');
     });
 });

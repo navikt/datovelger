@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Knapp from 'nav-frontend-knapper';
 import Datovelger from '../../datovelger/Datovelger';
-import { Tidsperiode } from '../../datovelger/types';
-import { dateToISOFormattedDateString, getDateStringFromValue } from '../../datovelger/utils';
+import { Tidsperiode, ISODateString } from '../../datovelger/types';
 import Box from '../components/box/Box';
 
-interface Props {}
-
-const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
-    const [dato, setDato] = useState<string | undefined>('');
+const DatovelgerEksempel: React.FunctionComponent = () => {
+    const [dato, setDato] = useState<ISODateString | undefined>('');
     const takenRange: Tidsperiode = {
-        fom: dateToISOFormattedDateString(moment().subtract(1, 'week').toDate())!,
-        tom: dateToISOFormattedDateString(moment().subtract(1, 'day').toDate())!,
+        fom: '2020-04-10',
+        tom: '2020-04-11',
     };
 
     return (
@@ -29,6 +26,8 @@ const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
                     avgrensninger={{
                         helgedagerIkkeTillatt: false,
                         ugyldigeTidsperioder: [takenRange],
+                        minDato: '2020-04-03',
+                        maksDato: '2020-05-15',
                     }}
                 />
             </Box>
@@ -39,7 +38,6 @@ const DatovelgerEksempel: React.FunctionComponent<Props> = (props) => {
                 </Knapp>
                 <Knapp onClick={() => setDato(undefined)}>Fjern dato</Knapp>{' '}
             </Box>
-            {moment().locale('fr').toLocaleString()}
         </div>
     );
 };

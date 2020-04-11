@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ingress } from 'nav-frontend-typografi';
+import { Ingress, } from 'nav-frontend-typografi';
 import Box from './components/box/Box';
 import PageIntro from './components/page-intro/PageIntro';
 import DatovelgerEksempel from './eksempler/DatovelgerEksempel';
