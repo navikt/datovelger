@@ -43,24 +43,3 @@ jobs:
           run: |
             npm ci
             npm run test
-
-    # build-lib:
-    #     name: Build package
-    #     needs: build
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #       - name: build-lib-files
-    #         run: |
-    #           npm run build-lib
-
-    # release:
-    #     name: Release module
-    #     needs: build-lib
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #       - name: Release
-    #         env:
-    #           CI: true
-    #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #           NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
-    #         run: npx semantic-release
