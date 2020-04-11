@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FocusEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 export interface ContainerBlurEvent {
     source: 'esc' | 'blur';
@@ -8,100 +8,83 @@ export function contains(node: HTMLElement, child: Element) {
     return node === child || node.contains(child);
 }
 
-export interface Props extends React.Props<any> {
-    onKeyDown?: (evt: React.KeyboardEvent<any>) => void;
-    onBlur?: (evt: React.FocusEvent<any> | { source: string }) => void;
-    onFocus?: (evt: React.FocusEvent<any>) => void;
+export interface Props {
+    onKeyDown?: (evt: React.KeyboardEvent<HTMLDivElement>) => void;
+    onBlur?: (evt: React.FocusEvent<HTMLDivElement> | { source: string }) => void;
+    onFocus?: (evt: React.FocusEvent<HTMLDivElement>) => void;
     active?: boolean;
     className?: string;
     tabIndex?: number;
+    children: React.ReactNode;
 }
 
-class DomEventContainer extends React.Component<Props, {}> {
-    domElement: HTMLDivElement | null = null;
-    ignoreDocumentClick: boolean = false;
+const DomEventContainer = (props: Props) => {
+    const divRef = useRef<HTMLDivElement>(null);
+    const { active, onBlur, onKeyDown, onFocus, className, tabIndex, children } = props;
 
-    constructor(props: Props) {
-        super(props);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.startEventListening = this.startEventListening.bind(this);
-        this.stopEventListening = this.stopEventListening.bind(this);
-        this.handleDocumentKeyDown = this.handleDocumentKeyDown.bind(this);
-        this.handleInternalDocumentKeyDown = this.handleInternalDocumentKeyDown.bind(this);
-        if (props.active) {
-            this.startEventListening();
+    const [isActive, setIsActive] = useState<boolean>(active === true);
+
+    useEffect(() => {
+        const blur = (source: string) => {
+            if (onBlur) {
+                onBlur({
+                    source,
+                });
+            }
+        };
+        const handleDocumentKeyDown = (evt?: any) => {
+            if (evt && evt.keyCode === 27) {
+                blur('esc');
+            }
+        };
+        const startEventListening = () => {
+            window.addEventListener('keydown', handleDocumentKeyDown);
+        };
+
+        const stopEventListening = () => {
+            window.removeEventListener('keydown', handleDocumentKeyDown);
+        };
+        if (active !== isActive) {
+            if (active === true) {
+                startEventListening();
+                setIsActive(true);
+            } else {
+                stopEventListening();
+                setIsActive(false);
+            }
         }
-    }
+    }, [active, setIsActive, isActive, onBlur]);
 
-    componentWillReceiveProps(nextProps: Props) {
-        if (!this.props.active && nextProps.active) {
-            this.startEventListening();
-        } else {
-            this.stopEventListening();
-        }
-    }
-
-    componentWillUnmount() {
-        this.stopEventListening();
-    }
-
-    handleBlur(evt: React.FocusEvent<any>) {
-        const { domElement } = this;
-        if (!domElement) {
+    const handleOnBlur = () => {
+        const divContainer = divRef.current || null;
+        if (divContainer === null) {
             return;
         }
         setTimeout(() => {
             const activeElement = window.document.activeElement;
-            const isChildElement = activeElement ? contains(domElement, activeElement) : undefined;
-            if (!isChildElement) {
-                this.blur('blur');
+            const isChildElement = activeElement ? contains(divContainer, activeElement) : undefined;
+            if (!isChildElement && onBlur) {
+                onBlur({ source: 'blur' });
             }
         }, 0);
-    }
+    };
 
-    blur(source: string) {
-        if (this.props.onBlur) {
-            this.props.onBlur({
-                source
-            });
+    const handleOnInternalDocumentKeyDown = (evt: KeyboardEvent<any>) => {
+        if (onKeyDown) {
+            onKeyDown(evt);
         }
-    }
+    };
 
-    handleDocumentKeyDown(evt: KeyboardEvent) {
-        if (evt.keyCode === 27) {
-            this.blur('esc');
-        }
-    }
-
-    handleInternalDocumentKeyDown(evt: React.KeyboardEvent<any>) {
-        if (this.props.onKeyDown) {
-            this.props.onKeyDown(evt);
-        }
-    }
-
-    startEventListening() {
-        window.addEventListener('keydown', this.handleDocumentKeyDown);
-    }
-
-    stopEventListening() {
-        window.removeEventListener('keydown', this.handleDocumentKeyDown);
-    }
-
-    render() {
-        /** Fjerner props som ikke er gyldige på div */
-        const { active: deletedActive, onBlur: deletedOnBlur, children, ...propsRest } = this.props;
-
-        return (
-            <div
-                ref={(c) => (this.domElement = c)}
-                {...propsRest}
-                onBlur={this.handleBlur}
-                onKeyDown={this.handleInternalDocumentKeyDown}
-                tabIndex={this.props.tabIndex}>
-                {this.props.children}
-            </div>
-        );
-    }
-}
-
+    return (
+        <div
+            ref={divRef}
+            onBlur={handleOnBlur}
+            onKeyDown={handleOnInternalDocumentKeyDown}
+            onFocus={onFocus}
+            className={className}
+            tabIndex={tabIndex}>
+            {children}
+        </div>
+    );
+};
 export default DomEventContainer;

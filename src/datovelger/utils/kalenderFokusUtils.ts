@@ -1,29 +1,7 @@
-import moment from 'moment';
-import { MånedFokusElement } from '../kalender/Kalender';
-import { dagDatoNøkkel, getMånedDiff } from './';
+import { NavFocusElement } from '../kalender/Kalender';
+import { dagDatoNøkkel } from './';
 
 type RefHTMLElement = HTMLElement | null;
-
-export const getFokusertDato = (kalender: RefHTMLElement): Date | undefined => {
-    const { activeElement } = document;
-    if (kalender && activeElement) {
-        if (activeElement.classList.contains('DayPicker-Day')) {
-            const dagElement = activeElement.childNodes.item(0) as HTMLElement;
-            if (dagElement) {
-                const attr = dagElement.attributes.getNamedItem('data-date');
-                if (attr) {
-                    return moment(attr.value, 'DD.MM.YYYY').toDate();
-                }
-            }
-        }
-    }
-    return undefined;
-};
-
-export const getSammeDatoIMåned = (dato: Date, måned: Date, nesteMåned: Date): Date =>
-    moment(dato)
-        .add(getMånedDiff(nesteMåned, måned), 'months')
-        .toDate();
 
 export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
     if (kalender) {
@@ -34,10 +12,7 @@ export const fokuserPåDato = (kalender: RefHTMLElement, dato: Date) => {
     }
 };
 
-const getMånedFokusDomElement = (
-    kalender: RefHTMLElement,
-    fokusElement: MånedFokusElement
-): HTMLElement | undefined => {
+const getMånedFokusDomElement = (kalender: RefHTMLElement, fokusElement: NavFocusElement): HTMLElement | undefined => {
     let el: any;
     if (kalender) {
         switch (fokusElement) {
@@ -59,27 +34,11 @@ const getMånedFokusDomElement = (
     return undefined;
 };
 
-export const fokuserPåMåned = (kalender: RefHTMLElement, fokusElement: MånedFokusElement) => {
+export const fokuserPåMåned = (kalender: RefHTMLElement, fokusElement: NavFocusElement) => {
     if (kalender) {
         const el = getMånedFokusDomElement(kalender, fokusElement);
         if (el) {
             el.focus();
-        }
-    }
-};
-
-export const fokuserKalender = (kalender: RefHTMLElement) => {
-    if (kalender) {
-        const selectedDay = kalender.querySelector('.DayPicker-Day--selected') as HTMLElement;
-        const availableDay = kalender.querySelector(
-            '.DayPicker-Day[aria-disabled=false],.DayPicker-Day--today'
-        ) as HTMLElement;
-        if (selectedDay) {
-            selectedDay.focus();
-        } else if (availableDay) {
-            availableDay.focus();
-        } else {
-            kalender.focus();
         }
     }
 };

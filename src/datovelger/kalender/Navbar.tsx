@@ -4,12 +4,12 @@ import classnames from 'classnames';
 import moment from 'moment';
 import Chevron from '../elementer/ChevronSvg';
 import { Tekster } from '../tekster';
-import { MånedFokusElement } from './Kalender';
+import { NavFocusElement } from './Kalender';
 import YearSelector from './YearSelector';
 
 export interface Props {
     defaultMåned: Date;
-    byttMåned: (month: Date, fokusElement: MånedFokusElement) => void;
+    byttMåned: (month: Date, fokusElement: NavFocusElement) => void;
     byttÅr?: (month: Date) => void;
     min?: Date;
     maks?: Date;
@@ -22,20 +22,20 @@ export interface NavbarKnappProps {
     måned: Date;
     retning: 'forrige' | 'neste';
     disabled: boolean;
-    onClick: (evt: any, måned: Date, fokusElement: MånedFokusElement) => void;
+    onClick: (evt: any, måned: Date, fokusElement: NavFocusElement) => void;
 }
 
 class NavbarKnapp extends React.Component<NavbarKnappProps> {
     render() {
         const { måned, retning, disabled, onClick } = this.props;
-        const label = retning === 'forrige' ? Tekster.navbar_forrigeManed_label : Tekster.navbar_nesteManed_label;
+        const label = retning === 'forrige' ? Tekster.navbarForrigeMånedLabel : Tekster.navbarNesteMånedLabel;
 
         return (
             <button
                 type="button"
                 id={`kalender-navbarknapp-${retning}`}
                 className={classnames('nav-datovelger__navbar__knapp', `nav-datovelger__navbar__knapp--${retning}`, {
-                    'nav-datovelger__navbar__knapp--disabled': disabled
+                    'nav-datovelger__navbar__knapp--disabled': disabled,
                 })}
                 onClick={(e) => (disabled ? null : onClick(e, måned, retning))}
                 aria-label={label}
@@ -63,7 +63,7 @@ class Navbar extends React.Component<Props> {
 
         const nesteErDisabled = maks ? moment(maks).isBefore(nesteMåned.startOf('month')) : false;
 
-        const onClick = (evt: React.MouseEvent<HTMLButtonElement>, mnd: Date, fokusElement: MånedFokusElement) => {
+        const onClick = (evt: React.MouseEvent<HTMLButtonElement>, mnd: Date, fokusElement: NavFocusElement) => {
             evt.preventDefault();
             evt.stopPropagation();
             byttMåned(mnd, fokusElement);

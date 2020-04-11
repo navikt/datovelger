@@ -23,7 +23,7 @@ const Chevron = (props: Props) => {
     const rotation = getRotationTransform(props.retning);
     const style = rotation
         ? {
-              transform: rotation
+              transform: rotation,
           }
         : undefined;
     return (
