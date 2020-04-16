@@ -21,7 +21,7 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                     id="datovelger"
                     kalender={{ visUkenumre: true }}
                     visÅrVelger={true}
-                    locale={'fr'}
+                    locale={'nb'}
                     input={{ name: 'dato', id: 'ahl' }}
                     avgrensninger={{
                         helgedagerIkkeTillatt: false,

@@ -64,7 +64,7 @@ const Kalender = React.forwardRef(function Calendar(props: Props, ref: React.Ref
 
     const innstillinger: DayPickerProps = {
         locale,
-        localeUtils,
+        localeUtils: kalenderLocaleUtils,
         navbarElement: function navbarElement() {
             return <span />;
         },
@@ -100,7 +100,6 @@ const Kalender = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                 }}>
                 <DayPicker
                     locale={locale}
-                    localeUtils={localeUtils}
                     fromMonth={min ? ISODateStringToUTCDate(min) : undefined}
                     toMonth={maks ? ISODateStringToUTCDate(maks) : undefined}
                     month={displayMonth}
