@@ -35,7 +35,7 @@ export interface DatovelgerProps {
 }
 
 const Datovelger = ({
-    id,
+    id = guid(),
     avgrensninger,
     valgtDato,
     dayPickerProps,
@@ -51,7 +51,6 @@ const Datovelger = ({
 }: DatovelgerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
-    const defaultId = useRef(guid());
 
     const dateInput = useRef(null);
     const calendar = useRef(null);
@@ -61,8 +60,8 @@ const Datovelger = ({
     }, [valgtDato, avgrensninger, dayPickerProps]);
 
     const dateInputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
-        id: input?.id,
-        name: input?.name || `${id || defaultId}__input`,
+        id: input?.id || id,
+        name: input?.name || `${id}__input`,
         'aria-invalid': datoErGyldig,
         'aria-label': input?.ariaLabel,
         'aria-describedby': input?.ariaDescribedby,
