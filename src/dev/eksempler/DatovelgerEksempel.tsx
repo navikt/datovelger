@@ -15,6 +15,7 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
     return (
         <div>
             <Box>
+                <label htmlFor="datovelger-input">Velg dato</label>
                 <Datovelger
                     valgtDato={dato}
                     onChange={(d) => setDato(d)}
@@ -22,7 +23,7 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                     kalender={{ visUkenumre: true }}
                     visÅrVelger={true}
                     locale={'nb'}
-                    input={{ name: 'dato', id: 'ahl' }}
+                    input={{ name: 'dato', id: 'datovelger-input' }}
                     avgrensninger={{
                         helgedagerIkkeTillatt: false,
                         ugyldigeTidsperioder: [takenRange],
