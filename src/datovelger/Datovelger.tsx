@@ -7,7 +7,7 @@ import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
 import { DatovelgerAvgrensninger, ISODateString, KalenderPlassering } from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
-import {guid} from "nav-frontend-js-utils";
+import { guid } from 'nav-frontend-js-utils';
 import './styles/datovelger.less';
 
 export interface DatovelgerProps {
@@ -61,6 +61,7 @@ const Datovelger = ({
     }, [valgtDato, avgrensninger, dayPickerProps]);
 
     const dateInputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
+        id: input?.id,
         name: input?.name || `${id || defaultId}__input`,
         'aria-invalid': datoErGyldig,
         'aria-label': input?.ariaLabel,
