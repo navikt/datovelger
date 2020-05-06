@@ -7,6 +7,7 @@ import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormat
 import { fokuserPåMåned } from '../utils/kalenderFokusUtils';
 import kalenderLocaleUtils from './localeUtils';
 import Navbar from './Navbar';
+import ErrorBoundary from '../common/ErrorBoundary';
 
 export interface Props {
     måned: Date;
@@ -92,26 +93,28 @@ const Kalender = React.forwardRef(function Calendar(props: Props, ref: React.Ref
 
     return (
         <div ref={ref} role="dialog" aria-label="Kalender" className="nav-datovelger__kalender">
-            <FocusTrap
-                active={true}
-                focusTrapOptions={{
-                    clickOutsideDeactivates: true,
-                    onDeactivate: onLukk,
-                }}>
-                <DayPicker
-                    locale={locale}
-                    fromMonth={min ? ISODateStringToUTCDate(min) : undefined}
-                    toMonth={maks ? ISODateStringToUTCDate(maks) : undefined}
-                    month={displayMonth}
-                    canChangeMonth={false}
-                    selectedDays={dato ? ISODateStringToUTCDate(dato) : undefined}
-                    onDayClick={onSelectDate}
-                    onMonthChange={onChangeMonth}
-                    disabledDays={utilgjengeligeDager}
-                    {...innstillinger}
-                    {...dayPickerProps}
-                />
-            </FocusTrap>
+            <ErrorBoundary>
+                <FocusTrap
+                    active={true}
+                    focusTrapOptions={{
+                        clickOutsideDeactivates: true,
+                        onDeactivate: onLukk,
+                    }}>
+                    <DayPicker
+                        locale={locale}
+                        fromMonth={min ? ISODateStringToUTCDate(min) : undefined}
+                        toMonth={maks ? ISODateStringToUTCDate(maks) : undefined}
+                        month={displayMonth}
+                        canChangeMonth={false}
+                        selectedDays={dato ? ISODateStringToUTCDate(dato) : undefined}
+                        onDayClick={onSelectDate}
+                        onMonthChange={onChangeMonth}
+                        disabledDays={utilgjengeligeDager}
+                        {...innstillinger}
+                        {...dayPickerProps}
+                    />
+                </FocusTrap>
+            </ErrorBoundary>
         </div>
     );
 });
