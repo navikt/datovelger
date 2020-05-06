@@ -27,7 +27,7 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                     avgrensninger={{
                         helgedagerIkkeTillatt: false,
                         ugyldigeTidsperioder: [takenRange],
-                        minDato: '2020-04-03',
+                        minDato: '2000-04-03',
                         maksDato: '2020-05-15',
                     }}
                 />

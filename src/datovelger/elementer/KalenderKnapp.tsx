@@ -24,6 +24,7 @@ class KalenderKnapp extends React.Component<Props> {
                 type="button"
                 className="nav-datovelger__kalenderknapp"
                 onClick={(e) => {
+                    e.stopPropagation();
                     e.preventDefault();
                     onClick();
                 }}
