@@ -5,7 +5,7 @@ import Datoinput from './Datoinput';
 import KalenderKnapp from './elementer/KalenderKnapp';
 import KalenderPortal from './elementer/KalenderPortal';
 import Kalender from './kalender/Kalender';
-import { DatovelgerAvgrensninger, ISODateString, KalenderPlassering } from './types';
+import {DatovelgerAvgrensninger, InputDateString, ISODateString, KalenderPlassering} from './types';
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { guid } from 'nav-frontend-js-utils';
 import './styles/datovelger.less';
@@ -16,6 +16,7 @@ export interface DatovelgerProps {
     avgrensninger?: DatovelgerAvgrensninger;
     datoErGyldig?: boolean;
     onChange: (date?: ISODateString) => void;
+    onInputChange?: (value: InputDateString, evt: React.ChangeEvent<HTMLInputElement>) => void;
     kalender?: {
         visUkenumre?: boolean;
         plassering?: KalenderPlassering;
@@ -47,6 +48,7 @@ const Datovelger = ({
     datoErGyldig,
     kanVelgeUgyldigDato,
     onChange,
+    onInputChange,
     ...kalenderProps
 }: DatovelgerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
@@ -85,6 +87,7 @@ const Datovelger = ({
                         ref={dateInput}
                         valgtDato={valgtDato || ''}
                         onDateChange={setDate}
+                        onInputChange={onInputChange}
                         disabled={disabled}
                     />
                     <KalenderKnapp
