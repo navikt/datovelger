@@ -59,10 +59,12 @@ const Datovelger = ({
         setActiveMonth(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
     }, [valgtDato, avgrensninger, dayPickerProps]);
 
+    const datoErUgyldig = datoErGyldig === false;
+
     const dateInputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
         id: input?.id || id,
         name: input?.name || `${id}__input`,
-        'aria-invalid': datoErGyldig,
+        'aria-invalid': datoErUgyldig,
         'aria-label': input?.ariaLabel,
         'aria-describedby': input?.ariaDescribedby,
         placeholder: input?.placeholder,
@@ -86,6 +88,7 @@ const Datovelger = ({
                         valgtDato={valgtDato || ''}
                         onDateChange={setDate}
                         disabled={disabled}
+                        datoErUgyldig={datoErUgyldig}
                     />
                     <KalenderKnapp
                         disabled={disabled}

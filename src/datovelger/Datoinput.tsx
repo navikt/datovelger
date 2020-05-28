@@ -8,6 +8,7 @@ import {
 
 export interface DatoInputProps {
     valgtDato?: ISODateString;
+    datoErUgyldig?: boolean;
     onDateChange: (date: ISODateString | undefined) => void;
     inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
     onInputChange?: (value: InputDateString, evt: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,6 +20,7 @@ const Datoinput = React.forwardRef(function Datoinput(
         valgtDato = '',
         inputProps = { placeholder: 'dd.mm.åååå' },
         disabled,
+        datoErUgyldig,
         onDateChange,
         onInputChange,
     }: DatoInputProps,
@@ -73,7 +75,7 @@ const Datoinput = React.forwardRef(function Datoinput(
         <input
             {...{ placeholder: 'dd.mm.åååå', ...inputProps }}
             ref={ref}
-            className="nav-datovelger__input"
+            className={`nav-datovelger__input${datoErUgyldig ? ' skjemaelement__input--harFeil' : ''}`}
             disabled={disabled}
             autoComplete="off"
             autoCorrect="off"
