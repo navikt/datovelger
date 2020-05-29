@@ -7,6 +7,7 @@ import Box from '../components/box/Box';
 
 const DatovelgerEksempel: React.FunctionComponent = () => {
     const [dato, setDato] = useState<ISODateString | undefined>('');
+    const [strict, setStrict] = useState(false);
     const takenRange: Tidsperiode = {
         fom: '2020-04-10',
         tom: '2020-04-11',
@@ -20,6 +21,7 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                     valgtDato={dato}
                     onChange={(d) => setDato(d)}
                     id="datovelger"
+                    strictInputMode={strict}
                     kalender={{ visUkenumre: true }}
                     visÅrVelger={true}
                     locale={'nb'}
@@ -33,11 +35,13 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                 />
             </Box>
             <Box margin="l">Valgt dato: {dato}</Box>
+            <Box margin="l">Strict input mode: {strict.toString()}</Box>
             <Box margin="l">
                 <Knapp onClick={() => setDato(moment(new Date()).format(moment.HTML5_FMT.DATE))}>
                     Sett dagens dato
                 </Knapp>
                 <Knapp onClick={() => setDato(undefined)}>Fjern dato</Knapp>{' '}
+                <Knapp onClick={() => setStrict(!strict)}>Aktiver strict mode</Knapp>{' '}
             </Box>
         </div>
     );

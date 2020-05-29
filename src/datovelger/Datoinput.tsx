@@ -5,6 +5,7 @@ import {
     INVALID_DATE_VALUE,
     ISODateStringToInputDateString,
 } from './utils/dateFormatUtils';
+import {formatDateStringIfValid} from "./utils/strictInput";
 
 export interface DatoInputProps {
     valgtDato?: ISODateString;
@@ -35,26 +36,16 @@ const Datoinput = React.forwardRef(function Datoinput(
     }, [valgtDato]);
 
     const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
-        const value = evt.target.value;
+        const newValue = evt.target.value;
 
         if(!!strictInputMode){
-            const valueLength = value.length;
-            const lastChar = value[valueLength - 1];
-
-            if (valueLength === 0){
-                setValue(value);
-            }
-
-            else if(valueLength === 3 || valueLength === 6) {
-                setValue(value.slice(0, valueLength - 1) + '.');
-            }
-
-            else if (lastChar.match(/\d/)){
-                setValue(value)
+            const maybeNewValue = formatDateStringIfValid(newValue);
+            if (maybeNewValue !== undefined){
+                setValue(maybeNewValue);
             }
         }
         else {
-            setValue(value);
+            setValue(newValue);
         }
 
     };
