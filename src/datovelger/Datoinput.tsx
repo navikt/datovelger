@@ -10,8 +10,8 @@ export interface DatoInputProps {
     valgtDato?: ISODateString;
     onDateChange: (date: ISODateString | undefined) => void;
     inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
-    onInputChange?: (value: InputDateString, evt: React.ChangeEvent<HTMLInputElement>) => void;
     disabled?: boolean;
+    strictInputMode?: boolean;
 }
 
 const Datoinput = React.forwardRef(function Datoinput(
@@ -20,7 +20,7 @@ const Datoinput = React.forwardRef(function Datoinput(
         inputProps = { placeholder: 'dd.mm.åååå' },
         disabled,
         onDateChange,
-        onInputChange,
+        strictInputMode
     }: DatoInputProps,
     ref: React.Ref<HTMLInputElement>
 ) {
@@ -35,10 +35,28 @@ const Datoinput = React.forwardRef(function Datoinput(
     }, [valgtDato]);
 
     const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
-        setValue(evt.target.value);
-        if (onInputChange) {
-            onInputChange(evt.target.value, evt);
+        const value = evt.target.value;
+
+        if(!!strictInputMode){
+            const valueLength = value.length;
+            const lastChar = value[valueLength - 1];
+
+            if (valueLength === 0){
+                setValue(value);
+            }
+
+            else if(valueLength === 3 || valueLength === 6) {
+                setValue(value.slice(0, valueLength - 1) + '.');
+            }
+
+            else if (lastChar.match(/\d/)){
+                setValue(value)
+            }
         }
+        else {
+            setValue(value);
+        }
+
     };
 
     const triggerValueChange = (inputValue: string) => {
@@ -58,6 +76,7 @@ const Datoinput = React.forwardRef(function Datoinput(
             onDateChange(INVALID_DATE_VALUE);
         }
     };
+
     const onBlur = (evt: FocusEvent<HTMLInputElement>) => {
         triggerValueChange(evt.target.value);
     };

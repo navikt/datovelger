@@ -31,6 +31,7 @@ export interface DatovelgerProps {
         ariaDescribedby?: string;
     };
     visÅrVelger?: boolean;
+    strictInputMode?: boolean;
     dayPickerProps?: DayPickerProps;
 }
 
@@ -47,6 +48,7 @@ const Datovelger = ({
     datoErGyldig,
     kanVelgeUgyldigDato,
     onChange,
+    strictInputMode,
     ...kalenderProps
 }: DatovelgerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMåned(valgtDato, avgrensninger, dayPickerProps));
@@ -86,6 +88,7 @@ const Datovelger = ({
                         valgtDato={valgtDato || ''}
                         onDateChange={setDate}
                         disabled={disabled}
+                        strictInputMode={strictInputMode}
                     />
                     <KalenderKnapp
                         disabled={disabled}
