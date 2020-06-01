@@ -53,8 +53,8 @@ const Datoinput = React.forwardRef(function Datoinput(
         if (isoDateString !== INVALID_DATE_VALUE) {
             if (isoDateString !== valgtDato) {
                 onDateChange(isoDateString);
-                setValue(isoDateString);
             }
+            setValue(ISODateStringToInputDateString(isoDateString));
         } else {
             setValue('');
             onDateChange(INVALID_DATE_VALUE);
