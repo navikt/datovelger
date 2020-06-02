@@ -32,7 +32,7 @@ describe('Datovelger', () => {
         input.simulate('blur');
         expect(changeFunction.mock.calls.length).toBe(1);
         expect(changeFunction.mock.calls[0][0]).toEqual('2000-10-12');
-        expect(wrapper.find('input').prop('value')).toBe('2000-10-12');
+        expect(wrapper.find('input').prop('value')).toBe('12.10.2000');
     });
 
     it('Should set "Invalid date" when invalid date is typed into Datoinput ', () => {
