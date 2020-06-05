@@ -1,13 +1,13 @@
 import FocusTrap from 'focus-trap-react';
 import React, { MutableRefObject, useState } from 'react';
 import DayPicker, { DayModifiers, DayPickerProps, Modifier } from 'react-day-picker';
-import { LocaleUtils } from 'react-day-picker/types/utils';
+import { LocaleUtils } from 'react-day-picker';
+import ErrorBoundary from '../common/ErrorBoundary';
 import { ISODateString } from '../types';
 import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
 import { fokuserPåMåned } from '../utils/kalenderFokusUtils';
 import kalenderLocaleUtils from './localeUtils';
 import Navbar from './Navbar';
-import ErrorBoundary from '../common/ErrorBoundary';
 
 export interface Props {
     måned: Date;

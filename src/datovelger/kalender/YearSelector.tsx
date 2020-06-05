@@ -1,5 +1,5 @@
 import React from 'react';
-import { LocaleUtils } from 'react-day-picker/types/utils';
+import { LocaleUtils } from 'react-day-picker';
 import moment from 'moment';
 import { guid } from 'nav-frontend-js-utils';
 import { NavFocusElement } from './Kalender';

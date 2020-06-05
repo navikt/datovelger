@@ -1,4 +1,4 @@
-import { LocaleUtils } from 'react-day-picker/types/utils';
+import { LocaleUtils } from 'react-day-picker';
 import moment from 'moment';
 import { dateToInputDateString } from '../utils/dateFormatUtils';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LocaleUtils } from 'react-day-picker/types/utils';
+import { LocaleUtils } from 'react-day-picker';
 import classnames from 'classnames';
 import moment from 'moment';
 import Chevron from '../elementer/ChevronSvg';
