@@ -3,7 +3,7 @@ import { InputDateString, INVALID_DATE, ISODateString } from '../types';
 
 export const INVALID_DATE_VALUE = 'Invalid date';
 export const INPUT_DATE_STRING_FORMAT: InputDateString = 'DD.MM.YYYY';
-const ALLOWED_INPUT_FORMATS = [INPUT_DATE_STRING_FORMAT, 'DDMMYYYY', 'DD/MM/YYYY', 'DD-MM-YYYY'];
+const ALLOWED_INPUT_FORMATS = [INPUT_DATE_STRING_FORMAT, 'DDMMYYYY', 'DD/MM/YYYY', 'DD-MM-YYYY', 'DDMMYY', 'D.M.YY'];
 export const ISO_DATE_STRING_FORMAT: ISODateString = moment.HTML5_FMT.DATE;
 
 const stringToUTCDate = (dateString: string | undefined, format: string): Date | undefined => {
