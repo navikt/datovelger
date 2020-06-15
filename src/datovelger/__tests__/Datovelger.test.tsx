@@ -64,14 +64,14 @@ describe('Datovelger', () => {
                 input={{ id: 'abc', name: 'sdf' }}
                 id={'1'}
                 onChange={changeFunction}
-                valgtDato={'2000-01-01'}
+                valgtDato={'2020-06-20'}
             />
         );
         const button = wrapper.find('KalenderKnapp');
         button.simulate('click');
-        const day = wrapper.find('Day[empty=false]').at(3);
+        const day = wrapper.find('[empty=false]').at(3);
         day.simulate('click');
         expect(changeFunction.mock.calls.length).toBe(1);
-        expect(changeFunction.mock.calls[0][0]).toEqual('2000-01-04');
+        expect(changeFunction.mock.calls[0][0]).toEqual('2020-06-04');
     });
 });
