@@ -9,6 +9,7 @@ import { DatovelgerAvgrensninger, ISODateString, KalenderPlassering } from './ty
 import { getDefaultMåned, getUtilgjengeligeDager } from './utils';
 import { guid } from 'nav-frontend-js-utils';
 import './styles/datovelger.less';
+import { isISODateString } from './types/typeGuards';
 
 export interface DatovelgerProps {
     id?: string;
@@ -72,7 +73,7 @@ const Datovelger = ({
 
     const setDate = (dateString: ISODateString | undefined, closeCalender?: boolean) => {
         setCalendarIsVisible(false);
-        onChange(dateString);
+        onChange(isISODateString(dateString) ? dateString : undefined);
         if (closeCalender) {
             setCalendarIsVisible(false);
         }

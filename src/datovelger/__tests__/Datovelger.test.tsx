@@ -42,7 +42,7 @@ describe('Datovelger', () => {
         input.simulate('change', { target: { value: '1210.2000' } });
         input.simulate('blur');
         expect(changeFunction.mock.calls.length).toBe(1);
-        expect(changeFunction.mock.calls[0][0]).toEqual('Invalid date');
+        expect(changeFunction.mock.calls[0][0]).toEqual(undefined);
         expect(wrapper.find('input').prop('value')).toBe('');
     });
 
