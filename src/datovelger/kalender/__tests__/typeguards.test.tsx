@@ -1,15 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Kalender from '../Kalender';
 import { isISODateString } from '../../types/typeGuards';
-
-describe('Kalender', () => {
-    it('Should be defined', () => {
-        expect(
-            shallow(<Kalender onLukk={jest.fn()} onVelgDag={jest.fn()} locale={'nb'} måned={new Date()} />)
-        ).toBeDefined();
-    });
-});
 
 describe('Test of isISODateString typeguard', () => {
     it('test1 - is of type ISODate string', () => {
