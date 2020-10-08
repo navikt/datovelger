@@ -30,6 +30,7 @@ export interface DatovelgerProps {
         ariaLabel?: string;
         placeholder?: string;
         ariaDescribedby?: string;
+        inputRef?: React.Ref<HTMLInputElement>;
     };
     visÅrVelger?: boolean;
     dayPickerProps?: DayPickerProps;
@@ -85,7 +86,7 @@ const Datovelger = ({
                 <div className="nav-datovelger__inputContainer">
                     <Datoinput
                         inputProps={dateInputProps}
-                        ref={dateInput}
+                        ref={input?.inputRef || dateInput}
                         valgtDato={valgtDato || ''}
                         onDateChange={setDate}
                         disabled={disabled}
