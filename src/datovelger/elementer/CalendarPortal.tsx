@@ -1,14 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
-import { KalenderPlassering } from '../types';
+import { CalendarPlacement } from '../types';
 
 export interface Props {
-    plassering?: KalenderPlassering;
+    plassering?: CalendarPlacement;
 }
 
-class KalenderPortal extends React.Component<Props, {}> {
+class CalendarPortal extends React.Component<Props> {
     render() {
-        const { children, plassering } = this.props;
+        const { children, plassering = 'responsive' } = this.props;
         return (
             <div
                 className={classnames(
@@ -20,4 +20,4 @@ class KalenderPortal extends React.Component<Props, {}> {
         );
     }
 }
-export default KalenderPortal;
+export default CalendarPortal;

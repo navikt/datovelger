@@ -1,14 +1,14 @@
 import React from 'react';
-import { Tekster } from '../tekster';
-import KalenderIkon from './KalenderIkon';
+import { Texts } from '../texts';
+import CalendarIcon from './CalendarIcon';
 
 export interface Props {
     onClick: () => void;
     disabled?: boolean;
-    erÅpen: boolean;
+    isOpen: boolean;
 }
 
-class KalenderKnapp extends React.Component<Props> {
+class CalendarButton extends React.Component<Props> {
     button: HTMLButtonElement | null = null;
     focus() {
         if (this.button) {
@@ -16,7 +16,7 @@ class KalenderKnapp extends React.Component<Props> {
         }
     }
     render() {
-        const { onClick, erÅpen, disabled } = this.props;
+        const { onClick, isOpen, disabled } = this.props;
 
         return (
             <button
@@ -29,11 +29,11 @@ class KalenderKnapp extends React.Component<Props> {
                     onClick();
                 }}
                 disabled={disabled}
-                aria-label={Tekster.kalenderLabel}
-                aria-expanded={erÅpen}>
-                <KalenderIkon />
+                aria-label={Texts.calendarLabel}
+                aria-expanded={isOpen}>
+                <CalendarIcon />
             </button>
         );
     }
 }
-export default KalenderKnapp;
+export default CalendarButton;

@@ -77,6 +77,7 @@ const DomEventContainer = (props: Props) => {
 
     return (
         <div
+            role="presentation"
             ref={divRef}
             onBlur={handleOnBlur}
             onKeyDown={handleOnInternalDocumentKeyDown}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FocusEvent, InputHTMLAttributes, useEffect, useState } from 'react';
 import { InputDateString, ISODateString } from './types';
 import {
     InputDateStringToISODateString,
@@ -6,24 +6,28 @@ import {
     ISODateStringToInputDateString,
 } from './utils/dateFormatUtils';
 
-export interface DatoInputProps {
-    valgtDato?: ISODateString;
-    datoErUgyldig?: boolean;
+export type DatepickerInputProps = Pick<
+    InputHTMLAttributes<HTMLInputElement>,
+    'name' | 'aria-invalid' | 'aria-label' | 'aria-describedby' | 'placeholder' | 'disabled'
+>;
+
+interface Props {
+    id?: string;
+    value?: ISODateString;
     onDateChange: (date: ISODateString | undefined) => void;
-    inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
+    inputProps?: DatepickerInputProps;
     onInputChange?: (value: InputDateString, evt: React.ChangeEvent<HTMLInputElement>) => void;
-    disabled?: boolean;
+    showInvalidFormattedDate?: boolean;
 }
 
-const Datoinput = React.forwardRef(function Datoinput(
-    {
-        valgtDato = '',
-        inputProps = { placeholder: 'dd.mm.åååå' },
-        disabled,
-        datoErUgyldig,
-        onDateChange,
-        onInputChange,
-    }: DatoInputProps,
+// enum DATE_VALUE_STATE {
+//     'VALID' = 'valid',
+//     'INVALID' = 'invalid',
+//     'UNDEFINED' = 'undefined',
+// }
+
+const DateInput = React.forwardRef(function Datoinput(
+    { id, value: valgtDato = '', inputProps = { placeholder: 'dd.mm.åååå' }, onDateChange, onInputChange }: Props,
     ref: React.Ref<HTMLInputElement>
 ) {
     const getInputValueToRender = (inputDateString: InputDateString): string => {
@@ -37,9 +41,10 @@ const Datoinput = React.forwardRef(function Datoinput(
     }, [valgtDato]);
 
     const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
-        setValue(evt.target.value);
+        const inputValue = evt.target.value;
+        setValue(inputValue);
         if (onInputChange) {
-            onInputChange(evt.target.value, evt);
+            onInputChange(inputValue, evt);
         }
     };
 
@@ -60,6 +65,7 @@ const Datoinput = React.forwardRef(function Datoinput(
             onDateChange(INVALID_DATE_VALUE);
         }
     };
+
     const onBlur = (evt: FocusEvent<HTMLInputElement>) => {
         triggerValueChange(evt.target.value);
     };
@@ -73,10 +79,13 @@ const Datoinput = React.forwardRef(function Datoinput(
 
     return (
         <input
+            id={id}
             {...{ placeholder: 'dd.mm.åååå', ...inputProps }}
             ref={ref}
-            className={`nav-datovelger__input${datoErUgyldig ? ' skjemaelement__input--harFeil' : ''}`}
-            disabled={disabled}
+            className={`nav-datovelger__input${
+                inputProps['aria-invalid'] === true ? ' skjemaelement__input--harFeil' : ''
+            }`}
+            disabled={inputProps?.disabled}
             autoComplete="off"
             autoCorrect="off"
             pattern="\d{2}.\d{2}.\d{4}"
@@ -90,4 +99,4 @@ const Datoinput = React.forwardRef(function Datoinput(
         />
     );
 });
-export default Datoinput;
+export default DateInput;

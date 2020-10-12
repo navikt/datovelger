@@ -3,8 +3,9 @@ import { InputDateString, INVALID_DATE, ISODateString } from '../types';
 
 export const INVALID_DATE_VALUE = 'Invalid date';
 export const INPUT_DATE_STRING_FORMAT: InputDateString = 'DD.MM.YYYY';
-const ALLOWED_INPUT_FORMATS = [INPUT_DATE_STRING_FORMAT, 'DDMMYYYY', 'DD/MM/YYYY', 'DD-MM-YYYY', 'DDMMYY', 'D.M.YY'];
 export const ISO_DATE_STRING_FORMAT: ISODateString = moment.HTML5_FMT.DATE;
+
+const ALLOWED_INPUT_FORMATS = [INPUT_DATE_STRING_FORMAT, 'DDMMYYYY', 'DD/MM/YYYY', 'DD-MM-YYYY', 'DDMMYY', 'D.M.YY'];
 
 const stringToUTCDate = (dateString: string | undefined, format: string): Date | undefined => {
     if (dateString !== undefined && dateString.trim().length === 10) {
@@ -13,6 +14,8 @@ const stringToUTCDate = (dateString: string | undefined, format: string): Date |
     }
     return undefined;
 };
+
+export const isInvalidDateValue = (value: string): boolean => value === INVALID_DATE_VALUE;
 
 export const dateToInputDateString = (date?: Date): InputDateString | INVALID_DATE =>
     date ? moment.utc(date).format(INPUT_DATE_STRING_FORMAT) : INVALID_DATE_VALUE;

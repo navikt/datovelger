@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Kalender from '../Kalender';
+import Calendar from '../Calendar';
 
 describe('Kalender', () => {
     it('Should be defined', () => {
         expect(
-            shallow(<Kalender onLukk={jest.fn()} onVelgDag={jest.fn()} locale={'nb'} måned={new Date()} />)
+            shallow(<Calendar onClose={jest.fn()} onSelect={jest.fn()} locale={'nb'} month={new Date()} />)
         ).toBeDefined();
     });
 });

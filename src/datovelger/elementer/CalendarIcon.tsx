@@ -1,11 +1,10 @@
 import React from 'react';
 
-const KalenderIkon = (props: {}) => (
+const CalendarIcon = () => (
     <svg
         height={16}
         width={16}
         viewBox="0 0 18 18"
-        {...props}
         role="presentation"
         aria-hidden="true"
         focusable={false}
@@ -18,4 +17,4 @@ const KalenderIkon = (props: {}) => (
     </svg>
 );
 
-export default KalenderIkon;
+export default CalendarIcon;

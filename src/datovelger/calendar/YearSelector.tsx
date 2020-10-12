@@ -2,25 +2,30 @@ import React from 'react';
 import { LocaleUtils } from 'react-day-picker';
 import moment from 'moment';
 import { guid } from 'nav-frontend-js-utils';
-import { NavFocusElement } from './Kalender';
+import { NavigationFocusElement } from './Calendar';
 
 export interface Props {
     defaultMonth: Date;
-    min?: Date;
-    max?: Date;
+    minDate?: Date;
+    maxDate?: Date;
     localeUtils: LocaleUtils;
     locale: string;
-    onChange: (mnd: Date, fokusElement: NavFocusElement) => void;
+    onChange: (mnd: Date, fokusElement: NavigationFocusElement) => void;
 }
 
 interface MonthOption {
     value: number;
     label: string;
 }
-const getAvailableMonths = (monthNames: string[], defaultMonth: Date, min?: Date, maks?: Date): MonthOption[] => {
+const getAvailableMonths = (
+    monthNames: string[],
+    defaultMonth: Date,
+    minDate?: Date,
+    maxDate?: Date
+): MonthOption[] => {
     const options: MonthOption[] = [];
-    const from = min && defaultMonth.getFullYear() === min.getFullYear() ? min.getMonth() : 0;
-    const to = maks && defaultMonth.getFullYear() === maks.getFullYear() ? maks.getMonth() : 11;
+    const from = minDate && defaultMonth.getFullYear() === minDate.getFullYear() ? minDate.getMonth() : 0;
+    const to = maxDate && defaultMonth.getFullYear() === maxDate.getFullYear() ? maxDate.getMonth() : 11;
     let m = from;
     while (m <= to) {
         options.push({
@@ -32,7 +37,7 @@ const getAvailableMonths = (monthNames: string[], defaultMonth: Date, min?: Date
     return options;
 };
 
-class YearSelector extends React.Component<Props, {}> {
+class YearSelector extends React.Component<Props> {
     yearSelect: HTMLSelectElement | null = null;
     monthSelect: HTMLSelectElement | null = null;
 
@@ -48,38 +53,38 @@ class YearSelector extends React.Component<Props, {}> {
         if (this.yearSelect) {
             return parseInt(this.yearSelect.value, 10);
         }
-        return (this.props.min || this.props.max || new Date()).getFullYear();
+        return (this.props.minDate || this.props.maxDate || new Date()).getFullYear();
     }
 
     getMonth(): number {
         if (this.monthSelect) {
             return parseInt(this.monthSelect.value, 10);
         }
-        return (this.props.min || this.props.max || new Date()).getMonth();
+        return (this.props.minDate || this.props.maxDate || new Date()).getMonth();
     }
 
     onChange() {
-        this.props.onChange(new Date(this.getYear(), this.getMonth()), 'mnd');
+        this.props.onChange(new Date(this.getYear(), this.getMonth()), 'month');
     }
 
     onYearChange() {
         const year = parseInt(this.yearSelect?.value || '', 10);
         const month = parseInt(this.monthSelect?.value || '', 10);
         const newDate = new Date(year, month);
-        if (this.props.min && moment(newDate).isBefore(this.props.min)) {
-            this.props.onChange(this.props.min, 'aar');
-        } else if (this.props.max && moment(newDate).isAfter(this.props.max)) {
-            this.props.onChange(this.props.max, 'aar');
+        if (this.props.minDate && moment(newDate).isBefore(this.props.minDate)) {
+            this.props.onChange(this.props.minDate, 'year');
+        } else if (this.props.maxDate && moment(newDate).isAfter(this.props.maxDate)) {
+            this.props.onChange(this.props.maxDate, 'year');
         } else {
-            this.props.onChange(newDate, 'aar');
+            this.props.onChange(newDate, 'year');
         }
     }
 
     render() {
         const {
             defaultMonth,
-            min = new Date(1900, 0, 1),
-            max = moment().add(4, 'years').toDate(),
+            minDate: min = new Date(1900, 0, 1),
+            maxDate: max = moment().add(4, 'years').toDate(),
             localeUtils,
             locale,
         } = this.props;
@@ -108,7 +113,7 @@ class YearSelector extends React.Component<Props, {}> {
                             ref={(c) => (this.yearSelect = c)}
                             className="skjemaelement__input skjemaelement__input--year"
                             name="year"
-                            onChange={this.onYearChange}
+                            onBlur={this.onYearChange}
                             value={defaultMonth.getFullYear()}>
                             {years.map((year) => (
                                 <option key={year} value={year}>
@@ -127,7 +132,7 @@ class YearSelector extends React.Component<Props, {}> {
                         ref={(c) => (this.monthSelect = c)}
                         className="skjemaelement__input"
                         name="month"
-                        onChange={this.onChange}
+                        onBlur={this.onChange}
                         value={defaultMonth.getMonth()}>
                         {monthOptions.map((m) => (
                             <option key={m.value} value={m.value}>

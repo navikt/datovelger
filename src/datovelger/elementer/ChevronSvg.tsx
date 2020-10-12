@@ -3,7 +3,7 @@ import React from 'react';
 export type ChevronRetning = 'opp' | 'ned' | 'høyre' | 'venstre';
 
 export interface Props {
-    retning?: ChevronRetning;
+    direction?: ChevronRetning;
 }
 
 const getRotationTransform = (retning?: ChevronRetning): string | undefined => {
@@ -20,7 +20,7 @@ const getRotationTransform = (retning?: ChevronRetning): string | undefined => {
 };
 
 const Chevron = (props: Props) => {
-    const rotation = getRotationTransform(props.retning);
+    const rotation = getRotationTransform(props.direction);
     const style = rotation
         ? {
               transform: rotation,

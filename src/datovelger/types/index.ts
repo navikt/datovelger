@@ -12,11 +12,11 @@ export interface Tidsperiode {
     tom: ISODateString;
 }
 
-export interface DatovelgerAvgrensninger {
-    minDato?: ISODateString;
-    maksDato?: ISODateString;
-    ugyldigeTidsperioder?: Tidsperiode[];
-    helgedagerIkkeTillatt?: boolean;
+export interface DatepickerLimitations {
+    minDate?: ISODateString;
+    maxDate?: ISODateString;
+    invalidDateRanges?: Tidsperiode[];
+    weekendsNotSelectable?: boolean;
 }
 
-export type KalenderPlassering = 'under' | 'fullskjerm' | '' | 'responsive';
+export type CalendarPlacement = 'under' | 'fullskjerm' | '' | 'responsive';
