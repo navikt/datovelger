@@ -7,15 +7,15 @@ import {
     RangeModifier,
 } from 'react-day-picker';
 import moment from 'moment';
-import { DatovelgerAvgrensninger } from '../types';
+import { DatepickerLimitations } from '../types';
 import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT, ISODateStringToUTCDate } from './dateFormatUtils';
 
-export const dagDatoNøkkel = (dato: Date) => moment(dato).format(INPUT_DATE_STRING_FORMAT);
+export const dayDateKey = (dato: Date) => moment(dato).format(INPUT_DATE_STRING_FORMAT);
 
-export const getUtilgjengeligeDager = (avgrensninger: DatovelgerAvgrensninger): Modifier[] => {
-    let ugyldigeDager: Modifier[] = [];
-    if (avgrensninger.ugyldigeTidsperioder) {
-        ugyldigeDager = avgrensninger.ugyldigeTidsperioder
+export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] => {
+    let invalidDates: Modifier[] = [];
+    if (limitations.invalidDateRanges) {
+        invalidDates = limitations.invalidDateRanges
             .map((t): RangeModifier | undefined => {
                 const from = ISODateStringToUTCDate(t.fom);
                 const to = ISODateStringToUTCDate(t.tom);
@@ -29,38 +29,40 @@ export const getUtilgjengeligeDager = (avgrensninger: DatovelgerAvgrensninger): 
             })
             .filter((t) => t !== undefined);
     }
-    const minDato = avgrensninger.minDato;
-    const maksDato = avgrensninger.maksDato;
-    const helgedager = {
-        daysOfWeek: avgrensninger.helgedagerIkkeTillatt ? [0, 6] : [],
+    const minDate = limitations.minDate;
+    const maxDate = limitations.maxDate;
+    const weekendDays = {
+        daysOfWeek: limitations.weekendsNotSelectable ? [0, 6] : [],
     };
     return [
-        ...ugyldigeDager,
-        ...(maksDato ? [{ after: moment(maksDato, ISO_DATE_STRING_FORMAT).toDate() } as AfterModifier] : []),
-        ...(minDato ? [{ before: moment(minDato, ISO_DATE_STRING_FORMAT).toDate() } as BeforeModifier] : []),
-        ...[helgedager as DaysOfWeekModifier],
+        ...invalidDates,
+        ...(maxDate ? [{ after: moment(maxDate, ISO_DATE_STRING_FORMAT).toDate() } as AfterModifier] : []),
+        ...(minDate ? [{ before: moment(minDate, ISO_DATE_STRING_FORMAT).toDate() } as BeforeModifier] : []),
+        ...[weekendDays as DaysOfWeekModifier],
     ];
 };
 
-export const getDefaultMåned = (
-    dato: string | undefined,
-    avgrensninger: DatovelgerAvgrensninger | undefined,
+export const isSameDate = (d1: Date, d2: Date) => {
+    return moment(d1).isSame(d2, 'day');
+};
+
+export const getDefaultMonth = (
+    dateString: string | undefined,
+    limitations: DatepickerLimitations | undefined,
     dayPickerProps: DayPickerProps | undefined
 ): Date => {
-    const d = moment.utc(dato, ISO_DATE_STRING_FORMAT, true);
-    if (dato && d.isValid()) {
+    const d = moment.utc(dateString, ISO_DATE_STRING_FORMAT, true);
+    if (dateString && d.isValid()) {
         return d.toDate();
     }
-
     if (dayPickerProps && dayPickerProps.initialMonth) {
         return dayPickerProps.initialMonth;
     }
-
-    const idag = moment().toDate();
-    if (avgrensninger && avgrensninger.minDato) {
-        return moment(avgrensninger.minDato).isAfter(idag)
-            ? moment(avgrensninger.minDato, ISO_DATE_STRING_FORMAT).toDate()
-            : idag;
+    const today = moment().toDate();
+    if (limitations && limitations.minDate) {
+        return moment(limitations.minDate).isAfter(today)
+            ? moment(limitations.minDate, ISO_DATE_STRING_FORMAT).toDate()
+            : today;
     }
-    return idag;
+    return today;
 };

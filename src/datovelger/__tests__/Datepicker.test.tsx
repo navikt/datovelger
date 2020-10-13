@@ -1,32 +1,34 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import Datovelger from '../Datovelger';
+import Datepicker from '../Datepicker';
 
 describe('Datovelger', () => {
     it('Should be defined', () => {
         expect(
-            shallow(<Datovelger input={{ onChange: jest.fn() } as any} id={'1'} onChange={jest.fn()} />)
+            shallow(<Datepicker inputProps={{ onChange: jest.fn() } as any} inputId={'inputId'} onChange={jest.fn()} />)
         ).toBeDefined();
     });
 
     it('Should render Datoinput and KalenderKnapp', () => {
-        const wrapper = shallow(<Datovelger input={{ id: 'abc', name: 'sdf' }} id={'1'} onChange={jest.fn()} />);
+        const wrapper = shallow(<Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={jest.fn()} />);
         const input = wrapper.find('ForwardRef(Datoinput)');
-        const button = wrapper.find('KalenderKnapp');
+        const button = wrapper.find('CalendarButton');
         expect(input.length).toBe(1);
         expect(button.length).toBe(1);
     });
 
     it('Should show calendar when KalenderKnapp clicked', () => {
-        const wrapper = shallow(<Datovelger input={{ id: 'abc', name: 'sdf' }} id={'1'} onChange={jest.fn()} />);
-        const button = wrapper.find('KalenderKnapp');
+        const wrapper = shallow(<Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={jest.fn()} />);
+        const button = wrapper.find('CalendarButton');
         button.simulate('click');
-        expect(wrapper.find('KalenderPortal').length).toBe(1);
+        expect(wrapper.find('CalendarPortal').length).toBe(1);
     });
 
     it('Should set new date when typed into Datoinput ', () => {
         const changeFunction = jest.fn();
-        const wrapper = mount(<Datovelger input={{ id: 'abc', name: 'abc' }} id={'1'} onChange={changeFunction} />);
+        const wrapper = mount(
+            <Datepicker inputProps={{ name: 'abc' }} inputId={'inputId'} onChange={changeFunction} />
+        );
         const input = wrapper.find('ForwardRef(Datoinput)');
         input.simulate('change', { target: { name: 'abc', value: '12.10.2000' } });
         input.simulate('blur');
@@ -37,7 +39,9 @@ describe('Datovelger', () => {
 
     it('Should set "Invalid date" when invalid date is typed into Datoinput ', () => {
         const changeFunction = jest.fn();
-        const wrapper = mount(<Datovelger input={{ id: 'abc', name: 'sdf' }} id={'1'} onChange={changeFunction} />);
+        const wrapper = mount(
+            <Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
+        );
         const input = wrapper.find('ForwardRef(Datoinput)');
         input.simulate('change', { target: { value: '1210.2000' } });
         input.simulate('blur');
@@ -48,7 +52,9 @@ describe('Datovelger', () => {
 
     it('Should trigger onChange with undefined when empty string typed into Datoinput ', () => {
         const changeFunction = jest.fn();
-        const wrapper = mount(<Datovelger input={{ id: 'abc', name: 'sdf' }} id={'1'} onChange={changeFunction} />);
+        const wrapper = mount(
+            <Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
+        );
         const input = wrapper.find('ForwardRef(Datoinput)');
         input.simulate('change', { target: { value: '' } });
         input.simulate('blur');
@@ -60,14 +66,14 @@ describe('Datovelger', () => {
     it('Should set correct date when date chosen from calendar', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
-            <Datovelger
-                input={{ id: 'abc', name: 'sdf' }}
-                id={'1'}
+            <Datepicker
+                inputProps={{ name: 'sdf' }}
+                inputId={'inputId'}
                 onChange={changeFunction}
-                valgtDato={'2020-06-20'}
+                value={'2020-06-20'}
             />
         );
-        const button = wrapper.find('KalenderKnapp');
+        const button = wrapper.find('CalendarButton');
         button.simulate('click');
         const day = wrapper.find('[empty=false]').at(3);
         day.simulate('click');

@@ -1,6 +1,6 @@
 import { LocaleUtils } from 'react-day-picker';
 import moment from 'moment';
-import { dateToInputDateString } from '../utils/dateFormatUtils';
+import { dateToInputDateString } from './dateFormatUtils';
 
 function formatDay(day: Date, locale = 'en') {
     return moment(day).locale(locale).format('DD.MM.YYYY, dddd');
