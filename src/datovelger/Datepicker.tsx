@@ -46,7 +46,6 @@ const Datepicker = ({
     showInvalidFormattedDate,
     onChange,
     dayPickerProps,
-    ...kalenderProps
 }: DatepickerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMonth(value, limitations, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
@@ -66,7 +65,7 @@ const Datepicker = ({
 
     const setDate = (dateString: DatepickerValue | undefined) => {
         setCalendarIsVisible(false);
-        onChange(isISODateString(dateString) ? dateString : INVALID_DATE_VALUE);
+        onChange(isISODateString(dateString) ? dateString : showInvalidFormattedDate ? INVALID_DATE_VALUE : undefined);
     };
 
     return (
@@ -91,7 +90,7 @@ const Datepicker = ({
                     <CalendarPortal plassering={calendarSettings?.position}>
                         <Calendar
                             ref={calendar}
-                            {...kalenderProps}
+                            showWeekNumbers={calendarSettings?.showWeekNumbers}
                             locale={locale}
                             dateString={value}
                             month={activeMonth}

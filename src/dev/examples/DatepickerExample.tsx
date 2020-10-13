@@ -5,8 +5,8 @@ import Datepicker, { DatepickerValue } from '../../datovelger/Datepicker';
 import { Tidsperiode } from '../../datovelger/types';
 import Box from '../components/box/Box';
 
-const DatovelgerEksempel: React.FunctionComponent = () => {
-    const [dato, setDato] = useState<DatepickerValue>('');
+const DatepickerExample: React.FunctionComponent = () => {
+    const [date, setDate] = useState<DatepickerValue>('');
 
     const takenRange: Tidsperiode = {
         fom: '2020-04-10',
@@ -16,19 +16,16 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
     return (
         <div>
             <Box>
-                <label htmlFor="datovelger-input">Velg dato</label>
+                <label htmlFor="datovelger-input">Choose date</label>
                 <Datepicker
                     inputId="datovelger-input"
-                    value={dato}
-                    onChange={(d) => {
-                        console.log('new date: ', d);
-                        setDato(d);
-                    }}
+                    value={date}
+                    onChange={setDate}
                     calendarSettings={{ showWeekNumbers: true }}
                     showYearSelector={true}
                     locale={'nb'}
                     inputProps={{ name: 'dato' }}
-                    showInvalidFormattedDate={true}
+                    showInvalidFormattedDate={false}
                     limitations={{
                         weekendsNotSelectable: false,
                         invalidDateRanges: [takenRange],
@@ -37,14 +34,12 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                     }}
                 />
             </Box>
-            <Box margin="l">Valgt dato: {dato}</Box>
+            <Box margin="l">Chosen date: {date}</Box>
             <Box margin="l">
-                <Knapp onClick={() => setDato(moment(new Date()).format(moment.HTML5_FMT.DATE))}>
-                    Sett dagens dato
-                </Knapp>
-                <Knapp onClick={() => setDato('')}>Fjern dato</Knapp>{' '}
+                <Knapp onClick={() => setDate(moment(new Date()).format(moment.HTML5_FMT.DATE))}>Choose today</Knapp>-
+                <Knapp onClick={() => setDate('')}>Unselect date</Knapp>
             </Box>
         </div>
     );
 };
-export default DatovelgerEksempel;
+export default DatepickerExample;

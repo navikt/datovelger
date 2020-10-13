@@ -86,7 +86,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
             );
         },
         firstDayOfWeek: 1,
-        showWeekNumbers: showWeekNumbers,
+        showWeekNumbers,
     };
 
     return (
