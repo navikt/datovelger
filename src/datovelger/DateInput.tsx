@@ -61,10 +61,7 @@ const DateInput = React.forwardRef(function Datoinput(
     };
 
     useEffect(() => {
-        console.log(dateValue);
-
         if (dateValue === INVALID_DATE_VALUE && showInvalidFormattedDate) {
-            console.log('invalid date', dateValue);
             return;
         }
         if (dateValue === '' || dateValue === undefined) {
