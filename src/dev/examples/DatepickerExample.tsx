@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
-import Datepicker, { DatepickerValue } from '../../datovelger/Datepicker';
+import Datovelger, { DatepickerValue } from '../../datovelger/Datovelger';
 import { Tidsperiode } from '../../datovelger/types';
 import Box from '../components/box/Box';
 import { INVALID_DATE_VALUE } from '../../datovelger/utils/dateFormatUtils';
@@ -22,7 +22,7 @@ const DatepickerExample: React.FunctionComponent = () => {
         <div>
             <Box>
                 <label htmlFor="datovelger-input">Choose date</label>
-                <Datepicker
+                <Datovelger
                     locale={'nb'}
                     inputId="datovelger-input"
                     value={date}

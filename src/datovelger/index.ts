@@ -1,3 +1,3 @@
-export { default as Datepicker } from './Datepicker';
+export { default as Datovelger } from './Datovelger';
 
 export * from './types';

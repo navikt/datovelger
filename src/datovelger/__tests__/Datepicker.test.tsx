@@ -1,16 +1,16 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import Datepicker from '../Datepicker';
+import Datovelger from '../Datovelger';
 
 describe('Datovelger', () => {
     it('Should be defined', () => {
         expect(
-            shallow(<Datepicker inputProps={{ onChange: jest.fn() } as any} inputId={'inputId'} onChange={jest.fn()} />)
+            shallow(<Datovelger inputProps={{ onChange: jest.fn() } as any} inputId={'inputId'} onChange={jest.fn()} />)
         ).toBeDefined();
     });
 
     it('Should render Datoinput and KalenderKnapp', () => {
-        const wrapper = shallow(<Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={jest.fn()} />);
+        const wrapper = shallow(<Datovelger inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={jest.fn()} />);
         const input = wrapper.find('ForwardRef(Datoinput)');
         const button = wrapper.find('CalendarButton');
         expect(input.length).toBe(1);
@@ -18,7 +18,7 @@ describe('Datovelger', () => {
     });
 
     it('Should show calendar when KalenderKnapp clicked', () => {
-        const wrapper = shallow(<Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={jest.fn()} />);
+        const wrapper = shallow(<Datovelger inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={jest.fn()} />);
         const button = wrapper.find('CalendarButton');
         button.simulate('click');
         expect(wrapper.find('CalendarPortal').length).toBe(1);
@@ -27,7 +27,7 @@ describe('Datovelger', () => {
     it('Should set new date when typed into Datoinput ', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
-            <Datepicker inputProps={{ name: 'abc' }} inputId={'inputId'} onChange={changeFunction} />
+            <Datovelger inputProps={{ name: 'abc' }} inputId={'inputId'} onChange={changeFunction} />
         );
         const input = wrapper.find('ForwardRef(Datoinput)');
         input.simulate('change', { target: { name: 'abc', value: '12.10.2000' } });
@@ -40,7 +40,7 @@ describe('Datovelger', () => {
     it('Should set "Invalid date" when invalid date is typed into Datoinput ', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
-            <Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
+            <Datovelger inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
         );
         const input = wrapper.find('ForwardRef(Datoinput)');
         input.simulate('change', { target: { value: '1210.2000' } });
@@ -53,7 +53,7 @@ describe('Datovelger', () => {
     it('Should trigger onChange with undefined when empty string typed into Datoinput ', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
-            <Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
+            <Datovelger inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
         );
         const input = wrapper.find('ForwardRef(Datoinput)');
         input.simulate('change', { target: { value: '' } });
@@ -66,7 +66,7 @@ describe('Datovelger', () => {
     it('Should set correct date when date chosen from calendar', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
-            <Datepicker
+            <Datovelger
                 inputProps={{ name: 'sdf' }}
                 inputId={'inputId'}
                 onChange={changeFunction}
