@@ -20,7 +20,10 @@ const DatovelgerEksempel: React.FunctionComponent = () => {
                 <Datepicker
                     inputId="datovelger-input"
                     value={dato}
-                    onChange={(d) => setDato(d)}
+                    onChange={(d) => {
+                        console.log('new date: ', d);
+                        setDato(d);
+                    }}
                     calendarSettings={{ showWeekNumbers: true }}
                     showYearSelector={true}
                     locale={'nb'}

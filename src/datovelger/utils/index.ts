@@ -42,6 +42,10 @@ export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] 
     ];
 };
 
+export const isSameDate = (d1: Date, d2: Date) => {
+    return moment(d1).isSame(d2, 'day');
+};
+
 export const getDefaultMonth = (
     dateString: string | undefined,
     limitations: DatepickerLimitations | undefined,

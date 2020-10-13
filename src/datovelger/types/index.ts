@@ -4,8 +4,8 @@ export type ISODateString = string;
 /** DD-MM-YYYY */
 export type InputDateString = string;
 
-/** Used when input date is invalid  */
-export type INVALID_DATE = 'Invalid date';
+/** Type used when input date is invalid  */
+export type INVALID_DATE_TYPE = 'Invalid date';
 
 export interface Tidsperiode {
     fom: ISODateString;

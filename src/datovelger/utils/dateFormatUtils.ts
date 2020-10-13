@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { InputDateString, INVALID_DATE, ISODateString } from '../types';
+import { InputDateString, INVALID_DATE_TYPE, ISODateString } from '../types';
 
 export const INVALID_DATE_VALUE = 'Invalid date';
 export const INPUT_DATE_STRING_FORMAT: InputDateString = 'DD.MM.YYYY';
@@ -15,12 +15,10 @@ const stringToUTCDate = (dateString: string | undefined, format: string): Date |
     return undefined;
 };
 
-export const isInvalidDateValue = (value: string): boolean => value === INVALID_DATE_VALUE;
-
-export const dateToInputDateString = (date?: Date): InputDateString | INVALID_DATE =>
+export const dateToInputDateString = (date?: Date): InputDateString | INVALID_DATE_TYPE =>
     date ? moment.utc(date).format(INPUT_DATE_STRING_FORMAT) : INVALID_DATE_VALUE;
 
-export const dateToISODateString = (date: Date): ISODateString | INVALID_DATE => {
+export const dateToISODateString = (date: Date): ISODateString | INVALID_DATE_TYPE => {
     const d = moment.utc(date);
     return d.isValid() ? d.format(ISO_DATE_STRING_FORMAT) : d.toString();
 };
@@ -33,13 +31,13 @@ export const InputDateStringToUTCDate = (inputDateString?: InputDateString): Dat
     return stringToUTCDate(inputDateString, INPUT_DATE_STRING_FORMAT);
 };
 
-export const ISODateStringToInputDateString = (isoDateString: ISODateString): InputDateString | INVALID_DATE => {
+export const ISODateStringToInputDateString = (isoDateString: ISODateString): InputDateString | INVALID_DATE_TYPE => {
     const date = stringToUTCDate(isoDateString, ISO_DATE_STRING_FORMAT);
     const stringValue = date ? dateToInputDateString(date) : INVALID_DATE_VALUE;
     return stringValue === INVALID_DATE_VALUE ? INVALID_DATE_VALUE : stringValue;
 };
 
-export const InputDateStringToISODateString = (inputDateString: InputDateString): string | INVALID_DATE => {
+export const InputDateStringToISODateString = (inputDateString: InputDateString): string | INVALID_DATE_TYPE => {
     const date = moment.utc(inputDateString, ALLOWED_INPUT_FORMATS, true);
     return date.isValid() ? dateToISODateString(date.toDate()) : INVALID_DATE_VALUE;
 };

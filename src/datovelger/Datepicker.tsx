@@ -6,12 +6,14 @@ import Calendar from './calendar/Calendar';
 import DateInput, { DatepickerInputProps } from './DateInput';
 import CalendarButton from './elementer/CalendarButton';
 import CalendarPortal from './elementer/CalendarPortal';
-import { CalendarPlacement, DatepickerLimitations, INVALID_DATE, ISODateString } from './types';
+import { CalendarPlacement, DatepickerLimitations, INVALID_DATE_TYPE, ISODateString } from './types';
 import { isISODateString } from './types/typeGuards';
-import { getDefaultMonth, getInvalidDates } from './utils';
+import { getDefaultMonth, getInvalidDates, isSameDate } from './utils';
 import './styles/datovelger.less';
+import { usePrevious } from './hooks/usePrevious';
+import { INVALID_DATE_VALUE } from './utils/dateFormatUtils';
 
-export type DatepickerValue = ISODateString | INVALID_DATE | undefined;
+export type DatepickerValue = ISODateString | INVALID_DATE_TYPE | undefined;
 
 export interface DatepickerProps {
     inputId?: string;
@@ -52,16 +54,19 @@ const Datepicker = ({
     const dateInput = useRef(null);
     const calendar = useRef(null);
 
+    const prevValue = usePrevious(value);
     useEffect(() => {
-        setActiveMonth(getDefaultMonth(value, limitations, dayPickerProps));
-    }, [value, limitations, dayPickerProps]);
-
-    const setDate = (dateString: ISODateString | undefined, closeCalender?: boolean) => {
-        setCalendarIsVisible(false);
-        onChange(isISODateString(dateString) ? dateString : undefined);
-        if (closeCalender) {
-            setCalendarIsVisible(false);
+        if (value !== prevValue) {
+            const defaultMonth = getDefaultMonth(value, limitations, dayPickerProps);
+            if (!isSameDate(defaultMonth, activeMonth)) {
+                setActiveMonth(defaultMonth);
+            }
         }
+    }, [value, limitations, prevValue, activeMonth, dayPickerProps]);
+
+    const setDate = (dateString: DatepickerValue | undefined) => {
+        setCalendarIsVisible(false);
+        onChange(isISODateString(dateString) ? dateString : INVALID_DATE_VALUE);
     };
 
     return (
@@ -70,9 +75,9 @@ const Datepicker = ({
                 <div className="nav-datovelger__inputContainer">
                     <DateInput
                         id={inputId}
-                        inputProps={{ ...inputProps, disabled }}
                         ref={inputProps?.inputRef || dateInput}
-                        value={value}
+                        inputProps={{ ...inputProps, disabled }}
+                        dateValue={value}
                         onDateChange={setDate}
                         showInvalidFormattedDate={showInvalidFormattedDate}
                     />
@@ -93,7 +98,7 @@ const Datepicker = ({
                             minDateString={limitations && limitations.minDate}
                             maxDateString={limitations && limitations.maxDate}
                             unavailableDates={limitations ? getInvalidDates(limitations) : undefined}
-                            onSelect={(d: string) => setDate(d, true)}
+                            onSelect={setDate}
                             onClose={() => setCalendarIsVisible(false)}
                             allowInvalidDateSelection={allowInvalidDateSelection}
                             dayPickerProps={dayPickerProps}

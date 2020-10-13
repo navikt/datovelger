@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FocusEvent, InputHTMLAttributes, useEffect, useState } from 'react';
-import { InputDateString, ISODateString } from './types';
+import { InputDateString, INVALID_DATE_TYPE, ISODateString } from './types';
 import {
     InputDateStringToISODateString,
     INVALID_DATE_VALUE,
@@ -13,40 +13,17 @@ export type DatepickerInputProps = Pick<
 
 interface Props {
     id?: string;
-    value?: ISODateString;
-    onDateChange: (date: ISODateString | undefined) => void;
+    dateValue?: ISODateString;
+    onDateChange: (date: ISODateString | INVALID_DATE_TYPE | undefined) => void;
     inputProps?: DatepickerInputProps;
-    onInputChange?: (value: InputDateString, evt: React.ChangeEvent<HTMLInputElement>) => void;
     showInvalidFormattedDate?: boolean;
 }
 
-// enum DATE_VALUE_STATE {
-//     'VALID' = 'valid',
-//     'INVALID' = 'invalid',
-//     'UNDEFINED' = 'undefined',
-// }
-
 const DateInput = React.forwardRef(function Datoinput(
-    { id, value: valgtDato = '', inputProps = { placeholder: 'dd.mm.åååå' }, onDateChange, onInputChange }: Props,
+    { id, dateValue = '', inputProps = { placeholder: 'dd.mm.åååå' }, onDateChange, showInvalidFormattedDate }: Props,
     ref: React.Ref<HTMLInputElement>
 ) {
-    const getInputValueToRender = (inputDateString: InputDateString): string => {
-        return inputDateString === INVALID_DATE_VALUE ? '' : inputDateString;
-    };
-
-    const [value, setValue] = useState<InputDateString>(ISODateStringToInputDateString(valgtDato));
-
-    useEffect(() => {
-        setValue(valgtDato === undefined ? '' : ISODateStringToInputDateString(valgtDato));
-    }, [valgtDato]);
-
-    const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
-        const inputValue = evt.target.value;
-        setValue(inputValue);
-        if (onInputChange) {
-            onInputChange(inputValue, evt);
-        }
-    };
+    const [inputValue, setInputValue] = useState<InputDateString>(ISODateStringToInputDateString(dateValue));
 
     const triggerValueChange = (inputValue: string) => {
         const value = (inputValue || '').trim();
@@ -56,14 +33,20 @@ const DateInput = React.forwardRef(function Datoinput(
         }
         const isoDateString = InputDateStringToISODateString(value);
         if (isoDateString !== INVALID_DATE_VALUE) {
-            if (isoDateString !== valgtDato) {
+            if (isoDateString !== value) {
                 onDateChange(isoDateString);
             }
-            setValue(ISODateStringToInputDateString(isoDateString));
+            setInputValue(ISODateStringToInputDateString(isoDateString));
         } else {
-            setValue('');
+            if (!showInvalidFormattedDate) {
+                setInputValue('');
+            }
             onDateChange(INVALID_DATE_VALUE);
         }
+    };
+
+    const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(evt.target.value);
     };
 
     const onBlur = (evt: FocusEvent<HTMLInputElement>) => {
@@ -76,6 +59,23 @@ const DateInput = React.forwardRef(function Datoinput(
             triggerValueChange((evt.target as HTMLInputElement).value || '');
         }
     };
+
+    useEffect(() => {
+        console.log(dateValue);
+
+        if (dateValue === INVALID_DATE_VALUE && showInvalidFormattedDate) {
+            console.log('invalid date', dateValue);
+            return;
+        }
+        if (dateValue === '' || dateValue === undefined) {
+            setInputValue('');
+            return;
+        }
+        const inputDateString = ISODateStringToInputDateString(dateValue);
+        if (inputDateString !== INVALID_DATE_VALUE) {
+            setInputValue(dateValue === undefined || dateValue === '' ? '' : inputDateString);
+        }
+    }, [dateValue, showInvalidFormattedDate]);
 
     return (
         <input
@@ -91,7 +91,7 @@ const DateInput = React.forwardRef(function Datoinput(
             pattern="\d{2}.\d{2}.\d{4}"
             type="text"
             inputMode="text"
-            value={getInputValueToRender(value)}
+            value={inputValue}
             maxLength={10}
             onChange={onChange}
             onBlur={onBlur}

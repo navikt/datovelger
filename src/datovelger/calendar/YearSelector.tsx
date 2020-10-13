@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-onchange */
 import React from 'react';
 import { LocaleUtils } from 'react-day-picker';
 import moment from 'moment';
@@ -113,7 +114,7 @@ class YearSelector extends React.Component<Props> {
                             ref={(c) => (this.yearSelect = c)}
                             className="skjemaelement__input skjemaelement__input--year"
                             name="year"
-                            onBlur={this.onYearChange}
+                            onChange={this.onYearChange}
                             value={defaultMonth.getFullYear()}>
                             {years.map((year) => (
                                 <option key={year} value={year}>
@@ -132,7 +133,7 @@ class YearSelector extends React.Component<Props> {
                         ref={(c) => (this.monthSelect = c)}
                         className="skjemaelement__input"
                         name="month"
-                        onBlur={this.onChange}
+                        onChange={this.onChange}
                         value={defaultMonth.getMonth()}>
                         {monthOptions.map((m) => (
                             <option key={m.value} value={m.value}>
