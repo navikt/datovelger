@@ -1,4 +1,5 @@
-import React, { FocusEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 export interface ContainerBlurEvent {
     source: 'esc' | 'blur';
@@ -77,7 +78,6 @@ const DomEventContainer = (props: Props) => {
 
     return (
         <div
-            role="presentation"
             ref={divRef}
             onBlur={handleOnBlur}
             onKeyDown={handleOnInternalDocumentKeyDown}
