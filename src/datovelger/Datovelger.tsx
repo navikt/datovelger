@@ -6,12 +6,12 @@ import Calendar from './calendar/Calendar';
 import DateInput, { DatepickerInputProps } from './DateInput';
 import CalendarButton from './elementer/CalendarButton';
 import CalendarPortal from './elementer/CalendarPortal';
+import { usePrevious } from './hooks/usePrevious';
 import { CalendarPlacement, DatepickerLimitations, INVALID_DATE_TYPE, ISODateString } from './types';
 import { isISODateString } from './types/typeGuards';
 import { getDefaultMonth, getInvalidDates, isSameDate } from './utils';
-import './styles/datovelger.less';
-import { usePrevious } from './hooks/usePrevious';
 import { INVALID_DATE_VALUE } from './utils/dateFormatUtils';
+import './styles/datovelger.less';
 
 export type DatepickerValue = ISODateString | INVALID_DATE_TYPE | undefined;
 

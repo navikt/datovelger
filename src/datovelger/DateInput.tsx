@@ -8,7 +8,7 @@ import {
 
 export type DatepickerInputProps = Pick<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'aria-invalid' | 'aria-label' | 'aria-describedby' | 'placeholder' | 'disabled'
+    'name' | 'aria-invalid' | 'aria-label' | 'aria-describedby' | 'placeholder' | 'disabled' | 'pattern'
 >;
 
 interface Props {
@@ -25,7 +25,7 @@ const getInitialValue = (dateValue: string): string => {
 };
 
 const DateInput = React.forwardRef(function Datoinput(
-    { id, dateValue = '', inputProps = { placeholder: 'dd.mm.åååå' }, onDateChange, showInvalidFormattedDate }: Props,
+    { id, dateValue = '', inputProps, onDateChange, showInvalidFormattedDate }: Props,
     ref: React.Ref<HTMLInputElement>
 ) {
     const [inputValue, setInputValue] = useState<InputDateString>(getInitialValue(dateValue));
@@ -82,10 +82,10 @@ const DateInput = React.forwardRef(function Datoinput(
     return (
         <input
             id={id}
-            {...{ placeholder: 'dd.mm.åååå', ...inputProps }}
+            {...{ placeholder: 'dd.mm.åååå', pattern: 'd{2}.d{2}.d{4}', ...inputProps }}
             ref={ref}
             className={`nav-datovelger__input${
-                inputProps['aria-invalid'] === true ? ' skjemaelement__input--harFeil' : ''
+                inputProps && inputProps['aria-invalid'] === true ? ' skjemaelement__input--harFeil' : ''
             }`}
             disabled={inputProps?.disabled}
             autoComplete="off"
