@@ -6,7 +6,6 @@ const CalendarIcon = () => (
         width={16}
         viewBox="0 0 18 18"
         role="presentation"
-        aria-hidden="true"
         focusable={false}
         style={{ pointerEvents: 'none' }}>
         <title>Kalenderikon</title>

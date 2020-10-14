@@ -29,9 +29,11 @@ class CalendarButton extends React.Component<Props> {
                     onClick();
                 }}
                 disabled={disabled}
-                aria-label={Texts.calendarLabel}
                 aria-expanded={isOpen}>
-                <CalendarIcon />
+                <span className="sr-only">{Texts.calendarLabel}</span>
+                <span aria-hidden={true} className="nav-datovelger__kalenderknapp__icon">
+                    <CalendarIcon />
+                </span>
             </button>
         );
     }
