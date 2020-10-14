@@ -33,7 +33,7 @@ export interface DatepickerProps {
     dayPickerProps?: DayPickerProps;
 }
 
-const Datovelger = ({
+const Datepicker = ({
     inputId = guid(),
     limitations,
     value,
@@ -109,4 +109,4 @@ const Datovelger = ({
         </DomEventContainer>
     );
 };
-export default Datovelger;
+export default Datepicker;

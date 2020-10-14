@@ -14,7 +14,7 @@
 
 #### New `Datovelger` interface:
   ```
-  <Datovelger
+  <Datepicker
     inputId?: string; // replaces previous two id's
     value?: DatepickerValue; // was valgtDato
     onChange: (date: DatepickerValue) => void; // se comments below
@@ -36,7 +36,7 @@
   />
 
   ```
-- **Datovelger changes explained**
+- **Datepicker changes explained**
   - `inputId` replaces previous two id props
   - `inputProps` is now a limited set of InputHTMLAttributes<HTMLInputElement>
   - new prop `showInvalidFormattedDate` which sets the input field to show invalid formatted datestrings. Default value is `false`, so the behaviour is the same as previous versions if not set to `true`

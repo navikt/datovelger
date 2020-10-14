@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
-import Datovelger, { DatepickerValue } from '../../datovelger/Datovelger';
-import { DatepickerDateRange } from '../../datovelger/types';
+import Datepicker, { DatepickerValue } from '../../datepicker/Datepicker';
+import { DatepickerDateRange } from '../../datepicker/types';
 import Box from '../components/box/Box';
-import { INVALID_DATE_VALUE } from '../../datovelger/utils/dateFormatUtils';
+import { INVALID_DATE_VALUE } from '../../datepicker/utils/dateFormatUtils';
 
 const DatepickerExample: React.FunctionComponent = () => {
     const [date, setDate] = useState<DatepickerValue>('');
@@ -22,7 +22,7 @@ const DatepickerExample: React.FunctionComponent = () => {
         <div>
             <Box>
                 <label htmlFor="datovelger-input">Choose date</label>
-                <Datovelger
+                <Datepicker
                     locale={'nb'}
                     inputId="datovelger-input"
                     value={date}
@@ -56,7 +56,10 @@ const DatepickerExample: React.FunctionComponent = () => {
                                     onChange={() => setShowYearSelector(!showYearSelector)}
                                     label={
                                         <>
-                                            <code>showYearSelector</code>:<br /> Show dropdowns for year and month
+                                            <div>
+                                                <code>showYearSelector</code>:
+                                            </div>{' '}
+                                            Show dropdowns for year and month
                                         </>
                                     }
                                 />
@@ -67,8 +70,9 @@ const DatepickerExample: React.FunctionComponent = () => {
                                     onChange={() => setShowWeekNumbers(!showWeekNumbers)}
                                     label={
                                         <>
-                                            <code>calendarSettings.showWeekNumbers</code>
-                                            <br />
+                                            <div>
+                                                <code>calendarSettings.showWeekNumbers</code>
+                                            </div>
                                             Toggle visibility on week numbers in calendar view
                                         </>
                                     }
@@ -80,7 +84,9 @@ const DatepickerExample: React.FunctionComponent = () => {
                                     onChange={() => setShowInvalidFormattedDate(!showInvalidFormattedDate)}
                                     label={
                                         <>
-                                            <code>showInvalidFormattedDate</code>:<br />
+                                            <div>
+                                                <code>showInvalidFormattedDate</code>:
+                                            </div>
                                             Do not clear input field when the entered date is invalid
                                         </>
                                     }

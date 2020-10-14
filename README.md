@@ -6,12 +6,12 @@ https://www.npmjs.com/package/react-day-picker
 # Use
 
 ```javascript
-import { Datovelger } from 'nav-datovelger';
+import { Datepicker } from 'nav-datovelger';
 
 const BasicDatepicker = () => {
     const [date, setDate] = useState('');
     return (
-        <Datovelger onChange={setDato} value={date} />
+        <Datepicker onChange={setDato} value={date} />
     );
 };
 
@@ -19,7 +19,7 @@ const AdvancedDatePicker = () => {
     const [date, setDate] = useState<string | INVALID_DATE_TYPE | undefined>('');
 
     return (
-        <Datovelger
+        <Datepicker
             locale={'nb'}
             inputId="datovelger-input"
             value={date}
