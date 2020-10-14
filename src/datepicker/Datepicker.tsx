@@ -11,7 +11,7 @@ import { CalendarPlacement, DatepickerLimitations, INVALID_DATE_TYPE, ISODateStr
 import { isISODateString } from './types/typeGuards';
 import { getDefaultMonth, getInvalidDates, isSameDate } from './utils';
 import { INVALID_DATE_VALUE } from './utils/dateFormatUtils';
-import './styles/datovelger.less';
+import './styles/datepicker.less';
 
 export type DatepickerValue = ISODateString | INVALID_DATE_TYPE | undefined;
 
