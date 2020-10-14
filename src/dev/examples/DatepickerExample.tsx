@@ -20,8 +20,10 @@ const DatepickerExample: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Box>
-                <label htmlFor="datovelger-input">Choose date</label>
+            <Box margin="xl">
+                <label style={{ display: 'block', marginBottom: '.5rem' }} htmlFor="datovelger-input">
+                    Choose date (format dd.mm.yyyy)
+                </label>
                 <Datepicker
                     locale={'nb'}
                     inputId="datovelger-input"
@@ -38,7 +40,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                         maxDate: '2020-12-12',
                     }}
                 />
-                <Box margin="l">Chosen date: {date}</Box>
+                <Box margin="l">Chosen date value: {date}</Box>
                 <Box margin="l">
                     <Knapp onClick={() => setDate(moment(new Date()).format(moment.HTML5_FMT.DATE))}>
                         Choose today
