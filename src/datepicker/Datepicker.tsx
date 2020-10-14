@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { guid } from 'nav-frontend-js-utils';
 import DomEventContainer from './common/DomEventContainer';
@@ -50,9 +50,6 @@ const Datepicker = ({
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMonth(value, limitations, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
 
-    const dateInput = useRef(null);
-    const calendar = useRef(null);
-
     const prevValue = usePrevious(value);
     useEffect(() => {
         if (value !== prevValue) {
@@ -74,7 +71,7 @@ const Datepicker = ({
                 <div className="nav-datovelger__inputContainer">
                     <DateInput
                         id={inputId}
-                        ref={inputProps?.inputRef || dateInput}
+                        ref={inputProps?.inputRef}
                         inputProps={{ ...inputProps, disabled }}
                         dateValue={value}
                         onDateChange={setDate}
@@ -89,7 +86,6 @@ const Datepicker = ({
                 {calendarIsVisible && (
                     <CalendarPortal plassering={calendarSettings?.position}>
                         <Calendar
-                            ref={calendar}
                             showWeekNumbers={calendarSettings?.showWeekNumbers}
                             locale={locale}
                             dateString={value}
