@@ -11,7 +11,7 @@ type Direction = 'previousMonth' | 'nextMonth';
 
 interface Props {
     defaultMonth: Date;
-    onChangeMonth: (month: Date, fokusElement: NavigationFocusElement) => void;
+    onChangeMonth: (month: Date, focusElement: NavigationFocusElement) => void;
     onChangeYear?: (month: Date) => void;
     minDate?: Date;
     maxDate?: Date;
@@ -24,7 +24,7 @@ interface NavbarButtonProps {
     month: Date;
     direction: Direction;
     disabled: boolean;
-    onClick: (evt: any, måned: Date, fokusElement: NavigationFocusElement) => void;
+    onClick: (evt: any, måned: Date, focusElement: NavigationFocusElement) => void;
 }
 
 class NavbarButton extends React.Component<NavbarButtonProps> {
@@ -48,11 +48,11 @@ class NavbarButton extends React.Component<NavbarButtonProps> {
     }
 }
 
-const lagCaption = (props: Props) => props.localeUtils.formatMonthTitle(props.defaultMonth, props.locale);
+const createCaption = (props: Props) => props.localeUtils.formatMonthTitle(props.defaultMonth, props.locale);
 
 class Navbar extends React.Component<Props> {
     shouldComponentUpdate(nextProps: any) {
-        return lagCaption(nextProps) !== lagCaption(this.props);
+        return createCaption(nextProps) !== createCaption(this.props);
     }
 
     render() {
@@ -64,16 +64,20 @@ class Navbar extends React.Component<Props> {
         const lastMonthIsDisabled = minDate ? moment(minDate).isAfter(previousMonth.endOf('month')) : false;
         const nextMonthIsDisabled = maxDate ? moment(maxDate).isBefore(nextMonth.startOf('month')) : false;
 
-        const onClick = (evt: React.MouseEvent<HTMLButtonElement>, mnd: Date, fokusElement: NavigationFocusElement) => {
+        const onClick = (
+            evt: React.MouseEvent<HTMLButtonElement>,
+            month: Date,
+            focusElement: NavigationFocusElement
+        ) => {
             evt.preventDefault();
             evt.stopPropagation();
-            onChangeMonth(mnd, fokusElement);
+            onChangeMonth(month, focusElement);
         };
 
         return (
             <div className="DayPicker-Caption">
                 <span aria-live="assertive" className={showYearSelector ? 'sr-only' : ''}>
-                    {lagCaption(this.props)}
+                    {createCaption(this.props)}
                 </span>
                 {showYearSelector && (
                     <div className="nav-datovelger__navbar__yearSelector">
@@ -83,12 +87,11 @@ class Navbar extends React.Component<Props> {
                             minDate={minDate}
                             locale={locale}
                             localeUtils={localeUtils}
-                            onChange={(mnd, fokusElement) => onChangeMonth(mnd, fokusElement)}
+                            onChange={(month, focusElement) => onChangeMonth(month, focusElement)}
                         />
                     </div>
                 )}
-                <div
-                    role="navigation"
+                <nav
                     className={`nav-datovelger__navbar ${
                         showYearSelector ? 'nav-datovelger__navbar--withYearSelector' : ''
                     }`}>
@@ -96,15 +99,15 @@ class Navbar extends React.Component<Props> {
                         month={previousMonth.toDate()}
                         direction={'previousMonth'}
                         disabled={lastMonthIsDisabled}
-                        onClick={(evt, mnd) => onClick(evt, mnd, 'previousMonth')}
+                        onClick={(evt, month) => onClick(evt, month, 'previousMonth')}
                     />
                     <NavbarButton
                         month={nextMonth.toDate()}
                         direction={'nextMonth'}
                         disabled={nextMonthIsDisabled}
-                        onClick={(evt, mnd) => onClick(evt, mnd, 'nextMonth')}
+                        onClick={(evt, month) => onClick(evt, month, 'nextMonth')}
                     />
-                </div>
+                </nav>
             </div>
         );
     }

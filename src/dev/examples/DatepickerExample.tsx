@@ -27,7 +27,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                     inputId="datovelger-input"
                     value={date}
                     onChange={setDate}
-                    inputProps={{ name: 'dato', 'aria-invalid': date === INVALID_DATE_VALUE }}
+                    inputProps={{ name: 'dateInput', 'aria-invalid': date === INVALID_DATE_VALUE }}
                     calendarSettings={{ showWeekNumbers }}
                     showYearSelector={showYearSelector}
                     showInvalidFormattedDate={showInvalidFormattedDate}

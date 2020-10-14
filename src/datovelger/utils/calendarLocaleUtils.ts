@@ -32,7 +32,7 @@ function getMonths(locale) {
     return months as any;
 }
 
-const kalenderLocaleUtils: LocaleUtils = {
+const calendarLocaleUtils: LocaleUtils = {
     formatDay,
     formatMonthTitle,
     formatWeekdayLong,
@@ -43,4 +43,4 @@ const kalenderLocaleUtils: LocaleUtils = {
     parseDate: (d) => moment.utc(d).toDate(),
 };
 
-export default kalenderLocaleUtils;
+export default calendarLocaleUtils;

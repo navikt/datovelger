@@ -11,7 +11,7 @@ export interface Props {
     maxDate?: Date;
     localeUtils: LocaleUtils;
     locale: string;
-    onChange: (mnd: Date, fokusElement: NavigationFocusElement) => void;
+    onChange: (month: Date, focusElement: NavigationFocusElement) => void;
 }
 
 interface MonthOption {
@@ -99,7 +99,7 @@ class YearSelector extends React.Component<Props> {
             years.push(i);
         }
 
-        const mndSelectId = guid();
+        const monthSelectId = guid();
         const yearSelectId = guid();
         const showYearSelect = years.length > 1;
         return (
@@ -125,11 +125,11 @@ class YearSelector extends React.Component<Props> {
                     </div>
                 )}
                 <div className={`selectContainer${showYearSelect === false ? ' selectContainer--monthOnly' : ''}`}>
-                    <label className="sr-only" htmlFor={mndSelectId}>
+                    <label className="sr-only" htmlFor={monthSelectId}>
                         Velg måned
                     </label>
                     <select
-                        id={mndSelectId}
+                        id={monthSelectId}
                         ref={(c) => (this.monthSelect = c)}
                         className="skjemaelement__input"
                         name="month"

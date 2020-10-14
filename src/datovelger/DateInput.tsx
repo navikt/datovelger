@@ -24,7 +24,7 @@ const getInitialValue = (dateValue: string): string => {
     return inputDateString === INVALID_DATE_VALUE ? '' : inputDateString;
 };
 
-const DateInput = React.forwardRef(function Datoinput(
+const DateInput = React.forwardRef(function DateInput(
     { id, dateValue = '', inputProps, onDateChange, showInvalidFormattedDate }: Props,
     ref: React.Ref<HTMLInputElement>
 ) {
@@ -82,15 +82,15 @@ const DateInput = React.forwardRef(function Datoinput(
     return (
         <input
             id={id}
-            {...{ placeholder: 'dd.mm.åååå', pattern: 'd{2}.d{2}.d{4}', ...inputProps }}
+            placeholder="dd.mm.åååå"
+            pattern="d{2}.d{2}.d{4}"
+            {...inputProps}
             ref={ref}
             className={`nav-datovelger__input${
                 inputProps && inputProps['aria-invalid'] === true ? ' skjemaelement__input--harFeil' : ''
             }`}
-            disabled={inputProps?.disabled}
             autoComplete="off"
             autoCorrect="off"
-            pattern="\d{2}.\d{2}.\d{4}"
             type="text"
             inputMode="text"
             value={inputValue}

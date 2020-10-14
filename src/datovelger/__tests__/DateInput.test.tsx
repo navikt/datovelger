@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DateInput from '../DateInput';
 
-describe('DatoInput', () => {
+describe('DateInput', () => {
     it('Should be defined', () => {
         expect(shallow(<DateInput id="abc" onDateChange={jest.fn()} />)).toBeDefined();
     });
@@ -14,7 +14,7 @@ describe('DatoInput', () => {
         expect(wrapper.find('input').prop('value')).toEqual('');
     });
 
-    it('onDateChange should return ISO formatted valgtDato string', () => {
+    it('onDateChange should return ISO formatted value string', () => {
         const onDateChangeMock = jest.fn();
         const component = shallow(<DateInput id="abc" onDateChange={onDateChangeMock} />);
         component.find('input').simulate('change', { target: { value: '01.01.2019' } });
@@ -22,7 +22,7 @@ describe('DatoInput', () => {
         expect(onDateChangeMock).toHaveBeenCalledWith('2019-01-01');
     });
 
-    it('ISO formatted valgtDato prop should render in DD.MM.YYYY format', () => {
+    it('ISO formatted value prop should render in DD.MM.YYYY format', () => {
         const component = shallow(<DateInput id="abc" dateValue={'2019-01-01'} onDateChange={jest.fn()} />);
         expect(component.find('input').prop('value')).toEqual('01.01.2019');
     });

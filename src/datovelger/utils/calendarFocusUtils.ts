@@ -3,9 +3,9 @@ import { dayDateKey } from '.';
 
 type RefHTMLElement = HTMLElement | null;
 
-export const setFocusOnDate = (calendar: RefHTMLElement, dato: Date) => {
+export const setFocusOnDate = (calendar: RefHTMLElement, date: Date) => {
     if (calendar) {
-        const el: HTMLElement = calendar.querySelector(`[data-date="${dayDateKey(dato)}"]`) as HTMLElement;
+        const el: HTMLElement = calendar.querySelector(`[data-date="${dayDateKey(date)}"]`) as HTMLElement;
         if (el) {
             (el.parentNode as HTMLElement).focus();
         }
@@ -34,9 +34,9 @@ const getMonthElement = (calendar: RefHTMLElement, focusElement: NavigationFocus
     return undefined;
 };
 
-export const setFocusOnCalendarMonth = (calendar: RefHTMLElement, fokusElement: NavigationFocusElement) => {
+export const setFocusOnCalendarMonth = (calendar: RefHTMLElement, focusElement: NavigationFocusElement) => {
     if (calendar) {
-        const el = getMonthElement(calendar, fokusElement);
+        const el = getMonthElement(calendar, focusElement);
         if (el) {
             el.focus();
         }

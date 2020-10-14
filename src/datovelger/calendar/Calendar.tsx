@@ -4,7 +4,7 @@ import DayPicker, { DayModifiers, DayPickerProps, LocaleUtils, Modifier } from '
 import { ISODateString } from '../types';
 import { setFocusOnCalendarMonth } from '../utils/calendarFocusUtils';
 import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
-import kalenderLocaleUtils from '../utils/localeUtils';
+import calendarLocaleUtils from '../utils/calendarLocaleUtils';
 import Navbar from './Navbar';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
     maxDateString?: ISODateString;
     locale: string;
     localeUtils?: LocaleUtils;
-    onSelect: (dato: ISODateString) => void;
+    onSelect: (dateString: ISODateString) => void;
     onClose: () => void;
     unavailableDates?: Modifier[];
     allowInvalidDateSelection?: boolean;
@@ -43,9 +43,9 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         dayPickerProps,
     } = props;
 
-    const onSelectDate = (dato: Date, modifiers: DayModifiers) => {
+    const onSelectDate = (date: Date, modifiers: DayModifiers) => {
         if (allowInvalidDateSelection || !modifiers.disabled) {
-            onSelect(dateToISODateString(dato));
+            onSelect(dateToISODateString(date));
         }
     };
 
@@ -63,7 +63,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
 
     const dayPickerPropsToUse: DayPickerProps = {
         locale,
-        localeUtils: kalenderLocaleUtils,
+        localeUtils: calendarLocaleUtils,
         navbarElement: function navbarElement() {
             return <span />;
         },
@@ -78,7 +78,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     maxDate={maxDate}
                     locale={locale}
                     localeUtils={{
-                        ...kalenderLocaleUtils,
+                        ...calendarLocaleUtils,
                         ...localeUtils,
                     }}
                     showYearSelector={showYearSelector}

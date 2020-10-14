@@ -10,7 +10,7 @@ import moment from 'moment';
 import { DatepickerLimitations } from '../types';
 import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT, ISODateStringToUTCDate } from './dateFormatUtils';
 
-export const dayDateKey = (dato: Date) => moment(dato).format(INPUT_DATE_STRING_FORMAT);
+export const dayDateKey = (date: Date) => moment(date).format(INPUT_DATE_STRING_FORMAT);
 
 export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] => {
     let invalidDates: Modifier[] = [];

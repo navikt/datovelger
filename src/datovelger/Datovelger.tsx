@@ -35,8 +35,8 @@ export interface DatepickerProps {
 
 const Datovelger = ({
     inputId = guid(),
-    value,
     limitations,
+    value,
     inputProps,
     calendarSettings,
     locale = 'nb',
