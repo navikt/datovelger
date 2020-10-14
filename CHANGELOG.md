@@ -39,6 +39,7 @@
 - **Datepicker changes explained**
   - `inputId` replaces previous two id props
   - `inputProps` is now a limited set of InputHTMLAttributes<HTMLInputElement>
+  - `inputProps.placeholder` defaults to undefined - was "dd.mm.åååå". Either describe the pattern in the label (recomended), or send in the prop
   - new prop `showInvalidFormattedDate` which sets the input field to show invalid formatted datestrings. Default value is `false`, so the behaviour is the same as previous versions if not set to `true`
   - `onChange` is now called with three different values if `showInvalidFormattedDate={true}`. The values are Date | "Invalid date" | undefined
   - `datoErGyldig`is removed, use `aria-invalid` on `inputProps` instead

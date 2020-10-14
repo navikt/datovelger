@@ -81,11 +81,10 @@ const DateInput = React.forwardRef(function DateInput(
 
     return (
         <input
+            ref={ref}
             id={id}
-            placeholder="dd.mm.åååå"
             pattern="d{2}.d{2}.d{4}"
             {...inputProps}
-            ref={ref}
             className={`nav-datovelger__input${
                 inputProps && inputProps['aria-invalid'] === true ? ' skjemaelement__input--harFeil' : ''
             }`}
