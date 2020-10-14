@@ -3,7 +3,7 @@ import moment from 'moment';
 import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import Datovelger, { DatepickerValue } from '../../datovelger/Datovelger';
-import { Tidsperiode } from '../../datovelger/types';
+import { DatepickerDateRange } from '../../datovelger/types';
 import Box from '../components/box/Box';
 import { INVALID_DATE_VALUE } from '../../datovelger/utils/dateFormatUtils';
 
@@ -13,9 +13,9 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [showYearSelector, setShowYearSelector] = useState<boolean>(false);
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
 
-    const takenRange: Tidsperiode = {
-        fom: '2020-04-10',
-        tom: '2020-04-11',
+    const takenRange: DatepickerDateRange = {
+        from: '2020-04-10',
+        to: '2020-04-11',
     };
 
     return (

@@ -8,12 +8,16 @@
 - Activate `showWeekNumbers` prop (was inactive)
 - Change language used in code from norwegian to english (css classNames not changed)
 - type `INVALID_DATE` is renamed to `INVALID_DATE_TYPE`
-- **New `Datovelger` props:**
+- type `Tidsperiode` is changed to `DatepickerDateRange` with props `from` and `to`
+- type `DatovelgerAvgrensninger` is renamed to `DatpickerLimitations`
+- type `KalenderPlassering` is renamed to `CalendarPlacement`
+
+#### New `Datovelger` interface:
   ```
   <Datovelger
     inputId?: string; // replaces previous two id's
     value?: DatepickerValue; // was valgtDato
-    onChange: (date: DatepickerValue) => void;
+    onChange: (date: DatepickerValue) => void; // se comments below
     locale?: string; // unchanged
     disabled?: boolean; // unchanged
     limitations?: DatepickerLimitations; // was avgrensninger
@@ -22,9 +26,9 @@
         position?: CalendarPlacement; // was plassering
     };
     inputProps?: DatepickerInputProps & { inputRef?: React.Ref<HTMLInputElement> }; // type is changed
-    allowInvalidDateSelection?: boolean; // kanVelgeUgyldigDato
+    allowInvalidDateSelection?: boolean; // was kanVelgeUgyldigDato
     showInvalidFormattedDate?: boolean; // new; see comments below
-    showYearSelector?: boolean; // visÅrVelger
+    showYearSelector?: boolean; // was visÅrVelger
     dayPickerProps?: DayPickerProps; // unchanged
 
     // removed props:
@@ -35,11 +39,9 @@
 - **Datovelger changes explained**
   - `inputId` replaces previous two id props
   - `inputProps` is now a limited set of InputHTMLAttributes<HTMLInputElement>
-  - new prop `showInvalidFormattedDate` which sets the input field to show invalid formatted datestrings
-  - onChange is now called with three different values if `showInvalidFormattedDate={true}`. The values are Date | "Invalid date" | undefined
+  - new prop `showInvalidFormattedDate` which sets the input field to show invalid formatted datestrings. Default value is `false`, so the behaviour is the same as previous versions if not set to `true`
+  - `onChange` is now called with three different values if `showInvalidFormattedDate={true}`. The values are Date | "Invalid date" | undefined
   - `datoErGyldig`is removed, use `aria-invalid` on `inputProps` instead
-- `DatovelgerAvgrensninger` is renamed to `DatpickerLimitations'
-- `KalenderPlassering` is renamed to `CalendarPlacement'
 
 ### Removed
 - `datoErGyldig` prop on Datevelger; use `aria-invalid` on `inputProps` instead

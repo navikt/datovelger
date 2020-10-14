@@ -17,8 +17,8 @@ export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] 
     if (limitations.invalidDateRanges) {
         invalidDates = limitations.invalidDateRanges
             .map((t): RangeModifier | undefined => {
-                const from = ISODateStringToUTCDate(t.fom);
-                const to = ISODateStringToUTCDate(t.tom);
+                const from = ISODateStringToUTCDate(t.from);
+                const to = ISODateStringToUTCDate(t.to);
                 if (from && to) {
                     return {
                         from,
