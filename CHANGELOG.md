@@ -3,6 +3,8 @@
 
 
 ## [7.0.0-beta.1] - 2020-12-14
+Rewrite and simplification. Props are changed and removed, and the change event will now always send the selected date or value in the input field - disregarding if the value is a valid date string or not. This is no the containing apps responsibility. The onChange event will send an extra prop saying if the date is valid, but this is only as a helping value, and is not reflected within the component.
+
 ### Changed
 - Refactor most of the code
 - Activate `showWeekNumbers` prop (was inactive)
@@ -16,8 +18,8 @@
   ```
   <Datepicker
     inputId?: string; // replaces previous two id's
-    value?: DatepickerValue; // was valgtDato
-    onChange: (date: DatepickerValue) => void; // se comments below
+    value?: string | undefined; // was valgtDato
+    onChange: (value: DatepickerValue, isValidISODateString: boolean) => void;  // se comments below
     locale?: string; // unchanged
     disabled?: boolean; // unchanged
     limitations?: DatepickerLimitations; // was avgrensninger
@@ -27,7 +29,6 @@
     };
     inputProps?: DatepickerInputProps & { inputRef?: React.Ref<HTMLInputElement> }; // type is changed
     allowInvalidDateSelection?: boolean; // was kanVelgeUgyldigDato
-    showInvalidFormattedDate?: boolean; // new; see comments below
     showYearSelector?: boolean; // was visÅrVelger
     dayPickerProps?: DayPickerProps; // unchanged
 
@@ -38,11 +39,9 @@
   ```
 - **Datepicker changes explained**
   - `inputId` replaces previous two id props
-  - `inputProps` is now a limited set of InputHTMLAttributes<HTMLInputElement>
-  - `inputProps.placeholder` defaults to undefined - was "dd.mm.åååå". Either describe the pattern in the label (recomended), or send in the prop
-  - new prop `showInvalidFormattedDate` which sets the input field to show invalid formatted datestrings. Default value is `false`, so the behaviour is the same as previous versions if not set to `true`
-  - `onChange` is now called with three different values if `showInvalidFormattedDate={true}`. The values are Date | "Invalid date" | undefined
-  - `datoErGyldig`is removed, use `aria-invalid` on `inputProps` instead
+  - `inputProps` is now a limited set of InputHTMLAttributes<HTMLInputElement>.
+  - `inputProps.placeholder` defaults to undefined - was "dd.mm.åååå". Either describe the pattern in the label (recomended), or send in the prop.
+  - `onChange` is now called with two different values - the string value from the input, and a flag indicating if the value is a valid ISODateString (YYYY-MM-DD).
+  - `datoErGyldig`is removed, use `aria-invalid` on `inputProps` instead.
+  - The input does not set `aria-invalid` anymore, this must be set from the containing app.
 
-### Removed
-- `datoErGyldig` prop on Datevelger; use `aria-invalid` on `inputProps` instead

@@ -27,7 +27,6 @@ const AdvancedDatePicker = () => {
             inputProps={{ name: 'dato', 'aria-invalid': date === INVALID_DATE_VALUE }}
             calendarSettings={{ showWeekNumbers }}
             showYearSelector={showYearSelector}
-            showInvalidFormattedDate={showInvalidFormattedDate}
             limitations={{
                 weekendsNotSelectable: false,
                 invalidDateRanges: [{

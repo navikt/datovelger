@@ -4,12 +4,20 @@ import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import Datepicker, { DatepickerValue } from '../../datepicker/Datepicker';
 import { DatepickerDateRange } from '../../datepicker/types';
+import { isISODateString } from '../../datepicker/types/typeGuards';
+import { ISODateStringToUTCDate } from '../../datepicker/utils/dateFormatUtils';
 import Box from '../components/box/Box';
-import { INVALID_DATE_VALUE } from '../../datepicker/utils/dateFormatUtils';
+
+const renderDate = (dateString = ''): string => {
+    if (dateString === '') {
+        return '';
+    }
+    const date = ISODateStringToUTCDate(dateString);
+    return date ? moment(date).format('DD.MM.YYYY') : 'invalid date';
+};
 
 const DatepickerExample: React.FunctionComponent = () => {
     const [date, setDate] = useState<DatepickerValue>('');
-    const [showInvalidFormattedDate, setShowInvalidFormattedDate] = useState<boolean>(false);
     const [showYearSelector, setShowYearSelector] = useState<boolean>(false);
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
 
@@ -29,10 +37,12 @@ const DatepickerExample: React.FunctionComponent = () => {
                     inputId="datovelger-input"
                     value={date}
                     onChange={setDate}
-                    inputProps={{ name: 'dateInput', 'aria-invalid': date === INVALID_DATE_VALUE }}
+                    inputProps={{
+                        name: 'dateInput',
+                        'aria-invalid': date !== '' && isISODateString(date) === false,
+                    }}
                     calendarSettings={{ showWeekNumbers }}
                     showYearSelector={showYearSelector}
-                    showInvalidFormattedDate={showInvalidFormattedDate}
                     limitations={{
                         weekendsNotSelectable: false,
                         invalidDateRanges: [takenRange],
@@ -40,12 +50,13 @@ const DatepickerExample: React.FunctionComponent = () => {
                         maxDate: '2020-12-12',
                     }}
                 />
-                <Box margin="l">Chosen date value: {date}</Box>
+                <Box margin="l">Chosen date: {renderDate(date)}</Box>
                 <Box margin="l">
                     <Knapp onClick={() => setDate(moment(new Date()).format(moment.HTML5_FMT.DATE))}>
                         Choose today
                     </Knapp>
-                    -<Knapp onClick={() => setDate('')}>Unselect date</Knapp>
+                    -<Knapp onClick={() => setDate('')}>Unselect date</Knapp>-
+                    <Knapp onClick={() => setDate('abc')}>Set invalid formatted date</Knapp>
                 </Box>
 
                 <Box margin="l">
@@ -76,20 +87,6 @@ const DatepickerExample: React.FunctionComponent = () => {
                                                 <code>calendarSettings.showWeekNumbers</code>
                                             </div>
                                             Toggle visibility on week numbers in calendar view
-                                        </>
-                                    }
-                                />
-                            </Box>
-                            <Box margin="l">
-                                <Checkbox
-                                    checked={showInvalidFormattedDate}
-                                    onChange={() => setShowInvalidFormattedDate(!showInvalidFormattedDate)}
-                                    label={
-                                        <>
-                                            <div>
-                                                <code>showInvalidFormattedDate</code>:
-                                            </div>
-                                            Do not clear input field when the entered date is invalid
                                         </>
                                     }
                                 />

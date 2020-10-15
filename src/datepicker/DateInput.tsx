@@ -1,10 +1,6 @@
 import React, { ChangeEvent, FocusEvent, InputHTMLAttributes, useEffect, useState } from 'react';
-import { InputDateString, INVALID_DATE_TYPE, ISODateString } from './types';
-import {
-    InputDateStringToISODateString,
-    INVALID_DATE_VALUE,
-    ISODateStringToInputDateString,
-} from './utils/dateFormatUtils';
+import { InputDateString, ISODateString } from './types';
+import { INVALID_DATE_VALUE, ISODateStringToInputDateString } from './utils/dateFormatUtils';
 
 export type DatepickerInputProps = Pick<
     InputHTMLAttributes<HTMLInputElement>,
@@ -14,40 +10,23 @@ export type DatepickerInputProps = Pick<
 interface Props {
     id?: string;
     dateValue?: ISODateString;
-    onDateChange: (date: ISODateString | INVALID_DATE_TYPE | undefined) => void;
+    onDateChange: (date: ISODateString | string | undefined) => void;
     inputProps?: DatepickerInputProps;
-    showInvalidFormattedDate?: boolean;
 }
 
 const getInitialValue = (dateValue: string): string => {
     const inputDateString = ISODateStringToInputDateString(dateValue);
-    return inputDateString === INVALID_DATE_VALUE ? '' : inputDateString;
+    return inputDateString === INVALID_DATE_VALUE ? dateValue : inputDateString;
 };
 
 const DateInput = React.forwardRef(function DateInput(
-    { id, dateValue = '', inputProps, onDateChange, showInvalidFormattedDate }: Props,
+    { id, dateValue = '', inputProps, onDateChange }: Props,
     ref: React.Ref<HTMLInputElement>
 ) {
     const [inputValue, setInputValue] = useState<InputDateString>(getInitialValue(dateValue));
 
     const triggerValueChange = (inputValue: string) => {
-        const value = (inputValue || '').trim();
-        if (value === '') {
-            onDateChange(undefined);
-            return;
-        }
-        const isoDateString = InputDateStringToISODateString(value);
-        if (isoDateString !== INVALID_DATE_VALUE) {
-            if (isoDateString !== value) {
-                onDateChange(isoDateString);
-            }
-            setInputValue(ISODateStringToInputDateString(isoDateString));
-        } else {
-            if (!showInvalidFormattedDate) {
-                setInputValue('');
-            }
-            onDateChange(INVALID_DATE_VALUE);
-        }
+        onDateChange((inputValue || '').trim());
     };
 
     const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -61,23 +40,18 @@ const DateInput = React.forwardRef(function DateInput(
     const onKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
         if (evt.key === 'Enter') {
             evt.preventDefault();
-            triggerValueChange((evt.target as HTMLInputElement).value || '');
+            triggerValueChange((evt.target as HTMLInputElement).value);
         }
     };
 
     useEffect(() => {
-        if (dateValue === INVALID_DATE_VALUE && showInvalidFormattedDate) {
-            return;
-        }
-        if (dateValue === '' || dateValue === undefined) {
-            setInputValue('');
-            return;
-        }
         const inputDateString = ISODateStringToInputDateString(dateValue);
         if (inputDateString !== INVALID_DATE_VALUE) {
             setInputValue(dateValue === undefined || dateValue === '' ? '' : inputDateString);
+        } else {
+            setInputValue(dateValue);
         }
-    }, [dateValue, showInvalidFormattedDate]);
+    }, [dateValue]);
 
     return (
         <input
