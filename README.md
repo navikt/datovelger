@@ -6,7 +6,7 @@ https://www.npmjs.com/package/react-day-picker
 # Use
 
 ```javascript
-import { Datepicker } from 'nav-datovelger';
+import { Datepicker, isISODateString } from 'nav-datovelger';
 
 const BasicDatepicker = () => {
     const [date, setDate] = useState('');
@@ -16,17 +16,20 @@ const BasicDatepicker = () => {
 };
 
 const AdvancedDatePicker = () => {
-    const [date, setDate] = useState<string | INVALID_DATE_TYPE | undefined>('');
+    const [date, setDate] = useState<string>('');
 
     return (
         <Datepicker
             locale={'nb'}
-            inputId="datovelger-input"
+            inputId="datepicker-input"
             value={date}
             onChange={setDate}
-            inputProps={{ name: 'dato', 'aria-invalid': date === INVALID_DATE_VALUE }}
-            calendarSettings={{ showWeekNumbers }}
-            showYearSelector={showYearSelector}
+            inputProps={{
+                name: 'dateInput',
+                'aria-invalid': date !== '' && isISODateString(date) === false,
+            }}
+            calendarSettings={{ showWeekNumbers: true }}
+            showYearSelector={true}
             limitations={{
                 weekendsNotSelectable: false,
                 invalidDateRanges: [{
