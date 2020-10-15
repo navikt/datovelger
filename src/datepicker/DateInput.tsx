@@ -1,6 +1,10 @@
 import React, { ChangeEvent, FocusEvent, InputHTMLAttributes, useEffect, useState } from 'react';
 import { InputDateString, ISODateString } from './types';
-import { INVALID_DATE_VALUE, ISODateStringToInputDateString } from './utils/dateFormatUtils';
+import {
+    InputDateStringToISODateString,
+    INVALID_DATE_VALUE,
+    ISODateStringToInputDateString,
+} from './utils/dateFormatUtils';
 
 export type DatepickerInputProps = Pick<
     InputHTMLAttributes<HTMLInputElement>,
@@ -25,8 +29,13 @@ const DateInput = React.forwardRef(function DateInput(
 ) {
     const [inputValue, setInputValue] = useState<InputDateString>(getInitialValue(dateValue));
 
-    const triggerValueChange = (inputValue: string) => {
-        onDateChange((inputValue || '').trim());
+    const triggerValueChange = (value = '') => {
+        const isoDateString = InputDateStringToISODateString(value.trim());
+        if (isoDateString !== INVALID_DATE_VALUE) {
+            onDateChange(isoDateString);
+        } else {
+            onDateChange(value);
+        }
     };
 
     const onChange = (evt: ChangeEvent<HTMLInputElement>) => {

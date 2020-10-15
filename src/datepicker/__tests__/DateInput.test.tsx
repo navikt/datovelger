@@ -32,9 +32,9 @@ describe('DateInput', () => {
         expect(component.find('input').prop('value')).toEqual('01.01.2019');
     });
 
-    it('Should not render invalid date string', () => {
+    it('Should render invalid date string', () => {
         const component = shallow(<DateInput id="abc" dateValue={'40-30-2019'} onDateChange={jest.fn()} />);
-        expect(component.find('input').prop('value') === 'Invalid date').toBeFalsy();
+        expect(component.find('input').prop('value') === '40-30-2019').toBeTruthy();
     });
 
     it('Should return invalid date string if selected date does not exist', () => {
@@ -42,6 +42,6 @@ describe('DateInput', () => {
         const component = shallow(<DateInput id="abc" dateValue={'40-30-2019'} onDateChange={onDateChangeMock} />);
         component.find('input').simulate('change', { target: { value: '30.02.2019' } });
         component.find('input').simulate('blur', { target: { value: '30.02.2019' } });
-        expect(onDateChangeMock).toHaveBeenCalledWith('Invalid date');
+        expect(onDateChangeMock).toHaveBeenCalledWith('30.02.2019');
     });
 });

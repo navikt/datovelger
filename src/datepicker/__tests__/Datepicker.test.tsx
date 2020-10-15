@@ -37,7 +37,7 @@ describe('Datepicker', () => {
         expect(wrapper.find('input').prop('value')).toBe('12.10.2000');
     });
 
-    it('Should set "Invalid date" when invalid date is typed into DateInput ', () => {
+    it('Should keep invalid date string in input when invalid formatted date is typed into DateInput ', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
             <Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
@@ -46,11 +46,11 @@ describe('Datepicker', () => {
         input.simulate('change', { target: { value: '1210.2000' } });
         input.simulate('blur');
         expect(changeFunction.mock.calls.length).toBe(1);
-        expect(changeFunction.mock.calls[0][0]).toEqual(undefined);
-        expect(wrapper.find('input').prop('value')).toBe('');
+        expect(changeFunction.mock.calls[0][0]).toEqual('1210.2000');
+        expect(wrapper.find('input').prop('value')).toBe('1210.2000');
     });
 
-    it('Should trigger onChange with undefined when empty string typed into DateInput ', () => {
+    it('Should trigger onChange with "" when empty string typed into DateInput ', () => {
         const changeFunction = jest.fn();
         const wrapper = mount(
             <Datepicker inputProps={{ name: 'sdf' }} inputId={'inputId'} onChange={changeFunction} />
@@ -59,7 +59,7 @@ describe('Datepicker', () => {
         input.simulate('change', { target: { value: '' } });
         input.simulate('blur');
         expect(changeFunction.mock.calls.length).toBe(1);
-        expect(changeFunction.mock.calls[0][0]).toEqual(undefined);
+        expect(changeFunction.mock.calls[0][0]).toEqual('');
         expect(wrapper.find('input').prop('value')).toBe('');
     });
 

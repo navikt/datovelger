@@ -57,7 +57,7 @@ const Datepicker = ({
         }
     }, [value, limitations, prevValue, activeMonth, dayPickerProps]);
 
-    const setDate = (value: DatepickerValue = '') => {
+    const setDate = (value = '') => {
         setCalendarIsVisible(false);
         onChange(value, isISODateString(value));
     };
