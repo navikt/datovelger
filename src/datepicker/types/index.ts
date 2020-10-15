@@ -19,4 +19,4 @@ export interface DatepickerLimitations {
     weekendsNotSelectable?: boolean;
 }
 
-export type CalendarPlacement = 'under' | 'fullskjerm' | '' | 'responsive';
+export type CalendarPlacement = 'under' | 'fullscreen' | '' | 'responsive';

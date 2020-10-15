@@ -84,7 +84,7 @@ const Datepicker = ({
                     />
                 </div>
                 {calendarIsVisible && (
-                    <CalendarPortal plassering={calendarSettings?.position}>
+                    <CalendarPortal position={calendarSettings?.position}>
                         <Calendar
                             showWeekNumbers={calendarSettings?.showWeekNumbers}
                             locale={locale}
