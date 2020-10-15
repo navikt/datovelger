@@ -14,10 +14,12 @@ import './styles/datepicker.less';
 
 export type DatepickerValue = ISODateString | string;
 
+export type DatepickerChange = (value: DatepickerValue, isValidISODateString: boolean) => void;
+
 export interface DatepickerProps {
     inputId?: string;
     value?: string | undefined;
-    onChange: (value: DatepickerValue, isValidISODateString: boolean) => void;
+    onChange: DatepickerChange;
     locale?: string;
     disabled?: boolean;
     limitations?: DatepickerLimitations;
