@@ -1,44 +1,43 @@
 # nav-datovelger
 
-Enkel datovelger basert på react-day-picker
+Simple datepicker basert på react-day-picker
 https://www.npmjs.com/package/react-day-picker
 
-# Bruk
+# Use
 
 ```javascript
-import { Datovelger } from 'nav-datovelger';
+import { Datepicker } from 'nav-datovelger';
 
-const BasicDatovelger = () => {
-    const [dato, setDato] = useState('');
+const BasicDatepicker = () => {
+    const [date, setDate] = useState('');
     return (
-        <Datovelger onChange={setDato} valgtDato={dato} />
+        <Datepicker onChange={setDato} value={date} />
     );
 };
 
-const AvansertDatovelger = () => {
-    const [dato, setDato] = useState('');
+const AdvancedDatePicker = () => {
+    const [date, setDate] = useState<string | INVALID_DATE_TYPE | undefined>('');
 
     return (
-        <Datovelger
-            valgtDato={dato}
-            onChange={(d) => setDato(d)}
-            id="minID"
-            kalender={{ visUkenumre: true }}
-            visÅrVelger={true}
+        <Datepicker
             locale={'nb'}
-            avgrensninger={{
-                helgedagerIkkeTillatt: false,
-                ugyldigeTidsperioder: [
-                    {
-                        fom: '2020-04-10',
-                        tom: '2020-04-11',
-                    }
-                ],
-                minDato: '2020-04-03',
-                maksDato: '2020-05-15',
+            inputId="datovelger-input"
+            value={date}
+            onChange={setDate}
+            inputProps={{ name: 'dato', 'aria-invalid': date === INVALID_DATE_VALUE }}
+            calendarSettings={{ showWeekNumbers }}
+            showYearSelector={showYearSelector}
+            limitations={{
+                weekendsNotSelectable: false,
+                invalidDateRanges: [{
+                    from: '2020-04-10',
+                    to: '2020-04-11',
+                }],
+                minDate: '2000-04-03',
+                maxDate: '2020-12-12',
             }}
         />
-);
+    );
 }
 ```
 

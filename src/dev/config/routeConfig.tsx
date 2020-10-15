@@ -10,9 +10,9 @@ export interface RouteConfig {
 export const routes: RouteConfig[] = [
     {
         path: 'frontpage',
-        title: 'Forside',
-        renderContent: () => <Intro />
-    }
+        title: 'Frontpage',
+        renderContent: () => <Intro />,
+    },
 ];
 
 export const getRouteConfig = (pathname: string): RouteConfig | undefined => {

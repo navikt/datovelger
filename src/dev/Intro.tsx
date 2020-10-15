@@ -1,19 +1,21 @@
 import React from 'react';
-import { Ingress, } from 'nav-frontend-typografi';
+import { Ingress, Normaltekst } from 'nav-frontend-typografi';
+import Lenke from 'nav-frontend-lenker';
 import Box from './components/box/Box';
 import PageIntro from './components/page-intro/PageIntro';
-import DatovelgerEksempel from './eksempler/DatovelgerEksempel';
+import DatepickerExample from './examples/DatepickerExample';
 
-interface Props {}
-
-const Intro: React.FunctionComponent<Props> = (props) => (
+const Intro: React.FunctionComponent = () => (
     <>
         <PageIntro title="nav-datovelger">
-            <h2>Enkel datovelger basert på react-day-picker</h2>
+            <h2>Simple datepicker based on react-day-picker</h2>
+            <Normaltekst>
+                <Lenke href="https://github.com/navikt/datovelger">GitHub repository</Lenke>
+            </Normaltekst>
         </PageIntro>
-        <Ingress style={{ marginBottom: '.5rem' }}>Eksempel:</Ingress>
+        <Ingress style={{ marginBottom: '.5rem' }}>Example:</Ingress>
         <Box>
-            <DatovelgerEksempel />
+            <DatepickerExample />
         </Box>
     </>
 );
