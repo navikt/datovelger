@@ -8,7 +8,7 @@ export const ISO_DATE_STRING_FORMAT: ISODateString = moment.HTML5_FMT.DATE;
 const ALLOWED_INPUT_FORMATS = [INPUT_DATE_STRING_FORMAT, 'DDMMYYYY', 'DD/MM/YYYY', 'DD-MM-YYYY', 'DDMMYY', 'D.M.YY'];
 
 const stringToUTCDate = (dateString: string | undefined, format: string): Date | undefined => {
-    if (dateString !== undefined && dateString.trim().length === 10) {
+    if (dateString !== undefined && dateString.trim && dateString.trim().length === 10) {
         const d = moment.utc(dateString, format, true);
         return d.isValid() ? d.toDate() : undefined;
     }
