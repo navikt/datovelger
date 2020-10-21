@@ -8,7 +8,7 @@ import {
 
 export type DatepickerInputProps = Pick<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'aria-invalid' | 'aria-label' | 'aria-describedby' | 'placeholder' | 'disabled' | 'pattern'
+    'name' | 'aria-invalid' | 'aria-label' | 'aria-describedby' | 'placeholder' | 'disabled' | 'pattern' | 'title'
 >;
 
 interface Props {
@@ -66,7 +66,6 @@ const DateInput = React.forwardRef(function DateInput(
         <input
             ref={ref}
             id={id}
-            pattern="\d{2}.\d{2}.\d{4}"
             {...inputProps}
             className={`nav-datovelger__input${
                 inputProps && inputProps['aria-invalid'] === true ? ' skjemaelement__input--harFeil' : ''
