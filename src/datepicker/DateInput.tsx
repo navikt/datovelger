@@ -23,6 +23,15 @@ const getInitialValue = (dateValue: string): string => {
     return inputDateString === INVALID_DATE_VALUE ? dateValue : inputDateString;
 };
 
+const isInputFormattedDateString = (value: any) => {
+    if (value && typeof value === 'string') {
+        const reg = /^\d{2}.\d{2}.\d{4}$/;
+        const match: RegExpMatchArray | null = value.match(reg);
+        return match !== null;
+    } else {
+        return false;
+    }
+};
 const DateInput = React.forwardRef(function DateInput(
     { id, dateValue = '', inputProps, onDateChange }: Props,
     ref: React.Ref<HTMLInputElement>
@@ -32,6 +41,9 @@ const DateInput = React.forwardRef(function DateInput(
     const triggerValueChange = (value = '') => {
         const isoDateString = InputDateStringToISODateString(value.trim());
         if (isoDateString !== INVALID_DATE_VALUE) {
+            if (!isInputFormattedDateString(value) && dateValue !== '') {
+                setInputValue(ISODateStringToInputDateString(dateValue));
+            }
             onDateChange(isoDateString);
         } else {
             onDateChange(value);
