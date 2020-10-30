@@ -6,8 +6,8 @@ export const INPUT_DATE_STRING_FORMAT: InputDateString = 'DD.MM.YYYY';
 export const ISO_DATE_STRING_FORMAT: ISODateString = moment.HTML5_FMT.DATE;
 
 moment.parseTwoDigitYear = function (yearString) {
-    const thisYear = new Date().getFullYear() / 100;
-    return parseInt(yearString) + (parseInt(yearString) > thisYear ? 1900 : 2000);
+    const yearBreakpoint = new Date().getFullYear() / 100 + 20;
+    return parseInt(yearString) + (parseInt(yearString) > yearBreakpoint ? 1900 : 2000);
 };
 
 const ALLOWED_INPUT_FORMATS = [INPUT_DATE_STRING_FORMAT, 'DDMMYYYY', 'DD/MM/YYYY', 'DD-MM-YYYY', 'DDMMYY', 'D.M.YY'];
