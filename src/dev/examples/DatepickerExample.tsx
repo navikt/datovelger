@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import Datepicker, { DatepickerValue } from '../../datepicker/Datepicker';
@@ -13,7 +13,7 @@ const renderDate = (dateString = ''): string => {
         return '';
     }
     const date = ISODateStringToUTCDate(dateString);
-    return date ? moment(date).format('DD.MM.YYYY') : 'invalid date';
+    return date ? dayjs(date).format('DD.MM.YYYY') : 'invalid date';
 };
 
 const DatepickerExample: React.FunctionComponent = () => {
@@ -52,7 +52,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                 />
                 <Box margin="l">Chosen date: {renderDate(date)}</Box>
                 <Box margin="l">
-                    <Knapp onClick={() => setDate(moment(new Date()).format(moment.HTML5_FMT.DATE))}>
+                    <Knapp onClick={() => setDate(dayjs(new Date()).format('YYYY-MM-DD'))}>
                         Choose today
                     </Knapp>
                     -<Knapp onClick={() => setDate('')}>Unselect date</Knapp>-
