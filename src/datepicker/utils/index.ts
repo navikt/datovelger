@@ -6,11 +6,11 @@ import {
     Modifier,
     RangeModifier,
 } from 'react-day-picker';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { DatepickerLimitations } from '../types';
 import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT, ISODateStringToUTCDate } from './dateFormatUtils';
 
-export const dayDateKey = (date: Date) => moment(date).format(INPUT_DATE_STRING_FORMAT);
+export const dayDateKey = (date: Date) => dayjs(date).format(INPUT_DATE_STRING_FORMAT);
 
 export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] => {
     let invalidDates: Modifier[] = [];
@@ -36,14 +36,14 @@ export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] 
     };
     return [
         ...invalidDates,
-        ...(maxDate ? [{ after: moment(maxDate, ISO_DATE_STRING_FORMAT).toDate() } as AfterModifier] : []),
-        ...(minDate ? [{ before: moment(minDate, ISO_DATE_STRING_FORMAT).toDate() } as BeforeModifier] : []),
+        ...(maxDate ? [{ after: dayjs(maxDate, ISO_DATE_STRING_FORMAT).toDate() } as AfterModifier] : []),
+        ...(minDate ? [{ before: dayjs(minDate, ISO_DATE_STRING_FORMAT).toDate() } as BeforeModifier] : []),
         ...[weekendDays as DaysOfWeekModifier],
     ];
 };
 
 export const isSameDate = (d1: Date, d2: Date) => {
-    return moment(d1).isSame(d2, 'day');
+    return dayjs(d1).isSame(d2, 'day');
 };
 
 export const getDefaultMonth = (
@@ -51,17 +51,17 @@ export const getDefaultMonth = (
     limitations: DatepickerLimitations | undefined,
     dayPickerProps: DayPickerProps | undefined
 ): Date => {
-    const d = moment.utc(dateString, ISO_DATE_STRING_FORMAT, true);
-    if (dateString && d.isValid()) {
-        return d.toDate();
+    const d = dayjs(dateString).utc(true).format(ISO_DATE_STRING_FORMAT);
+    if (dateString && dayjs(d).isValid()) {
+        return dayjs(d).toDate();
     }
     if (dayPickerProps && dayPickerProps.initialMonth) {
         return dayPickerProps.initialMonth;
     }
-    const today = moment().toDate();
+    const today = dayjs().toDate();
     if (limitations && limitations.minDate) {
-        return moment(limitations.minDate).isAfter(today)
-            ? moment(limitations.minDate, ISO_DATE_STRING_FORMAT).toDate()
+        return dayjs(limitations.minDate).isAfter(today)
+            ? dayjs(limitations.minDate, ISO_DATE_STRING_FORMAT).toDate()
             : today;
     }
     return today;
