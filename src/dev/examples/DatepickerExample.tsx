@@ -52,10 +52,8 @@ const DatepickerExample: React.FunctionComponent = () => {
                 />
                 <Box margin="l">Chosen date: {renderDate(date)}</Box>
                 <Box margin="l">
-                    <Knapp onClick={() => setDate(dayjs(new Date()).format('YYYY-MM-DD'))}>
-                        Choose today
-                    </Knapp>
-                    -<Knapp onClick={() => setDate('')}>Unselect date</Knapp>-
+                    <Knapp onClick={() => setDate(dayjs(new Date()).format('YYYY-MM-DD'))}>Choose today</Knapp>-
+                    <Knapp onClick={() => setDate('')}>Unselect date</Knapp>-
                     <Knapp onClick={() => setDate('abc')}>Set invalid formatted date</Knapp>
                 </Box>
 
