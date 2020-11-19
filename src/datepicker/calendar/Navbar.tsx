@@ -1,7 +1,7 @@
 import React from 'react';
 import { LocaleUtils } from 'react-day-picker';
 import classnames from 'classnames';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Chevron from '../elementer/ChevronSvg';
 import { Texts } from '../texts';
 import { NavigationFocusElement } from './Calendar';
@@ -58,11 +58,11 @@ class Navbar extends React.Component<Props> {
     render() {
         const { defaultMonth, onChangeMonth, minDate, maxDate, showYearSelector, locale, localeUtils } = this.props;
 
-        const previousMonth = moment(defaultMonth).add(-1, 'months');
-        const nextMonth = moment(defaultMonth).add(1, 'months');
+        const previousMonth = dayjs(defaultMonth).subtract(1, 'month');
+        const nextMonth = dayjs(defaultMonth).add(1, 'month');
 
-        const lastMonthIsDisabled = minDate ? moment(minDate).isAfter(previousMonth.endOf('month')) : false;
-        const nextMonthIsDisabled = maxDate ? moment(maxDate).isBefore(nextMonth.startOf('month')) : false;
+        const lastMonthIsDisabled = minDate ? dayjs(minDate).isAfter(previousMonth.endOf('month')) : false;
+        const nextMonthIsDisabled = maxDate ? dayjs(maxDate).isBefore(nextMonth.startOf('month')) : false;
 
         const onClick = (
             evt: React.MouseEvent<HTMLButtonElement>,

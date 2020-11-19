@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react';
 import { LocaleUtils } from 'react-day-picker';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { guid } from 'nav-frontend-js-utils';
 import { NavigationFocusElement } from './Calendar';
 
@@ -72,9 +72,9 @@ class YearSelector extends React.Component<Props> {
         const year = parseInt(this.yearSelect?.value || '', 10);
         const month = parseInt(this.monthSelect?.value || '', 10);
         const newDate = new Date(year, month);
-        if (this.props.minDate && moment(newDate).isBefore(this.props.minDate)) {
+        if (this.props.minDate && dayjs(newDate).isBefore(this.props.minDate)) {
             this.props.onChange(this.props.minDate, 'year');
-        } else if (this.props.maxDate && moment(newDate).isAfter(this.props.maxDate)) {
+        } else if (this.props.maxDate && dayjs(newDate).isAfter(this.props.maxDate)) {
             this.props.onChange(this.props.maxDate, 'year');
         } else {
             this.props.onChange(newDate, 'year');
@@ -85,7 +85,7 @@ class YearSelector extends React.Component<Props> {
         const {
             defaultMonth,
             minDate: min = new Date(1900, 0, 1),
-            maxDate: max = moment().add(4, 'years').toDate(),
+            maxDate: max = dayjs().add(4, 'year').toDate(),
             localeUtils,
             locale,
         } = this.props;
