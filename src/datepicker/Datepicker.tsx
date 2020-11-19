@@ -48,22 +48,29 @@ const Datepicker = ({
 }: DatepickerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMonth(value, limitations, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
-
     const prevValue = usePrevious(value);
+    const initialMonthPrevValue = usePrevious(dayPickerProps?.initialMonth);
+
     useEffect(() => {
+        const initialMonth = dayPickerProps?.initialMonth;
+        if (initialMonth !== initialMonthPrevValue && value === prevValue) {
+            const defaultMonth = getDefaultMonth(value, limitations, dayPickerProps);
+            if (!isSameDate(defaultMonth, activeMonth)) {
+                setActiveMonth(defaultMonth);
+            }
+        }
         if (value !== prevValue) {
             const defaultMonth = getDefaultMonth(value, limitations, dayPickerProps);
             if (!isSameDate(defaultMonth, activeMonth)) {
                 setActiveMonth(defaultMonth);
             }
         }
-    }, [value, limitations, prevValue, activeMonth, dayPickerProps]);
+    }, [value, limitations, prevValue, activeMonth, dayPickerProps, initialMonthPrevValue]);
 
     const setDate = (value = '') => {
         setCalendarIsVisible(false);
         onChange(value, isISODateString(value));
     };
-
     return (
         <DomEventContainer>
             <div className="nav-datovelger">

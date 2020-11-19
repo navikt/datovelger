@@ -101,14 +101,14 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     locale={locale}
                     fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
                     toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
-                    month={displayMonth}
                     canChangeMonth={false}
                     selectedDays={dateString ? ISODateStringToUTCDate(dateString) : undefined}
                     onDayClick={onSelectDate}
                     onMonthChange={onChangeMonth}
                     disabledDays={unavailableDates}
-                    {...dayPickerPropsToUse}
                     {...dayPickerProps}
+                    {...dayPickerPropsToUse}
+                    month={displayMonth}
                 />
             </FocusTrap>
         </div>
