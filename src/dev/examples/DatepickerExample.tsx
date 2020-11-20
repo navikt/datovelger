@@ -20,6 +20,7 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [date, setDate] = useState<DatepickerValue>('');
     const [showYearSelector, setShowYearSelector] = useState<boolean>(false);
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
+    const [initialMonth, setInitialMonth] = useState<Date | undefined>();
 
     const takenRange: DatepickerDateRange = {
         from: '2020-04-10',
@@ -49,17 +50,42 @@ const DatepickerExample: React.FunctionComponent = () => {
                         minDate: '2000-04-03',
                         maxDate: '2020-12-12',
                     }}
+                    dayPickerProps={{
+                        initialMonth,
+                    }}
                 />
                 <Box margin="l">Chosen date: {renderDate(date)}</Box>
-                <Box margin="l">
-                    <Knapp onClick={() => setDate(dayjs(new Date()).format('YYYY-MM-DD'))}>
+                <Box margin="m">
+                    <Knapp mini={true} onClick={() => setDate(dayjs(new Date()).format('YYYY-MM-DD'))}>
                         Choose today
                     </Knapp>
-                    -<Knapp onClick={() => setDate('')}>Unselect date</Knapp>-
-                    <Knapp onClick={() => setDate('abc')}>Set invalid formatted date</Knapp>
+                    -
+                    <Knapp mini={true} onClick={() => setDate('')}>
+                        Unselect date
+                    </Knapp>
+                    -
+                    <Knapp mini={true} onClick={() => setDate('abc')}>
+                        Set invalid formatted date
+                    </Knapp>
+                </Box>
+                <Box margin="xl">
+                    Initial month: {initialMonth ? renderDate(dayjs(initialMonth).format('YYYY-MM-DD')) : undefined}
+                </Box>
+                <Box margin="m">
+                    <Knapp mini={true} onClick={() => setInitialMonth(new Date())}>
+                        Choose this month
+                    </Knapp>
+                    -
+                    <Knapp mini={true} onClick={() => setInitialMonth(undefined)}>
+                        Undefined
+                    </Knapp>
+                    -
+                    <Knapp mini={true} onClick={() => setInitialMonth(new Date(2020, 0, 1))}>
+                        2020.01.01
+                    </Knapp>
                 </Box>
 
-                <Box margin="l">
+                <Box margin="xl">
                     <fieldset>
                         <legend>Presentation properties</legend>
                         <div style={{ padding: '1rem' }}>
