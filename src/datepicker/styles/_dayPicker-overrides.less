@@ -51,10 +51,11 @@
                 background-color: @navBla !important;
             }
             &--disabled  {
-                color: @navGra40;
+                color: @navGra80;
                 background-color: @c-blockedDays;
                 font-weight: normal !important;
                 position: relative;
+                text-decoration: line-through;
             }
             &--outside {
                 background-color: transparent;
@@ -66,10 +67,12 @@
                 }
             }
             &:last-child {
-                color: @navRodLighten60 !important;
+                color: @navRod !important;
+                font-style: italic;
             }
         }
         &-Weekday {
+            color: @navGra80;
             text-transform: capitalize;
         }
         &-Caption  {
