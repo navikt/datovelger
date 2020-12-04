@@ -39,6 +39,7 @@
         "core-js": "^3.6.5",
         "craco-less": "^1.17.0",
         "cz-conventional-changelog": "^3.3.0",
+        "date-holidays": "^1.8.3",
         "dayjs": "^1.9.6",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",

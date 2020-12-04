@@ -7,6 +7,7 @@ import { DatepickerDateRange } from '../../datepicker/types';
 import { isISODateString } from '../../datepicker/types/typeGuards';
 import { ISODateStringToUTCDate } from '../../datepicker/utils/dateFormatUtils';
 import Box from '../components/box/Box';
+import { holidays } from '../utils/holidays';
 
 const renderDate = (dateString = ''): string => {
     if (dateString === '') {
@@ -16,10 +17,17 @@ const renderDate = (dateString = ''): string => {
     return date ? dayjs(date).format('DD.MM.YYYY') : 'invalid date';
 };
 
+// const holidays = getPublicHolidays(new Date(2018, 0, 1), new Date(2022, 11, 31));
+
+const isPublicHoliday = (d: Date): boolean => {
+    return holidays.some((d2) => dayjs(d2.date).isSame(d, 'day'));
+};
+
 const DatepickerExample: React.FunctionComponent = () => {
     const [date, setDate] = useState<DatepickerValue>('');
     const [showYearSelector, setShowYearSelector] = useState<boolean>(false);
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
+    const [showPublicHolidays, setShowPublicHolidays] = useState<boolean>(true);
     const [initialMonth, setInitialMonth] = useState<Date | undefined>();
 
     const takenRange: DatepickerDateRange = {
@@ -52,6 +60,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                     }}
                     dayPickerProps={{
                         initialMonth,
+                        modifiers: showPublicHolidays ? { isPublicHoliday } : undefined,
                     }}
                 />
                 <Box margin="l">Chosen date: {renderDate(date)}</Box>
@@ -113,6 +122,20 @@ const DatepickerExample: React.FunctionComponent = () => {
                                                 <code>calendarSettings.showWeekNumbers</code>
                                             </div>
                                             Toggle visibility on week numbers in calendar view
+                                        </>
+                                    }
+                                />
+                            </Box>
+                            <Box margin="l">
+                                <Checkbox
+                                    checked={showPublicHolidays}
+                                    onChange={() => setShowPublicHolidays(!showPublicHolidays)}
+                                    label={
+                                        <>
+                                            <div>
+                                                <code>Custom - show holiday</code>
+                                            </div>
+                                            Possibility to highlight special days
                                         </>
                                     }
                                 />

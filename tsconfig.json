@@ -19,6 +19,7 @@
         "declaration": true,
         "moduleResolution": "node",
         "noEmit": true,
+        "typeRoots": ["src/dev/@types"],
         "baseUrl": "./src"
     },
     "include": ["src"],
