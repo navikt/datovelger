@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/datovelger/static/css/main.238b1a08.chunk.css",
+    "main.css": "/datovelger/static/css/main.b1aac70f.chunk.css",
     "main.js": "/datovelger/static/js/main.cd3790c5.chunk.js",
     "main.js.map": "/datovelger/static/js/main.cd3790c5.chunk.js.map",
     "runtime-main.js": "/datovelger/static/js/runtime-main.d9e63391.js",
@@ -9,17 +9,17 @@
     "static/js/2.0774a734.chunk.js": "/datovelger/static/js/2.0774a734.chunk.js",
     "static/js/2.0774a734.chunk.js.map": "/datovelger/static/js/2.0774a734.chunk.js.map",
     "index.html": "/datovelger/index.html",
-    "precache-manifest.fe12c674c1839a0554b71f28324ef857.js": "/datovelger/precache-manifest.fe12c674c1839a0554b71f28324ef857.js",
+    "precache-manifest.f867b719a33648984a59b97ab009abed.js": "/datovelger/precache-manifest.f867b719a33648984a59b97ab009abed.js",
     "service-worker.js": "/datovelger/service-worker.js",
     "static/css/2.b3fc4309.chunk.css.map": "/datovelger/static/css/2.b3fc4309.chunk.css.map",
-    "static/css/main.238b1a08.chunk.css.map": "/datovelger/static/css/main.238b1a08.chunk.css.map",
+    "static/css/main.b1aac70f.chunk.css.map": "/datovelger/static/css/main.b1aac70f.chunk.css.map",
     "static/js/2.0774a734.chunk.js.LICENSE.txt": "/datovelger/static/js/2.0774a734.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d9e63391.js",
     "static/css/2.b3fc4309.chunk.css",
     "static/js/2.0774a734.chunk.js",
-    "static/css/main.238b1a08.chunk.css",
+    "static/css/main.b1aac70f.chunk.css",
     "static/js/main.cd3790c5.chunk.js"
   ]
 }

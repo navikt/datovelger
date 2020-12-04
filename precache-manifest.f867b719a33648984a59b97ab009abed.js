@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d6a5392da59372f171cb17815b028ff1",
+    "revision": "2bceee097b89755ec81f93bc7c7c2e3d",
     "url": "/datovelger/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/datovelger/static/css/2.b3fc4309.chunk.css"
   },
   {
-    "revision": "7dbc73f437a8515411d7",
-    "url": "/datovelger/static/css/main.238b1a08.chunk.css"
+    "revision": "39090111ea2cee0a2cdc",
+    "url": "/datovelger/static/css/main.b1aac70f.chunk.css"
   },
   {
     "revision": "760755a521c9a2402e74",
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/datovelger/static/js/2.0774a734.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7dbc73f437a8515411d7",
+    "revision": "39090111ea2cee0a2cdc",
     "url": "/datovelger/static/js/main.cd3790c5.chunk.js"
   },
   {
