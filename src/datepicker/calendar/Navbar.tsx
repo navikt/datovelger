@@ -16,7 +16,6 @@ interface Props {
     minDate?: Date;
     maxDate?: Date;
     showYearSelector?: boolean;
-    locale: string;
     localeUtils: LocaleUtils;
 }
 
@@ -48,7 +47,7 @@ class NavbarButton extends React.Component<NavbarButtonProps> {
     }
 }
 
-const createCaption = (props: Props) => props.localeUtils.formatMonthTitle(props.defaultMonth, props.locale);
+const createCaption = (props: Props) => props.localeUtils.formatMonthTitle(props.defaultMonth);
 
 class Navbar extends React.Component<Props> {
     shouldComponentUpdate(nextProps: any) {
@@ -56,7 +55,7 @@ class Navbar extends React.Component<Props> {
     }
 
     render() {
-        const { defaultMonth, onChangeMonth, minDate, maxDate, showYearSelector, locale, localeUtils } = this.props;
+        const { defaultMonth, onChangeMonth, minDate, maxDate, showYearSelector, localeUtils } = this.props;
 
         const previousMonth = dayjs(defaultMonth).subtract(1, 'month');
         const nextMonth = dayjs(defaultMonth).add(1, 'month');
@@ -85,7 +84,6 @@ class Navbar extends React.Component<Props> {
                             defaultMonth={defaultMonth}
                             maxDate={maxDate}
                             minDate={minDate}
-                            locale={locale}
                             localeUtils={localeUtils}
                             onChange={(month, focusElement) => onChangeMonth(month, focusElement)}
                         />
