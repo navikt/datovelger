@@ -20,7 +20,6 @@ export interface DatepickerProps {
     inputId?: string;
     value?: string | undefined;
     onChange: DatepickerChange;
-    locale?: string;
     disabled?: boolean;
     limitations?: DatepickerLimitations;
     calendarSettings?: {
@@ -39,7 +38,6 @@ const Datepicker = ({
     value,
     inputProps,
     calendarSettings,
-    locale = 'nb',
     disabled,
     allowInvalidDateSelection,
     showYearSelector,
@@ -92,7 +90,6 @@ const Datepicker = ({
                     <CalendarPortal position={calendarSettings?.position}>
                         <Calendar
                             showWeekNumbers={calendarSettings?.showWeekNumbers}
-                            locale={locale}
                             dateString={value}
                             month={activeMonth}
                             minDateString={limitations && limitations.minDate}

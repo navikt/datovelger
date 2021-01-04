@@ -20,7 +20,6 @@ const AdvancedDatePicker = () => {
 
     return (
         <Datepicker
-            locale={'nb'}
             inputId="datepicker-input"
             value={date}
             onChange={setDate}
@@ -43,6 +42,8 @@ const AdvancedDatePicker = () => {
     );
 }
 ```
+# Språk
+Default locale er 'nb'. Annet locale må settes gjenneom å bruke dayjs.locale('nb' | 'nn' | 'en')
 
 # Kjøre eksempel-app
 

@@ -1,12 +1,11 @@
 import FocusTrap from 'focus-trap-react';
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import DayPicker, { DayModifiers, DayPickerProps, LocaleUtils, Modifier } from 'react-day-picker';
 import { ISODateString } from '../types';
 import { setFocusOnCalendarMonth } from '../utils/calendarFocusUtils';
 import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
 import calendarLocaleUtils from '../utils/calendarLocaleUtils';
 import Navbar from './Navbar';
-import dayjs from 'dayjs';
 
 require('dayjs/locale/nb.js');
 require('dayjs/locale/nn.js');
@@ -15,7 +14,6 @@ interface Props {
     dateString?: ISODateString;
     minDateString?: ISODateString;
     maxDateString?: ISODateString;
-    locale: string;
     localeUtils?: LocaleUtils;
     onSelect: (dateString: ISODateString) => void;
     onClose: () => void;
@@ -35,7 +33,6 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         dateString,
         minDateString,
         maxDateString,
-        locale = 'nb',
         localeUtils,
         showWeekNumbers,
         unavailableDates,
@@ -45,10 +42,6 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         onSelect,
         dayPickerProps,
     } = props;
-
-    useEffect(() => {
-        dayjs.locale(locale);
-    }, [locale]);
 
     const onSelectDate = (date: Date, modifiers: DayModifiers) => {
         if (allowInvalidDateSelection || !modifiers.disabled) {
@@ -69,7 +62,6 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
     };
 
     const dayPickerPropsToUse: DayPickerProps = {
-        locale,
         localeUtils: calendarLocaleUtils,
         navbarElement: function navbarElement() {
             return <span />;
@@ -83,7 +75,6 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     onChangeMonth={onChangeMonth}
                     minDate={minDate}
                     maxDate={maxDate}
-                    locale={locale}
                     localeUtils={{
                         ...calendarLocaleUtils,
                         ...localeUtils,
@@ -105,7 +96,6 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     onDeactivate: onClose,
                 }}>
                 <DayPicker
-                    locale={locale}
                     fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
                     toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
                     canChangeMonth={false}

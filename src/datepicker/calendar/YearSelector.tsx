@@ -10,7 +10,6 @@ export interface Props {
     minDate?: Date;
     maxDate?: Date;
     localeUtils: LocaleUtils;
-    locale: string;
     onChange: (month: Date, focusElement: NavigationFocusElement) => void;
 }
 
@@ -87,9 +86,8 @@ class YearSelector extends React.Component<Props> {
             minDate: min = new Date(1900, 0, 1),
             maxDate: max = dayjs().add(4, 'year').toDate(),
             localeUtils,
-            locale,
         } = this.props;
-        const monthNames = localeUtils.getMonths(locale);
+        const monthNames = localeUtils.getMonths();
         const monthOptions = getAvailableMonths(monthNames, defaultMonth, min, max);
         const years: number[] = [];
 

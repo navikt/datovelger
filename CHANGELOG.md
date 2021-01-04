@@ -20,7 +20,6 @@ Rewrite and simplification. Props are changed and removed, and the change event 
     inputId?: string; // replaces previous two id's
     value?: string | undefined; // was valgtDato
     onChange: (value: DatepickerValue, isValidISODateString: boolean) => void;  // se comments below
-    locale?: string; // unchanged
     disabled?: boolean; // unchanged
     limitations?: DatepickerLimitations; // was avgrensninger
     calendarSettings?: { // was kalender

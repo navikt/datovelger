@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
@@ -27,11 +27,15 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
     const [showPublicHolidays, setShowPublicHolidays] = useState<boolean>(true);
     const [initialMonth, setInitialMonth] = useState<Date | undefined>();
-    const [locale, setLocale] = useState<string>('en');
+    const [locale, setLocale] = useState<string>('nb');
+
+    useEffect(() => {
+        dayjs.locale(locale);
+    }, [locale]);
 
     const takenRange: DatepickerDateRange = {
         from: '2020-04-10',
-        to: '2020-04-11',
+        to: '2022-04-11',
     };
 
     return (
@@ -41,7 +45,6 @@ const DatepickerExample: React.FunctionComponent = () => {
                     Choose date (format dd.mm.yyyy)
                 </label>
                 <Datepicker
-                    locale={locale}
                     inputId="datovelger-input"
                     value={date}
                     onChange={setDate}

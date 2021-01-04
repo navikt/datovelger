@@ -7,31 +7,31 @@ import { dateToInputDateString } from './dateFormatUtils';
 dayjs.extend(localeData);
 dayjs.extend(utc);
 
-function formatDay(day: Date, locale = 'en') {
-    return dayjs(day).locale(locale).format('DD.MM.YYYY, dddd');
+function formatDay(day: Date) {
+    return dayjs(day).format('DD.MM.YYYY, dddd');
 }
 
-function formatMonthTitle(date: Date, locale = 'en') {
-    return dayjs(date).locale(locale).format('MMMM YYYY');
+function formatMonthTitle(date: Date) {
+    return dayjs(date).format('MMMM YYYY');
 }
 
-function formatWeekdayShort(day: number, locale = 'en') {
-    return dayjs().locale(locale).localeData().weekdays()[day].substr(0, 3);
+function formatWeekdayShort(day: number) {
+    return dayjs().localeData().weekdays()[day].substr(0, 3);
 }
 
-function formatWeekdayLong(day: number, locale = 'en') {
-    return dayjs().locale(locale).localeData().weekdays()[day];
+function formatWeekdayLong(day: number) {
+    return dayjs().localeData().weekdays()[day];
 }
 
-function getFirstDayOfWeek(locale) {
-    return dayjs().locale(locale).localeData().firstDayOfWeek();
+function getFirstDayOfWeek() {
+    return dayjs().localeData().firstDayOfWeek();
 }
 
-function getMonths(locale) {
+function getMonths() {
     const months: string[] = [];
     let i = 0;
     while (i < 12) {
-        months.push(dayjs().locale(locale).month(i).format('MMMM'));
+        months.push(dayjs().month(i).format('MMMM'));
         i += 1;
     }
     return months as any;
