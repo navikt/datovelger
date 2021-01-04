@@ -1,25 +1,23 @@
 {
   "files": {
-    "main.css": "/datovelger/static/css/main.b1aac70f.chunk.css",
-    "main.js": "/datovelger/static/js/main.cd3790c5.chunk.js",
-    "main.js.map": "/datovelger/static/js/main.cd3790c5.chunk.js.map",
-    "runtime-main.js": "/datovelger/static/js/runtime-main.d9e63391.js",
-    "runtime-main.js.map": "/datovelger/static/js/runtime-main.d9e63391.js.map",
-    "static/css/2.b3fc4309.chunk.css": "/datovelger/static/css/2.b3fc4309.chunk.css",
-    "static/js/2.0774a734.chunk.js": "/datovelger/static/js/2.0774a734.chunk.js",
-    "static/js/2.0774a734.chunk.js.map": "/datovelger/static/js/2.0774a734.chunk.js.map",
+    "main.css": "/datovelger/static/css/main.4659f660.chunk.css",
+    "main.js": "/datovelger/static/js/main.809f996e.chunk.js",
+    "main.js.map": "/datovelger/static/js/main.809f996e.chunk.js.map",
+    "runtime-main.js": "/datovelger/static/js/runtime-main.319924e1.js",
+    "runtime-main.js.map": "/datovelger/static/js/runtime-main.319924e1.js.map",
+    "static/css/2.849a81a8.chunk.css": "/datovelger/static/css/2.849a81a8.chunk.css",
+    "static/js/2.b97094b1.chunk.js": "/datovelger/static/js/2.b97094b1.chunk.js",
+    "static/js/2.b97094b1.chunk.js.map": "/datovelger/static/js/2.b97094b1.chunk.js.map",
     "index.html": "/datovelger/index.html",
-    "precache-manifest.f867b719a33648984a59b97ab009abed.js": "/datovelger/precache-manifest.f867b719a33648984a59b97ab009abed.js",
-    "service-worker.js": "/datovelger/service-worker.js",
-    "static/css/2.b3fc4309.chunk.css.map": "/datovelger/static/css/2.b3fc4309.chunk.css.map",
-    "static/css/main.b1aac70f.chunk.css.map": "/datovelger/static/css/main.b1aac70f.chunk.css.map",
-    "static/js/2.0774a734.chunk.js.LICENSE.txt": "/datovelger/static/js/2.0774a734.chunk.js.LICENSE.txt"
+    "static/css/2.849a81a8.chunk.css.map": "/datovelger/static/css/2.849a81a8.chunk.css.map",
+    "static/css/main.4659f660.chunk.css.map": "/datovelger/static/css/main.4659f660.chunk.css.map",
+    "static/js/2.b97094b1.chunk.js.LICENSE.txt": "/datovelger/static/js/2.b97094b1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d9e63391.js",
-    "static/css/2.b3fc4309.chunk.css",
-    "static/js/2.0774a734.chunk.js",
-    "static/css/main.b1aac70f.chunk.css",
-    "static/js/main.cd3790c5.chunk.js"
+    "static/js/runtime-main.319924e1.js",
+    "static/css/2.849a81a8.chunk.css",
+    "static/js/2.b97094b1.chunk.js",
+    "static/css/main.4659f660.chunk.css",
+    "static/js/main.809f996e.chunk.js"
   ]
 }
