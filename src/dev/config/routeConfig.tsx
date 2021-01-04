@@ -11,7 +11,9 @@ export const routes: RouteConfig[] = [
     {
         path: 'frontpage',
         title: 'Frontpage',
-        renderContent: () => <Intro />,
+        renderContent: function RenderContent() {
+            return <Intro />;
+        },
     },
 ];
 
