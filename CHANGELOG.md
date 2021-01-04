@@ -1,6 +1,6 @@
 # Changelog
-
-
+## [9.0.0] - 2021-01-04
+Remove locale prop on datovelger, and rely on dayjs.locale instead. Calendar has support for 'nb', 'nn' and 'en' locale, and defaults to 'nb'. This was 'en'.
 
 ## [7.0.0-beta.1] - 2020-12-14
 Rewrite and simplification. Props are changed and removed, and the change event will now always send the selected date or value in the input field - disregarding if the value is a valid date string or not. This is no the containing apps responsibility. The onChange event will send an extra prop saying if the date is valid, but this is only as a helping value, and is not reflected within the component.
