@@ -6,6 +6,7 @@ import { setFocusOnCalendarMonth } from '../utils/calendarFocusUtils';
 import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
 import calendarLocaleUtils from '../utils/calendarLocaleUtils';
 import Navbar from './Navbar';
+import dayjs from 'dayjs';
 
 require('dayjs/locale/nb.js');
 require('dayjs/locale/nn.js');
@@ -96,6 +97,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     onDeactivate: onClose,
                 }}>
                 <DayPicker
+                    locale={dayjs.locale()}
                     fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
                     toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
                     canChangeMonth={false}
