@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import Knapp from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import Datepicker, { DatepickerValue } from '../../datepicker/Datepicker';
-import { DatepickerDateRange } from '../../datepicker/types';
+import { DatepickerDateRange, DatepickerLocales } from '../../datepicker/types';
 import { isISODateString } from '../../datepicker/types/typeGuards';
 import { ISODateStringToUTCDate } from '../../datepicker/utils/dateFormatUtils';
 import Box from '../components/box/Box';
@@ -27,11 +27,11 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
     const [showPublicHolidays, setShowPublicHolidays] = useState<boolean>(true);
     const [initialMonth, setInitialMonth] = useState<Date | undefined>();
-    const [locale, setLocale] = useState<string>('nb');
+    const [locale, setLocale] = useState<DatepickerLocales>('nb');
 
-    useEffect(() => {
-        dayjs.locale(locale);
-    }, [locale]);
+    // useEffect(() => {
+    //     dayjs.locale(locale);
+    // }, [locale]);
 
     const takenRange: DatepickerDateRange = {
         from: '2020-04-10',
@@ -52,6 +52,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                         name: 'dateInput',
                         'aria-invalid': date !== '' && isISODateString(date) === false,
                     }}
+                    locale={locale}
                     calendarSettings={{ showWeekNumbers }}
                     showYearSelector={showYearSelector}
                     limitations={{

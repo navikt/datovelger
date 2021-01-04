@@ -7,7 +7,7 @@ import DateInput, { DatepickerInputProps } from './DateInput';
 import CalendarButton from './elementer/CalendarButton';
 import CalendarPortal from './elementer/CalendarPortal';
 import { usePrevious } from './hooks/usePrevious';
-import { CalendarPlacement, DatepickerLimitations, ISODateString } from './types';
+import { CalendarPlacement, DatepickerLimitations, DatepickerLocales, ISODateString } from './types';
 import { isISODateString } from './types/typeGuards';
 import { getDefaultMonth, getInvalidDates, isSameDate } from './utils';
 import './styles/datepicker.less';
@@ -26,6 +26,7 @@ export interface DatepickerProps {
         showWeekNumbers?: boolean;
         position?: CalendarPlacement;
     };
+    locale?: DatepickerLocales;
     inputProps?: DatepickerInputProps & { inputRef?: React.Ref<HTMLInputElement> };
     allowInvalidDateSelection?: boolean;
     showYearSelector?: boolean;
@@ -40,6 +41,7 @@ const Datepicker = ({
     calendarSettings,
     disabled,
     allowInvalidDateSelection,
+    locale = 'nb',
     showYearSelector,
     onChange,
     dayPickerProps,
@@ -89,6 +91,7 @@ const Datepicker = ({
                 {calendarIsVisible && (
                     <CalendarPortal position={calendarSettings?.position}>
                         <Calendar
+                            locale={locale}
                             showWeekNumbers={calendarSettings?.showWeekNumbers}
                             dateString={value}
                             month={activeMonth}

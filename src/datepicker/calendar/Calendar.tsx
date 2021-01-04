@@ -1,15 +1,15 @@
 import FocusTrap from 'focus-trap-react';
 import React, { MutableRefObject, useState } from 'react';
 import DayPicker, { DayModifiers, DayPickerProps, LocaleUtils, Modifier } from 'react-day-picker';
-import { ISODateString } from '../types';
+import { DatepickerLocales, ISODateString } from '../types';
 import { setFocusOnCalendarMonth } from '../utils/calendarFocusUtils';
 import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
 import calendarLocaleUtils from '../utils/calendarLocaleUtils';
 import Navbar from './Navbar';
-import dayjs from 'dayjs';
 
 require('dayjs/locale/nb.js');
 require('dayjs/locale/nn.js');
+
 interface Props {
     month: Date;
     dateString?: ISODateString;
@@ -22,6 +22,7 @@ interface Props {
     allowInvalidDateSelection?: boolean;
     showWeekNumbers?: boolean;
     showYearSelector?: boolean;
+    locale: DatepickerLocales;
     dayPickerProps?: DayPickerProps;
 }
 
@@ -39,6 +40,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         unavailableDates,
         showYearSelector,
         allowInvalidDateSelection,
+        locale,
         onClose,
         onSelect,
         dayPickerProps,
@@ -97,7 +99,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     onDeactivate: onClose,
                 }}>
                 <DayPicker
-                    locale={dayjs.locale()}
+                    locale={locale}
                     fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
                     toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
                     canChangeMonth={false}
