@@ -17,8 +17,6 @@ const renderDate = (dateString = ''): string => {
     return date ? dayjs(date).format('DD.MM.YYYY') : 'invalid date';
 };
 
-// const holidays = getPublicHolidays(new Date(2018, 0, 1), new Date(2022, 11, 31));
-
 const isPublicHoliday = (d: Date): boolean => {
     return holidays.some((d2) => dayjs(d2.date).isSame(d, 'day'));
 };
@@ -29,6 +27,7 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [showWeekNumbers, setShowWeekNumbers] = useState<boolean>(false);
     const [showPublicHolidays, setShowPublicHolidays] = useState<boolean>(true);
     const [initialMonth, setInitialMonth] = useState<Date | undefined>();
+    const [locale, setLocale] = useState<string>('en');
 
     const takenRange: DatepickerDateRange = {
         from: '2020-04-10',
@@ -42,7 +41,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                     Choose date (format dd.mm.yyyy)
                 </label>
                 <Datepicker
-                    locale={'nb'}
+                    locale={locale}
                     inputId="datovelger-input"
                     value={date}
                     onChange={setDate}
@@ -77,6 +76,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                         Set invalid formatted date
                     </Knapp>
                 </Box>
+
                 <Box margin="xl">
                     Initial month: {initialMonth ? renderDate(dayjs(initialMonth).format('YYYY-MM-DD')) : undefined}
                 </Box>
@@ -91,6 +91,21 @@ const DatepickerExample: React.FunctionComponent = () => {
                     -
                     <Knapp mini={true} onClick={() => setInitialMonth(new Date(2020, 0, 1))}>
                         2020.01.01
+                    </Knapp>
+                </Box>
+
+                <Box margin="xl">Locale: {locale}</Box>
+                <Box margin="m">
+                    <Knapp mini={true} onClick={() => setLocale('nb')}>
+                        nb
+                    </Knapp>
+                    -
+                    <Knapp mini={true} onClick={() => setLocale('nn')}>
+                        nn
+                    </Knapp>
+                    -
+                    <Knapp mini={true} onClick={() => setLocale('en')}>
+                        en
                     </Knapp>
                 </Box>
 

@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link, useHistory, } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import 'nav-frontend-lenker-style';
-import { isActiveRoute, routes, } from '../../config/routeConfig';
+import { isActiveRoute, routes } from '../../config/routeConfig';
 import bemUtils from '../../utils/bemUtils';
 
 const lenkeBem = bemUtils('lenke');
 
 const LeftMenu: React.FunctionComponent = () => {
     const {
-        location: { pathname }
+        location: { pathname },
     } = useHistory();
     return (
         <div className="leftMenu">

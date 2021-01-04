@@ -1,6 +1,6 @@
 {
     "name": "nav-datovelger",
-    "version": "8.0.4",
+    "version": "8.1.0",
     "description": "Datepicker with input and calendar",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
