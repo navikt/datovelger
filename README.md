@@ -43,7 +43,7 @@ const AdvancedDatePicker = () => {
 }
 ```
 # Språk
-Default locale er 'nb'. Annet locale må settes gjenneom å bruke dayjs.locale('nb' | 'nn' | 'en')
+Default locale er 'en'. Annet locale må settes gjenneom å bruke dayjs.locale('nb' | 'nn' | 'en')
 
 # Kjøre eksempel-app
 
