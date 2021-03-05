@@ -62,6 +62,9 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                 });
             }
         }
+        if (dayPickerProps?.onMonthChange) {
+            dayPickerProps?.onMonthChange(month);
+        }
     };
 
     const dayPickerPropsToUse: DayPickerProps = {
