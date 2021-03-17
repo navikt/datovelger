@@ -29,10 +29,6 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [initialMonth, setInitialMonth] = useState<Date | undefined>();
     const [locale, setLocale] = useState<DatepickerLocales>('nb');
 
-    // useEffect(() => {
-    //     dayjs.locale(locale);
-    // }, [locale]);
-
     const takenRange: DatepickerDateRange = {
         from: '2020-04-10',
         to: '2022-04-11',
@@ -59,11 +55,14 @@ const DatepickerExample: React.FunctionComponent = () => {
                         weekendsNotSelectable: false,
                         invalidDateRanges: [takenRange],
                         minDate: '2000-04-03',
-                        maxDate: '2020-12-12',
+                        maxDate: '2025-12-12',
                     }}
                     dayPickerProps={{
                         initialMonth,
                         modifiers: showPublicHolidays ? { isPublicHoliday } : undefined,
+                        onMonthChange: (month) => {
+                            console.log(month);
+                        },
                     }}
                 />
                 <Box margin="l">Chosen date: {renderDate(date)}</Box>
