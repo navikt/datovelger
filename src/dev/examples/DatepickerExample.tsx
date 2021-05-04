@@ -30,8 +30,8 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [locale, setLocale] = useState<DatepickerLocales>('nb');
 
     const takenRange: DatepickerDateRange = {
-        from: '2020-04-10',
-        to: '2022-04-11',
+        from: '2021-04-10',
+        to: '2021-04-11',
     };
 
     return (
@@ -48,6 +48,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                         name: 'dateInput',
                         'aria-invalid': date !== '' && isISODateString(date) === false,
                     }}
+                    setFocusOnDateWhenOpened={true}
                     locale={locale}
                     calendarSettings={{ showWeekNumbers }}
                     showYearSelector={showYearSelector}

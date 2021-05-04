@@ -31,6 +31,7 @@ export interface DatepickerProps {
     allowInvalidDateSelection?: boolean;
     showYearSelector?: boolean;
     dayPickerProps?: DayPickerProps;
+    setFocusOnDateWhenOpened?: boolean;
 }
 
 const Datepicker = ({
@@ -45,6 +46,7 @@ const Datepicker = ({
     showYearSelector,
     onChange,
     dayPickerProps,
+    setFocusOnDateWhenOpened,
 }: DatepickerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMonth(value, limitations, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
@@ -103,6 +105,7 @@ const Datepicker = ({
                             allowInvalidDateSelection={allowInvalidDateSelection}
                             dayPickerProps={dayPickerProps}
                             showYearSelector={showYearSelector}
+                            setFocusOnDateWhenOpened={setFocusOnDateWhenOpened}
                         />
                     </CalendarPortal>
                 )}

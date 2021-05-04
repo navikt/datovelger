@@ -1,13 +1,15 @@
 import { NavigationFocusElement } from '../calendar/Calendar';
-import { dayDateKey } from '.';
 
 type RefHTMLElement = HTMLElement | null;
 
-export const setFocusOnDate = (calendar: RefHTMLElement, date: Date) => {
+export const setInitialDayFocus = (calendar: RefHTMLElement) => {
     if (calendar) {
-        const el: HTMLElement = calendar.querySelector(`[data-date="${dayDateKey(date)}"]`) as HTMLElement;
+        const el: HTMLElement =
+            (calendar.querySelector(`.DayPicker-Day--selected`) as HTMLElement) ||
+            (calendar.querySelector(`.DayPicker-Day--today`) as HTMLElement) ||
+            (calendar.querySelector(`.DayPicker-Day[aria-disabled="false"]`) as HTMLElement);
         if (el) {
-            (el.parentNode as HTMLElement).focus();
+            el.focus();
         }
     }
 };
