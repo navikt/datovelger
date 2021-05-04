@@ -1,10 +1,10 @@
 import FocusTrap from 'focus-trap-react';
-import React, { MutableRefObject, useState } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import DayPicker, { DayModifiers, DayPickerProps, LocaleUtils, Modifier } from 'react-day-picker';
 import { DatepickerLocales, ISODateString } from '../types';
-import { setFocusOnCalendarMonth } from '../utils/calendarFocusUtils';
-import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
+import { setFocusOnCalendarMonth, setInitialDayFocus } from '../utils/calendarFocusUtils';
 import calendarLocaleUtils from '../utils/calendarLocaleUtils';
+import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
 import Navbar from './Navbar';
 
 require('dayjs/locale/nb.js');
@@ -24,6 +24,7 @@ interface Props {
     showYearSelector?: boolean;
     locale: DatepickerLocales;
     dayPickerProps?: DayPickerProps;
+    setFocusOnDateWhenOpened?: boolean;
 }
 
 export type NavigationFocusElement = 'nextMonth' | 'previousMonth' | 'year' | 'month';
@@ -43,6 +44,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         locale,
         onClose,
         onSelect,
+        setFocusOnDateWhenOpened,
         dayPickerProps,
     } = props;
 
@@ -93,28 +95,36 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         showWeekNumbers,
     };
 
+    const calendarRef = useRef<any>();
+    useEffect(() => {
+        if (setFocusOnDateWhenOpened && calendarRef.current) {
+            setInitialDayFocus(calendarRef.current);
+        }
+    }, [calendarRef, setFocusOnDateWhenOpened]);
     return (
         <div ref={ref} role="dialog" aria-label="Kalender" className="nav-datovelger__kalender">
-            <FocusTrap
-                active={true}
-                focusTrapOptions={{
-                    clickOutsideDeactivates: true,
-                    onDeactivate: onClose,
-                }}>
-                <DayPicker
-                    locale={locale}
-                    fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
-                    toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
-                    canChangeMonth={false}
-                    selectedDays={dateString ? ISODateStringToUTCDate(dateString) : undefined}
-                    onDayClick={onSelectDate}
-                    onMonthChange={onChangeMonth}
-                    disabledDays={unavailableDates}
-                    {...dayPickerProps}
-                    {...dayPickerPropsToUse}
-                    month={displayMonth}
-                />
-            </FocusTrap>
+            <div ref={calendarRef}>
+                <FocusTrap
+                    active={true}
+                    focusTrapOptions={{
+                        clickOutsideDeactivates: true,
+                        onDeactivate: onClose,
+                    }}>
+                    <DayPicker
+                        locale={locale}
+                        fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
+                        toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
+                        canChangeMonth={false}
+                        selectedDays={dateString ? ISODateStringToUTCDate(dateString) : undefined}
+                        onDayClick={onSelectDate}
+                        onMonthChange={onChangeMonth}
+                        disabledDays={unavailableDates}
+                        {...dayPickerProps}
+                        {...dayPickerPropsToUse}
+                        month={displayMonth}
+                    />
+                </FocusTrap>
+            </div>
         </div>
     );
 });

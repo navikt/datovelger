@@ -70,9 +70,12 @@
                 color: @navRod !important;
                 font-style: italic;
             }
-            &--isPublicHoliday {
+            &--isPublicHoliday:not(.DayPicker-Day--selected) {
                 color: @navRod !important;
                 font-style: italic;
+            }
+            &--selected:last-child {
+                color: white !important;
             }
         }
         &-Weekday {
