@@ -1,8 +1,14 @@
 import FocusTrap from 'focus-trap-react';
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import DayPicker, { DayModifiers, DayPickerProps, LocaleUtils, Modifier } from 'react-day-picker';
+import DomEventContainer from '../common/DomEventContainer';
 import { DatepickerLocales, ISODateString } from '../types';
-import { setFocusOnCalendarMonth, setInitialDayFocus } from '../utils/calendarFocusUtils';
+import {
+    setFocusOnCalendarMonth,
+    setFocusOnFirstElementInDayPickerCaption,
+    setFocusOnLastElementInDayPickerCaption,
+    setInitialDayFocus,
+} from '../utils/calendarFocusUtils';
 import calendarLocaleUtils from '../utils/calendarLocaleUtils';
 import { dateToISODateString, ISODateStringToUTCDate } from '../utils/dateFormatUtils';
 import Navbar from './Navbar';
@@ -101,30 +107,47 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
             setInitialDayFocus(calendarRef.current);
         }
     }, [calendarRef, setFocusOnDateWhenOpened]);
+
     return (
         <div ref={ref} role="dialog" aria-label="Kalender" className="nav-datovelger__kalender">
-            <div ref={calendarRef}>
-                <FocusTrap
-                    active={true}
-                    focusTrapOptions={{
-                        clickOutsideDeactivates: true,
-                        onDeactivate: onClose,
-                    }}>
-                    <DayPicker
-                        locale={locale}
-                        fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
-                        toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
-                        canChangeMonth={false}
-                        selectedDays={dateString ? ISODateStringToUTCDate(dateString) : undefined}
-                        onDayClick={onSelectDate}
-                        onMonthChange={onChangeMonth}
-                        disabledDays={unavailableDates}
-                        {...dayPickerProps}
-                        {...dayPickerPropsToUse}
-                        month={displayMonth}
-                    />
-                </FocusTrap>
-            </div>
+            <DomEventContainer
+                onKeyDown={(evt) => {
+                    if (evt.key === 'Tab' && evt.target) {
+                        const className: string = (evt.target as any).className || '';
+                        if (className.indexOf('DayPicker-Day') >= 0) {
+                            if (evt.shiftKey === false) {
+                                setFocusOnFirstElementInDayPickerCaption(calendarRef.current);
+                            } else {
+                                setFocusOnLastElementInDayPickerCaption(calendarRef.current);
+                            }
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        }
+                    }
+                }}>
+                <div ref={calendarRef}>
+                    <FocusTrap
+                        active={true}
+                        focusTrapOptions={{
+                            clickOutsideDeactivates: true,
+                            onDeactivate: onClose,
+                        }}>
+                        <DayPicker
+                            locale={locale}
+                            fromMonth={minDateString ? ISODateStringToUTCDate(minDateString) : undefined}
+                            toMonth={maxDateString ? ISODateStringToUTCDate(maxDateString) : undefined}
+                            canChangeMonth={false}
+                            selectedDays={dateString ? ISODateStringToUTCDate(dateString) : undefined}
+                            onDayClick={onSelectDate}
+                            onMonthChange={onChangeMonth}
+                            disabledDays={unavailableDates}
+                            {...dayPickerProps}
+                            {...dayPickerPropsToUse}
+                            month={displayMonth}
+                        />
+                    </FocusTrap>
+                </div>
+            </DomEventContainer>
         </div>
     );
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { guid } from 'nav-frontend-js-utils';
 import DomEventContainer from './common/DomEventContainer';
@@ -53,6 +53,8 @@ const Datepicker = ({
     const prevValue = usePrevious(value);
     const initialMonthPrevValue = usePrevious(dayPickerProps?.initialMonth);
 
+    const calendarRef = useRef<any>();
+
     useEffect(() => {
         const initialMonth = dayPickerProps?.initialMonth;
         if (initialMonth !== initialMonthPrevValue && value === prevValue) {
@@ -93,6 +95,7 @@ const Datepicker = ({
                 {calendarIsVisible && (
                     <CalendarPortal position={calendarSettings?.position}>
                         <Calendar
+                            ref={calendarRef}
                             locale={locale}
                             showWeekNumbers={calendarSettings?.showWeekNumbers}
                             dateString={value}
