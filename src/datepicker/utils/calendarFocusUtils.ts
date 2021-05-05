@@ -1,4 +1,5 @@
 import { NavigationFocusElement } from '../calendar/Calendar';
+import { focusFirstElement, focusLastElement } from './focusUtils';
 
 type RefHTMLElement = HTMLElement | null;
 
@@ -10,6 +11,22 @@ export const setInitialDayFocus = (calendar: RefHTMLElement) => {
             (calendar.querySelector(`.DayPicker-Day[aria-disabled="false"]`) as HTMLElement);
         if (el) {
             el.focus();
+        }
+    }
+};
+export const setFocusOnFirstElementInDayPickerCaption = (calendar: RefHTMLElement) => {
+    if (calendar) {
+        const el: HTMLElement = calendar.querySelector(`.DayPicker-Caption`) as HTMLElement;
+        if (el) {
+            focusFirstElement(el);
+        }
+    }
+};
+export const setFocusOnLastElementInDayPickerCaption = (calendar: RefHTMLElement) => {
+    if (calendar) {
+        const el: HTMLElement = calendar.querySelector(`.DayPicker-Caption`) as HTMLElement;
+        if (el) {
+            focusLastElement(el);
         }
     }
 };

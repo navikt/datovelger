@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { LocaleUtils } from 'react-day-picker';
 import dayjs from 'dayjs';
 import { guid } from 'nav-frontend-js-utils';
@@ -63,11 +63,16 @@ class YearSelector extends React.Component<Props> {
         return (this.props.minDate || this.props.maxDate || new Date()).getMonth();
     }
 
-    onChange() {
+    onChange(evt: ChangeEvent<HTMLSelectElement>) {
+        evt.stopPropagation();
+        evt.preventDefault();
         this.props.onChange(new Date(this.getYear(), this.getMonth()), 'month');
     }
 
-    onYearChange() {
+    onYearChange(evt: ChangeEvent<HTMLSelectElement>) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
         const year = parseInt(this.yearSelect?.value || '', 10);
         const month = parseInt(this.monthSelect?.value || '', 10);
         const newDate = new Date(year, month);
