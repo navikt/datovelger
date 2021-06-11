@@ -1,4 +1,8 @@
 # Changelog
+
+## [11.2.0] - 2021-06-11
+Add ability to navigate outside restricted range via prop
+
 ## [9.0.0] - 2021-01-04
 Refactor locale code. Set 'nb' as default locale (was 'en').
 

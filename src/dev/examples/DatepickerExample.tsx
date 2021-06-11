@@ -29,6 +29,10 @@ const DatepickerExample: React.FunctionComponent = () => {
     const [initialMonth, setInitialMonth] = useState<Date | undefined>();
     const [locale, setLocale] = useState<DatepickerLocales>('nb');
 
+    const [minDate, setMinDate] = useState<DatepickerValue>('2000-04-03');
+    const [maxDate, setMaxDate] = useState<DatepickerValue>('2025-12-12');
+    const [allowNavigatingToDisabledMonths, setAllowNavigatingToDisabledMonths] = useState(false);
+
     const takenRange: DatepickerDateRange = {
         from: '2021-04-10',
         to: '2021-04-11',
@@ -55,8 +59,8 @@ const DatepickerExample: React.FunctionComponent = () => {
                     limitations={{
                         weekendsNotSelectable: false,
                         invalidDateRanges: [takenRange],
-                        minDate: '2000-04-03',
-                        maxDate: '2025-12-12',
+                        minDate: minDate.length > 0 ? minDate : undefined,
+                        maxDate: maxDate.length > 0 ? maxDate : undefined,
                     }}
                     dayPickerProps={{
                         initialMonth,
@@ -65,6 +69,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                             console.log(month);
                         },
                     }}
+                    allowNavigationToDisabledMonths={allowNavigatingToDisabledMonths}
                 />
                 <Box margin="l">Chosen date: {renderDate(date)}</Box>
                 <Box margin="m">
@@ -113,6 +118,19 @@ const DatepickerExample: React.FunctionComponent = () => {
                     </Knapp>
                 </Box>
 
+                <Box margin="xl">Restrictions</Box>
+                <Box margin="m">
+                    <div style={{ display: 'inline-block' }}>
+                        <label htmlFor={'date-range-from'}>First pickable date</label>
+                        <Datepicker inputId={'date-range-from'} onChange={(e) => setMinDate(e)} value={minDate} />
+                    </div>
+                    {' - '}
+                    <div style={{ display: 'inline-block' }}>
+                        <label htmlFor={'date-range-to'}>Last pickable date</label>
+                        <Datepicker inputId={'date-range-to'} onChange={(e) => setMaxDate(e)} value={maxDate} />
+                    </div>
+                </Box>
+
                 <Box margin="xl">
                     <fieldset>
                         <legend>Presentation properties</legend>
@@ -157,6 +175,20 @@ const DatepickerExample: React.FunctionComponent = () => {
                                             Possibility to highlight special days
                                         </>
                                     }
+                                />
+                            </Box>
+                            <Box margin={'l'}>
+                                <Checkbox
+                                    label={
+                                        <>
+                                            <div>
+                                                <code>allowNavigationToDisabledMonths</code>
+                                            </div>
+                                            Allow navigating outside restricted range
+                                        </>
+                                    }
+                                    checked={allowNavigatingToDisabledMonths}
+                                    onChange={(event) => setAllowNavigatingToDisabledMonths(event.target.checked)}
                                 />
                             </Box>
                         </div>

@@ -17,6 +17,7 @@ interface Props {
     maxDate?: Date;
     showYearSelector?: boolean;
     localeUtils: LocaleUtils;
+    allowNavigationToDisabledMonths: boolean;
 }
 
 interface NavbarButtonProps {
@@ -55,13 +56,23 @@ class Navbar extends React.Component<Props> {
     }
 
     render() {
-        const { defaultMonth, onChangeMonth, minDate, maxDate, showYearSelector, localeUtils } = this.props;
+        const {
+            defaultMonth,
+            onChangeMonth,
+            minDate,
+            maxDate,
+            showYearSelector,
+            localeUtils,
+            allowNavigationToDisabledMonths,
+        } = this.props;
 
         const previousMonth = dayjs(defaultMonth).subtract(1, 'month');
         const nextMonth = dayjs(defaultMonth).add(1, 'month');
 
-        const lastMonthIsDisabled = minDate ? dayjs(minDate).isAfter(previousMonth.endOf('month')) : false;
-        const nextMonthIsDisabled = maxDate ? dayjs(maxDate).isBefore(nextMonth.startOf('month')) : false;
+        const lastMonthIsDisabled =
+            !allowNavigationToDisabledMonths && minDate ? dayjs(minDate).isAfter(previousMonth.endOf('month')) : false;
+        const nextMonthIsDisabled =
+            !allowNavigationToDisabledMonths && maxDate ? dayjs(maxDate).isBefore(nextMonth.startOf('month')) : false;
 
         const onClick = (
             evt: React.MouseEvent<HTMLButtonElement>,

@@ -31,6 +31,7 @@ interface Props {
     locale: DatepickerLocales;
     dayPickerProps?: DayPickerProps;
     setFocusOnDateWhenOpened?: boolean;
+    allowNavigationToDisabledMonths: boolean;
 }
 
 export type NavigationFocusElement = 'nextMonth' | 'previousMonth' | 'year' | 'month';
@@ -52,6 +53,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         onSelect,
         setFocusOnDateWhenOpened,
         dayPickerProps,
+        allowNavigationToDisabledMonths,
     } = props;
 
     const onSelectDate = (date: Date, modifiers: DayModifiers) => {
@@ -94,6 +96,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                         ...localeUtils,
                     }}
                     showYearSelector={showYearSelector}
+                    allowNavigationToDisabledMonths={allowNavigationToDisabledMonths}
                 />
             );
         },
