@@ -1,6 +1,6 @@
 {
     "name": "nav-datovelger",
-    "version": "11.1.2",
+    "version": "11.2.0",
     "description": "Datepicker with input and calendar",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -92,13 +92,13 @@
     },
     "peerDependencies": {
         "classnames": "^2.2.x",
+        "dayjs": "^1.10.x",
         "nav-frontend-core": "^5.0.x",
         "nav-frontend-js-utils": "^1.0.x",
         "nav-frontend-skjema": "^3.1.x",
         "nav-frontend-typografi": "^3.0.x",
         "react": "17",
-        "react-day-picker": "^7.4.x",
-        "dayjs": "^1.10.x"
+        "react-day-picker": "^7.4.x"
     },
     "eslintConfig": {
         "extends": "react-app"
