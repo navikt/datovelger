@@ -13,18 +13,20 @@
                     color: @white;
                 }
                 &:hover {
-                    .hoverOutline();
                     .dayZindexFix();
+                    box-shadow: none;
+                    outline: 3px solid @fokusFarge;
                     &:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside) {
                         background-color: inherit;
                     }
                 }
                 &:active,
                 &:focus {
-                    .focusOutline();
                     .dayZindexFix();
                     background: @white;
                     z-index: 3;
+                    box-shadow: none;
+                    outline: 3px solid @fokusFarge;
                 }
             }
             &.DayPicker-Day--disabled,
