@@ -56,6 +56,12 @@ const DatepickerExample: React.FunctionComponent = () => {
                     locale={locale}
                     calendarSettings={{ showWeekNumbers }}
                     showYearSelector={showYearSelector}
+                    calendarDateStringFilter={(value) => {
+                        if (dayjs(value).isValid()) {
+                            return value;
+                        }
+                        return dayjs().subtract(1, 'year').format('YYYY-MM-DD');
+                    }}
                     limitations={{
                         weekendsNotSelectable: false,
                         invalidDateRanges: [takenRange],

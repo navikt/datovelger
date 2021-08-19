@@ -33,6 +33,7 @@ export interface DatepickerProps {
     dayPickerProps?: DayPickerProps;
     setFocusOnDateWhenOpened?: boolean;
     allowNavigationToDisabledMonths?: boolean;
+    calendarDateStringFilter?: (value: string | undefined) => string | undefined;
 }
 
 const Datepicker = ({
@@ -49,6 +50,7 @@ const Datepicker = ({
     dayPickerProps,
     setFocusOnDateWhenOpened,
     allowNavigationToDisabledMonths = false,
+    calendarDateStringFilter,
 }: DatepickerProps) => {
     const [activeMonth, setActiveMonth] = useState<Date>(getDefaultMonth(value, limitations, dayPickerProps));
     const [calendarIsVisible, setCalendarIsVisible] = useState<boolean>(false);
@@ -59,19 +61,20 @@ const Datepicker = ({
 
     useEffect(() => {
         const initialMonth = dayPickerProps?.initialMonth;
-        if (initialMonth !== initialMonthPrevValue && value === prevValue) {
-            const defaultMonth = getDefaultMonth(value, limitations, dayPickerProps);
+        const dateStringToUse = calendarDateStringFilter ? calendarDateStringFilter(value) : value;
+        if (initialMonth !== initialMonthPrevValue && dateStringToUse === prevValue) {
+            const defaultMonth = getDefaultMonth(dateStringToUse, limitations, dayPickerProps);
             if (!isSameDate(defaultMonth, activeMonth)) {
                 setActiveMonth(defaultMonth);
             }
         }
-        if (value !== prevValue) {
-            const defaultMonth = getDefaultMonth(value, limitations, dayPickerProps);
+        if (dateStringToUse !== prevValue) {
+            const defaultMonth = getDefaultMonth(dateStringToUse, limitations, dayPickerProps);
             if (!isSameDate(defaultMonth, activeMonth)) {
                 setActiveMonth(defaultMonth);
             }
         }
-    }, [value, limitations, prevValue, activeMonth, dayPickerProps, initialMonthPrevValue]);
+    }, [value, limitations, prevValue, activeMonth, dayPickerProps, initialMonthPrevValue, calendarDateStringFilter]);
 
     const setDate = (value = '') => {
         setCalendarIsVisible(false);
@@ -100,7 +103,7 @@ const Datepicker = ({
                             ref={calendarRef}
                             locale={locale}
                             showWeekNumbers={calendarSettings?.showWeekNumbers}
-                            dateString={value}
+                            dateString={calendarDateStringFilter ? calendarDateStringFilter(value) : value}
                             month={activeMonth}
                             minDateString={limitations && limitations.minDate}
                             maxDateString={limitations && limitations.maxDate}
