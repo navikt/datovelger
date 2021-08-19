@@ -18,6 +18,7 @@ const ALLOWED_INPUT_FORMATS = [
     'DDMMYY',
     'D.M.YY',
     'DD.MM.YY',
+    'D.M.YYYY',
 ];
 
 const stringToUTCDate = (dateString: string | undefined, format: string): Date | undefined => {

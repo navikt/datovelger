@@ -38,6 +38,10 @@ const DatepickerExample: React.FunctionComponent = () => {
         to: '2021-04-11',
     };
 
+    const isValidFormattedDateString = (dateString = ''): boolean => {
+        return /\d{1,2}.\d{1,2}.(\d{2}|\d{4})$/.test(dateString);
+    };
+
     return (
         <div>
             <Box margin="xl">
@@ -57,10 +61,11 @@ const DatepickerExample: React.FunctionComponent = () => {
                     calendarSettings={{ showWeekNumbers }}
                     showYearSelector={showYearSelector}
                     calendarDateStringFilter={(value) => {
-                        if (dayjs(value).isValid()) {
+                        if (isValidFormattedDateString(value)) {
                             return value;
                         }
-                        return dayjs().subtract(1, 'year').format('YYYY-MM-DD');
+                        // Date is not valid, open calendar with no date specified
+                        return undefined;
                     }}
                     limitations={{
                         weekendsNotSelectable: false,
