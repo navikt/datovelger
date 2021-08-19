@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import DateHolidays, { Holiday } from 'date-holidays';
+import DateHolidays, { HolidaysTypes } from 'date-holidays';
 
 const norwegianHolidays = new DateHolidays('no');
 
-export const getPublicHolidays = (from: Date, to: Date): Holiday[] => {
-    let days = [] as Holiday[];
+export const getPublicHolidays = (from: Date, to: Date): HolidaysTypes.Holiday[] => {
+    let days = [] as HolidaysTypes.Holiday[];
     const fromYear = from.getFullYear();
     const toYear = to.getFullYear();
     if (fromYear === toYear) {
@@ -27,8 +27,8 @@ export const getPublicHolidays = (from: Date, to: Date): Holiday[] => {
         .filter((d) => dayjs(d.date).isAfter(start, 'day') && dayjs(d.date).isBefore(slutt, 'day'));
 };
 
-export const getPublicHolidaysInMonth = (month: Date): Holiday[] => {
-    const days: Holiday[] = norwegianHolidays.getHolidays(month.getFullYear());
+export const getPublicHolidaysInMonth = (month: Date): HolidaysTypes.Holiday[] => {
+    const days: HolidaysTypes.Holiday[] = norwegianHolidays.getHolidays(month.getFullYear());
     const from = dayjs(month).startOf('month');
     const to = dayjs(month).endOf('month');
     return days

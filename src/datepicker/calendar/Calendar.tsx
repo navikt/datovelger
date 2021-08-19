@@ -111,6 +111,8 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
         }
     }, [calendarRef, setFocusOnDateWhenOpened]);
 
+    console.log(dateString);
+
     return (
         <div ref={ref} role="dialog" aria-label="Kalender" className="nav-datovelger__kalender">
             <DomEventContainer
