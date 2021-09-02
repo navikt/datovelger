@@ -6,6 +6,7 @@ import Chevron from '../elementer/ChevronSvg';
 import { Texts } from '../texts';
 import { NavigationFocusElement } from './Calendar';
 import YearSelector from './YearSelector';
+import { DatepickerLocales } from '../types';
 
 type Direction = 'previousMonth' | 'nextMonth';
 
@@ -18,6 +19,7 @@ interface Props {
     showYearSelector?: boolean;
     localeUtils: LocaleUtils;
     allowNavigationToDisabledMonths: boolean;
+    locale: DatepickerLocales;
 }
 
 interface NavbarButtonProps {
@@ -64,6 +66,7 @@ class Navbar extends React.Component<Props> {
             showYearSelector,
             localeUtils,
             allowNavigationToDisabledMonths,
+            locale,
         } = this.props;
 
         const previousMonth = dayjs(defaultMonth).subtract(1, 'month');
@@ -97,6 +100,7 @@ class Navbar extends React.Component<Props> {
                             minDate={minDate}
                             localeUtils={localeUtils}
                             onChange={(month, focusElement) => onChangeMonth(month, focusElement)}
+                            locale={locale}
                         />
                     </div>
                 )}

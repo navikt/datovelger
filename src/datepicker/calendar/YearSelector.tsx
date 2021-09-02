@@ -4,6 +4,7 @@ import { LocaleUtils } from 'react-day-picker';
 import dayjs from 'dayjs';
 import { guid } from 'nav-frontend-js-utils';
 import { NavigationFocusElement } from './Calendar';
+import { DatepickerLocales } from '../types';
 
 export interface Props {
     defaultMonth: Date;
@@ -11,6 +12,7 @@ export interface Props {
     maxDate?: Date;
     localeUtils: LocaleUtils;
     onChange: (month: Date, focusElement: NavigationFocusElement) => void;
+    locale: DatepickerLocales;
 }
 
 interface MonthOption {
@@ -92,7 +94,7 @@ class YearSelector extends React.Component<Props> {
             maxDate: max = dayjs().add(4, 'year').toDate(),
             localeUtils,
         } = this.props;
-        const monthNames = localeUtils.getMonths();
+        const monthNames = localeUtils.getMonths(this.props.locale);
         const monthOptions = getAvailableMonths(monthNames, defaultMonth, min, max);
         const years: number[] = [];
 
