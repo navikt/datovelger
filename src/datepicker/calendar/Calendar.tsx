@@ -97,6 +97,7 @@ const Calendar = React.forwardRef(function Calendar(props: Props, ref: React.Ref
                     }}
                     showYearSelector={showYearSelector}
                     allowNavigationToDisabledMonths={allowNavigationToDisabledMonths}
+                    locale={locale}
                 />
             );
         },
