@@ -1,3 +1,5 @@
+import { DaysOfWeekModifier } from 'react-day-picker';
+
 /** YYYY-MM-DD */
 export type ISODateString = string;
 
@@ -17,6 +19,7 @@ export interface DatepickerLimitations {
     maxDate?: ISODateString;
     invalidDateRanges?: DatepickerDateRange[];
     weekendsNotSelectable?: boolean;
+    disabledWeekdays?: DaysOfWeekModifier;
 }
 
 export type DatepickerLocales = 'nb' | 'nn' | 'en';
