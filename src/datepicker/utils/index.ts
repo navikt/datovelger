@@ -31,11 +31,11 @@ export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] 
     }
     const minDate = limitations.minDate;
     const maxDate = limitations.maxDate;
-    const weekendDays = {
-        daysOfWeek: limitations.weekendsNotSelectable ? [0, 6] : [],
-    };
     const disabledWeekdays: DaysOfWeekModifier = {
-        daysOfWeek: [...weekendDays.daysOfWeek, ...(limitations.disabledWeekdays?.daysOfWeek || [])],
+        daysOfWeek: [
+            ...(limitations.weekendsNotSelectable ? [0, 6] : []),
+            ...(limitations.disabledWeekdays?.daysOfWeek || []),
+        ],
     };
     return [
         ...invalidDates,
