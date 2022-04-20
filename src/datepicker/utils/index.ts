@@ -31,14 +31,17 @@ export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] 
     }
     const minDate = limitations.minDate;
     const maxDate = limitations.maxDate;
-    const weekendDays = {
-        daysOfWeek: limitations.weekendsNotSelectable ? [0, 6] : [],
+    const disabledWeekdays: DaysOfWeekModifier = {
+        daysOfWeek: [
+            ...(limitations.weekendsNotSelectable ? [0, 6] : []),
+            ...(limitations.disabledWeekdays?.daysOfWeek || []),
+        ],
     };
     return [
         ...invalidDates,
         ...(maxDate ? [{ after: dayjs(maxDate, ISO_DATE_STRING_FORMAT).toDate() } as AfterModifier] : []),
         ...(minDate ? [{ before: dayjs(minDate, ISO_DATE_STRING_FORMAT).toDate() } as BeforeModifier] : []),
-        ...[weekendDays as DaysOfWeekModifier],
+        ...[disabledWeekdays],
     ];
 };
 
