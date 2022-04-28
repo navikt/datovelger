@@ -107,7 +107,9 @@ const Datepicker = ({
                             month={activeMonth}
                             minDateString={limitations && limitations.minDate}
                             maxDateString={limitations && limitations.maxDate}
-                            unavailableDates={limitations ? getInvalidDates(limitations) : undefined}
+                            unavailableDates={
+                                limitations ? getInvalidDates(limitations, dayPickerProps?.disabledDays) : undefined
+                            }
                             onSelect={setDate}
                             onClose={() => setCalendarIsVisible(false)}
                             allowInvalidDateSelection={allowInvalidDateSelection}

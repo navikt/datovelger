@@ -69,11 +69,11 @@ const DatepickerExample: React.FunctionComponent = () => {
                         return undefined;
                     }}
                     limitations={{
-                        weekendsNotSelectable: false,
+                        weekendsNotSelectable: true,
                         invalidDateRanges: [takenRange],
                         minDate: minDate.length > 0 ? minDate : undefined,
                         maxDate: maxDate.length > 0 ? maxDate : undefined,
-                        disabledWeekdays: { daysOfWeek: [2, 6] },
+                        disabledWeekdays: { daysOfWeek: [2, 3] },
                     }}
                     dayPickerProps={{
                         initialMonth,
@@ -81,6 +81,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                         onMonthChange: (month) => {
                             console.log(month);
                         },
+                        disabledDays: { daysOfWeek: [3, 5] },
                     }}
                     allowNavigationToDisabledMonths={allowNavigatingToDisabledMonths}
                 />
