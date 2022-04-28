@@ -19,7 +19,7 @@ export interface DatepickerLimitations {
     maxDate?: ISODateString;
     invalidDateRanges?: DatepickerDateRange[];
     weekendsNotSelectable?: boolean;
-    disabledWeekdays?: DaysOfWeekModifier;
+    disabledDaysOfWeek?: DaysOfWeekModifier;
 }
 
 export type DatepickerLocales = 'nb' | 'nn' | 'en';

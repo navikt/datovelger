@@ -34,7 +34,7 @@ export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] 
     const disabledWeekdays: DaysOfWeekModifier = {
         daysOfWeek: [
             ...(limitations.weekendsNotSelectable ? [0, 6] : []),
-            ...(limitations.disabledWeekdays?.daysOfWeek || []),
+            ...(limitations.disabledDaysOfWeek?.daysOfWeek || []),
         ],
     };
     return [

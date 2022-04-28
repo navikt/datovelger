@@ -30,7 +30,7 @@ export interface DatepickerProps {
     inputProps?: DatepickerInputProps & { inputRef?: React.Ref<HTMLInputElement> };
     allowInvalidDateSelection?: boolean;
     showYearSelector?: boolean;
-    dayPickerProps?: DayPickerProps;
+    dayPickerProps?: Omit<DayPickerProps, 'disabledDays'>;
     setFocusOnDateWhenOpened?: boolean;
     allowNavigationToDisabledMonths?: boolean;
     calendarDateStringFilter?: (value: string | undefined) => string | undefined;
