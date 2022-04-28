@@ -30,7 +30,7 @@ export interface DatepickerProps {
     inputProps?: DatepickerInputProps & { inputRef?: React.Ref<HTMLInputElement> };
     allowInvalidDateSelection?: boolean;
     showYearSelector?: boolean;
-    dayPickerProps?: DayPickerProps;
+    dayPickerProps?: Omit<DayPickerProps, 'disabledDays'>;
     setFocusOnDateWhenOpened?: boolean;
     allowNavigationToDisabledMonths?: boolean;
     calendarDateStringFilter?: (value: string | undefined) => string | undefined;
@@ -107,9 +107,7 @@ const Datepicker = ({
                             month={activeMonth}
                             minDateString={limitations && limitations.minDate}
                             maxDateString={limitations && limitations.maxDate}
-                            unavailableDates={
-                                limitations ? getInvalidDates(limitations, dayPickerProps?.disabledDays) : undefined
-                            }
+                            unavailableDates={limitations ? getInvalidDates(limitations) : undefined}
                             onSelect={setDate}
                             onClose={() => setCalendarIsVisible(false)}
                             allowInvalidDateSelection={allowInvalidDateSelection}

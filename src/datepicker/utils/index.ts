@@ -12,25 +12,7 @@ import { INPUT_DATE_STRING_FORMAT, ISO_DATE_STRING_FORMAT, ISODateStringToUTCDat
 
 export const dayDateKey = (date: Date) => dayjs(date).format(INPUT_DATE_STRING_FORMAT);
 
-const getDaysOfWeekForModifier = (modifier: Modifier) => {
-    const mDaysOfWeek = (modifier as DaysOfWeekModifier).daysOfWeek;
-    return mDaysOfWeek || [];
-};
-
-export const getDisabledWeekdaysFromDayPickerProps = (modifier: Modifier | Modifier[]): number[] | undefined => {
-    const daysOfWeek: number[] = [];
-    if (Array.isArray(modifier)) {
-        modifier.forEach((m) => daysOfWeek.push(...getDaysOfWeekForModifier(m)));
-    } else {
-        daysOfWeek.push(...getDaysOfWeekForModifier(modifier));
-    }
-    return daysOfWeek.length > 0 ? daysOfWeek : undefined;
-};
-
-export const getInvalidDates = (
-    limitations: DatepickerLimitations,
-    disabledDaysInDayPickerProps?: Modifier | Modifier[]
-): Modifier[] => {
+export const getInvalidDates = (limitations: DatepickerLimitations): Modifier[] => {
     let invalidDates: Modifier[] = [];
     if (limitations.invalidDateRanges) {
         invalidDates = limitations.invalidDateRanges
@@ -49,13 +31,10 @@ export const getInvalidDates = (
     }
     const minDate = limitations.minDate;
     const maxDate = limitations.maxDate;
-    const disabledDaysOfWeekInDayPickerProps =
-        getDisabledWeekdaysFromDayPickerProps(disabledDaysInDayPickerProps) || [];
     const disabledWeekdays: DaysOfWeekModifier = {
         daysOfWeek: [
             ...(limitations.weekendsNotSelectable ? [0, 6] : []),
             ...(limitations.disabledDaysOfWeek?.daysOfWeek || []),
-            ...(disabledDaysOfWeekInDayPickerProps || []),
         ],
     };
     return [
