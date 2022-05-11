@@ -55,7 +55,7 @@ const DatepickerExample: React.FunctionComponent = () => {
                     inputProps={{
                         name: 'dateInput',
                         'aria-invalid': date !== '' && isISODateString(date) === false,
-                        'data-testkey': 'test-key-this',
+                        'data-testid': 'test-key-this',
                     }}
                     setFocusOnDateWhenOpened={true}
                     locale={locale}

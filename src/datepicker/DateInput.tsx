@@ -10,7 +10,7 @@ export type DatepickerInputProps = Pick<
     InputHTMLAttributes<HTMLInputElement>,
     'name' | 'aria-invalid' | 'aria-label' | 'aria-describedby' | 'placeholder' | 'disabled' | 'pattern' | 'title'
 > & {
-    'data-testkey'?: string;
+    'data-testid'?: string;
 };
 
 interface Props {
